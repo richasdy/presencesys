@@ -1,0 +1,3 @@
+INSERT INTO `Account` (`email`, `phone`, `username`, `password`, `note`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('admin@email.com', '999999999', 'admin', 'admin', 'sample note admin', 'admin', 1, NULL, NOW(), NULL, NULL, NULL, NOW(), NULL, NULL),
+('admin2@email.com', '999999992', 'admin2', 'admin2', 'sample note admin2', 'admin', 0, NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL);
