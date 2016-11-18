@@ -1,4 +1,4 @@
-package com.richasdy.presencesys;
+package com.richasdy.presencesys.smoketest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,10 +12,9 @@ import com.richasdy.presencesys.api.AccountEndpoint;
 import com.richasdy.presencesys.controller.AccountController;
 import com.richasdy.presencesys.service.AccountService;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SmokeTest {
+public class AccountSmokeTest {
 
 	@Autowired
 	private AccountEndpoint accountEndpoint;
