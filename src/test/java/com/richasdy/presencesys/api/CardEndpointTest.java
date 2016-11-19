@@ -29,7 +29,7 @@ import com.richasdy.presencesys.domain.Card;
 import com.richasdy.presencesys.service.CardService;
 
 @Transactional
-public class CardEndpointTestMockMvc extends AbstractControllerTest {
+public class CardEndpointTest extends AbstractControllerTest {
 
 	// connection using mockmvc
 

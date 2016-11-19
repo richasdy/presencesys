@@ -51,7 +51,7 @@
 
 							</div>
 							<!-- /.box-header -->
-							<div class="box-body" th:unless="${#lists.isEmpty(listAccount)}">
+							<div class="box-body" th:unless="${#lists.isEmpty(listEntity)}">
 								<table class="table table-bordered">
 									<tr>
 										<th style="width: 10px">id</th>
@@ -67,22 +67,22 @@
 										<th>deletedAt</th>
 										<th>action</th>
 									</tr>
-									<tr th:each="account : ${listAccount}">
-										<td th:text="${{account.id}}" />
-										<td><a th:href="@{/account/{id}(id=${account.id})}"><span
-												th:text="${{account.email}}">email</span></a></td>
-										<td th:text="${{account.phone}}" />
-										<td th:text="${{account.username}}" />
-										<td th:text="${{account.note}}" />
-										<td th:text="${{account.activated}}" />
-										<td th:text="${{account.activatedAt}}" />
-										<td th:text="${{account.lastLogin}}" />
-										<td th:text="${{account.createdAt}}" />
-										<td th:text="${{account.updatedAt}}" />
-										<td th:text="${{account.deletedAt}}" />
-										<td><a th:href="@{/account/{id}/edit(id=${account.id})}"><i
+									<tr th:each="entity : ${listEntity}">
+										<td th:text="${{entity.id}}" />
+										<td><a th:href="@{/account/{id}(id=${entity.id})}"><span
+												th:text="${{entity.email}}">email</span></a></td>
+										<td th:text="${{entity.phone}}" />
+										<td th:text="${{entity.username}}" />
+										<td th:text="${{entity.note}}" />
+										<td th:text="${{entity.activated}}" />
+										<td th:text="${{entity.activatedAt}}" />
+										<td th:text="${{entity.lastLogin}}" />
+										<td th:text="${{entity.createdAt}}" />
+										<td th:text="${{entity.updatedAt}}" />
+										<td th:text="${{entity.deletedAt}}" />
+										<td><a th:href="@{/account/{id}/edit(id=${entity.id})}"><i
 												class="fa fa-edit" /></a> <a
-											th:href="@{/account/{id}/delete(id=${account.id})}"><i
+											th:href="@{/account/{id}/delete(id=${entity.id})}"><i
 												class="fa fa-trash-o" /></a></td>
 									</tr>
 

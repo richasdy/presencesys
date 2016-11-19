@@ -25,19 +25,19 @@ import com.richasdy.presencesys.service.AccountService;
 @RequestMapping("account")
 public class AccountController {
 
-	AccountService accountService;
+	AccountService service;
 
 	@Autowired
-	public AccountController(AccountService accountService) {
-		this.accountService = accountService;
+	public AccountController(AccountService service) {
+		this.service = service;
 	}
 
 	@GetMapping()
 	public String index(Model model) {
 
-		Iterable<Account> listAccount = accountService.findAll();
+		Iterable<Account> listEntity = service.findAll();
 
-		model.addAttribute("listAccount", listAccount);
+		model.addAttribute("listEntity", listEntity);
 		model.addAttribute("pageName", "Account Table");
 		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
 
@@ -56,12 +56,12 @@ public class AccountController {
 	}
 
 	@PostMapping()
-	public String save(@Valid Account account, BindingResult result) {
+	public String save(@Valid Account entity, BindingResult result) {
 		
 		// debug
 		// System.out.println("ganteng");
 		// System.out.println(result.toString());
-		// System.out.println(account.toString());
+		// System.out.println(entity.toString());
 
 		if (result.hasErrors()) {
 			
@@ -72,15 +72,15 @@ public class AccountController {
 			
 
 			// check activated untuk assign activatedAt
-			// account.getActivated() == true/false --> saat real
-			// account.getActivated() == null --> saat testing,
+			// entity.getActivated() == true/false --> saat real
+			// entity.getActivated() == null --> saat testing,
 			// karena nilainya null, bukan hanya true/false
-			if (account.getActivated() == null || account.getActivated()) {
-				account.setActivatedAt(new Date());
+			if (entity.getActivated() == null || entity.getActivated()) {
+				entity.setActivatedAt(new Date());
 				
 			}
 
-			Account confirm = accountService.save(account);
+			Account confirm = service.save(entity);
 
 			return "redirect:/account/" + confirm.getId();
 		}
@@ -90,13 +90,13 @@ public class AccountController {
 	@GetMapping("/{id}")
 	public String show(Model model, @PathVariable int id) {
 
-		Account account = accountService.findOne(id);
+		Account entity = service.findOne(id);
 
 		// debug
 		// System.out.println("id @show" + id);
 		// System.out.println("ganteng" + account);
 
-		model.addAttribute("account", account);
+		model.addAttribute("entity", entity);
 		model.addAttribute("pageName", "Account Detail");
 		model.addAttribute("pageNameDesc", "Detail Data Akun");
 
@@ -106,9 +106,9 @@ public class AccountController {
 	@GetMapping("/{id}/edit")
 	public String edit(Model model, @PathVariable int id) {
 
-		Account account = accountService.findOne(id);
+		Account entity = service.findOne(id);
 
-		model.addAttribute("account", account);
+		model.addAttribute("account", entity);
 		model.addAttribute("pageName", "Account Edit");
 		model.addAttribute("pageNameDesc", "Detail Perubahan Data Akun");
 
@@ -116,9 +116,9 @@ public class AccountController {
 	}
 
 	@PostMapping("/{id}/update")
-	public String update(@PathVariable int id, @Valid Account updatedAccount, BindingResult result) {
+	public String update(@PathVariable int id, @Valid Account updatedEntity, BindingResult result) {
 
-		if (result.hasErrors() || id!=updatedAccount.getId()) {
+		if (result.hasErrors() || id!=updatedEntity.getId()) {
 
 			// VULNURABLE
 			// ada kemungkinan dihack
@@ -148,7 +148,7 @@ public class AccountController {
 			// System.out.println(result);
 			// System.out.println(updatedAccount.toString());
 
-			Account currentAccount = accountService.findOne(id);
+			Account currentEntity = service.findOne(id);
 
 			// debug
 			// System.out.println(currentAccount.toString());
@@ -158,20 +158,20 @@ public class AccountController {
 			// account.getActivated() == true/false --> saat real
 			// account.getActivated() == null --> saat testing,
 			// karena nilainya null, bukan hanya true/false
-			if (updatedAccount.getActivated() == null || updatedAccount.getActivated() == false) {
-				updatedAccount.setActivatedAt(null);
-				currentAccount.setActivatedAt(null);
+			if (updatedEntity.getActivated() == null || updatedEntity.getActivated() == false) {
+				updatedEntity.setActivatedAt(null);
+				currentEntity.setActivatedAt(null);
 			} else {
-				updatedAccount.setActivatedAt(new Date());
+				updatedEntity.setActivatedAt(new Date());
 
 				// memastikan saat diaktifkan, deletedAt di kembalikan null
-				updatedAccount.setDeletedAt(null);
-				currentAccount.setDeletedAt(null);
+				updatedEntity.setDeletedAt(null);
+				currentEntity.setDeletedAt(null);
 			}
 
 			// copy changed field into object
 			// get null value field
-			final BeanWrapper src = new BeanWrapperImpl(updatedAccount);
+			final BeanWrapper src = new BeanWrapperImpl(updatedEntity);
 			java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
 			Set<String> emptyNames = new HashSet<String>();
 			for (java.beans.PropertyDescriptor pd : pds) {
@@ -182,11 +182,11 @@ public class AccountController {
 			String[] resultNullField = new String[emptyNames.size()];
 
 			// BeanUtils.copyProperties with ignore field
-			BeanUtils.copyProperties(updatedAccount, currentAccount, emptyNames.toArray(resultNullField));
+			BeanUtils.copyProperties(updatedEntity, currentEntity, emptyNames.toArray(resultNullField));
 
-			accountService.update(currentAccount);
+			service.update(currentEntity);
 
-			return "redirect:/account/" + currentAccount.getId();
+			return "redirect:/account/" + currentEntity.getId();
 
 		}
 
@@ -198,13 +198,13 @@ public class AccountController {
 		// tidak terpakai
 		// accountService.deleteSoft(id);
 
-		Account currentAccount = accountService.findOne(id);
-		currentAccount.setActivated(false);
-		currentAccount.setActivatedAt(null);
-		currentAccount.setUpdatedAt(new Date());
-		currentAccount.setDeletedAt(new Date());
+		Account currentEntity = service.findOne(id);
+		currentEntity.setActivated(false);
+		currentEntity.setActivatedAt(null);
+		currentEntity.setUpdatedAt(new Date());
+		currentEntity.setDeletedAt(new Date());
 
-		accountService.save(currentAccount);
+		service.save(currentEntity);
 
 		return "redirect:/account";
 

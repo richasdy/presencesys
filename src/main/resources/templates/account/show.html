@@ -41,7 +41,7 @@
 										<label for="inputEmail" class="col-sm-2 control-label">Id</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.id}">
+											<span class="form-control" th:text="${entity.id}">
 												1 </span>
 										</div>
 									</div>
@@ -50,7 +50,7 @@
 										<label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.email}">
+											<span class="form-control" th:text="${entity.email}">
 												donni.richasdy@gmail.com </span>
 										</div>
 									</div>
@@ -59,7 +59,7 @@
 										<label for="inputPhone" class="col-sm-2 control-label">Phone</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.phone}">
+											<span class="form-control" th:text="${entity.phone}">
 												0852687856123 </span>
 										</div>
 									</div>
@@ -68,7 +68,7 @@
 										<label for="inputUsername" class="col-sm-2 control-label">Username</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.username}">
+											<span class="form-control" th:text="${entity.username}">
 												richasdy </span>
 										</div>
 									</div>
@@ -78,7 +78,7 @@
 
 										<div class="col-sm-9">
 											<textarea class="form-control" rows="3" id="inputNote"
-												placeholder="Enter ..." th:text="${account.note}" disabled="disabled">this is note</textarea>
+												placeholder="Enter ..." th:text="${entity.note}" disabled="disabled">this is note</textarea>
 										</div>
 									</div>
 
@@ -86,7 +86,7 @@
 										<label for="inputPermission" class="col-sm-2 control-label">Permissions</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.permissions}">
+											<span class="form-control" th:text="${entity.permissions}">
 												admin </span>
 										</div>
 									</div>
@@ -94,7 +94,7 @@
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Activated</label>
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.activated}">
+											<span class="form-control" th:text="${entity.activated}">
 												Active </span>
 										</div>
 									</div>
@@ -102,7 +102,7 @@
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Activated At</label>
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.activatedAt}">
+											<span class="form-control" th:text="${entity.activatedAt}">
 												Sekarang </span>
 										</div>
 									</div>
@@ -110,7 +110,7 @@
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Last Login</label>
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.lastLogin}">
+											<span class="form-control" th:text="${entity.lastLogin}">
 												Sekarang </span>
 										</div>
 									</div>
@@ -118,7 +118,7 @@
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Persist Code</label>
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.persistCode}">
+											<span class="form-control" th:text="${entity.persistCode}">
 												Sekarang </span>
 										</div>
 									</div>
@@ -126,7 +126,7 @@
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Reset Password Code</label>
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.resetPasswordCode}">
+											<span class="form-control" th:text="${entity.resetPasswordCode}">
 												Sekarang </span>
 										</div>
 									</div>
@@ -134,7 +134,7 @@
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Created At</label>
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.createdAt}">
+											<span class="form-control" th:text="${entity.createdAt}">
 												Sekarang </span>
 										</div>
 									</div>
@@ -142,7 +142,7 @@
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Updated At</label>
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.updatedAt}">
+											<span class="form-control" th:text="${entity.updatedAt}">
 												Sekarang </span>
 										</div>
 									</div>
@@ -150,7 +150,7 @@
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Deleted At</label>
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${account.deletedAt}">
+											<span class="form-control" th:text="${entity.deletedAt}">
 												Sekarang </span>
 										</div>
 									</div>
@@ -160,7 +160,7 @@
 								<div class="box-footer">
 									<a class="btn btn-default" th:href="@{/account}">Back to table</a> <a
 										class="btn btn-info pull-right"
-										th:href="@{/account/{id}/edit(id=${account.id})}">Edit</a>
+										th:href="@{/account/{id}/edit(id=${entity.id})}">Edit</a>
 								</div>
 								<!-- /.box-footer -->
 							</form>

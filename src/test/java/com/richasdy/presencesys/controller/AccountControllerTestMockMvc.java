@@ -108,7 +108,7 @@ public class AccountControllerTestMockMvc extends AbstractControllerTest {
 		int status = result.getResponse().getStatus();
 
 		// check
-		assertTrue("failure - expected model attribute listAccount", model.containsKey("listAccount"));
+		assertTrue("failure - expected model attribute listAccount", model.containsKey("listEntity"));
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
@@ -226,8 +226,8 @@ public class AccountControllerTestMockMvc extends AbstractControllerTest {
 		int status = result.getResponse().getStatus();
 
 		// check
-		assertTrue("failure - expected model attribute account", model.containsKey("account"));
-		assertTrue("failure - expected model attribute account not null", model.get("account") != null);
+		assertTrue("failure - expected model attribute account", model.containsKey("entity"));
+		assertTrue("failure - expected model attribute account not null", model.get("entity") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
@@ -245,9 +245,9 @@ public class AccountControllerTestMockMvc extends AbstractControllerTest {
 		// action
 		mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
 				.andExpect(model().attributeExists("pageName")).andExpect(model().attributeExists("pageNameDesc"))
-				.andExpect(model().attributeExists("account"))
-				.andExpect(model().attribute("account", hasProperty("email", is(foo.getEmail()))))
-				.andExpect(model().attributeExists("account")).andExpect(view().name("account/show"));
+				.andExpect(model().attributeExists("entity"))
+				.andExpect(model().attribute("entity", hasProperty("email", is(foo.getEmail()))))
+				.andExpect(model().attributeExists("entity")).andExpect(view().name("account/show"));
 
 	}
 
@@ -262,7 +262,7 @@ public class AccountControllerTestMockMvc extends AbstractControllerTest {
 		// proses mock tidak jalan, null pointer di theamleaf.
 		// saat akses account.id padahal account = null
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
-				.andExpect(model().attributeExists("account")).andExpect(model().attribute("account", nullValue()))
+				.andExpect(model().attributeExists("entity")).andExpect(model().attribute("entity", nullValue()))
 				.andReturn();
 
 	}
