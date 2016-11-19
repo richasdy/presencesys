@@ -32,24 +32,22 @@ import com.richasdy.presencesys.service.AccountService;
 @RequestMapping("apiv1/account")
 public class AccountEndpoint {
 
-	// can implement bidingResult here?
-
-	private AccountService accountService;
+	private AccountService service;
 	// private final Log log = LogFactory.getLog(getClass());
 
 	@Autowired
-	public AccountEndpoint(AccountService accountService) {
-		this.accountService = accountService;
+	public AccountEndpoint(AccountService service) {
+		this.service = service;
 	}
 
 	@GetMapping()
 	public ResponseEntity<Iterable<Account>> index() {
 		// log.info("Fetching all Account");
 
-		Iterable<Account> accounts = accountService.findAll();
+		Iterable<Account> iterableEntity = service.findAll();
 
-		if (accounts.iterator().hasNext()) {
-			return new ResponseEntity<Iterable<Account>>(accounts, HttpStatus.OK);
+		if (iterableEntity.iterator().hasNext()) {
+			return new ResponseEntity<Iterable<Account>>(iterableEntity, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Iterable<Account>>(HttpStatus.NO_CONTENT);
 		}
@@ -61,62 +59,32 @@ public class AccountEndpoint {
 
 		// log.info("Fetching Account with id " + id);
 
-		Account account = accountService.findOne(id);
+		Account entity = service.findOne(id);
 
-		if (account == null) {
+		if (entity == null) {
 			// log.info("Account with id " + id + " not found");
 			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
 		} else {
-			return new ResponseEntity<Account>(account, HttpStatus.OK);
+			return new ResponseEntity<Account>(entity, HttpStatus.OK);
 		}
 
 	}
 
 	@PostMapping()
-	public ResponseEntity<Account> save(@Valid @RequestBody Account account) {
+	public ResponseEntity<Account> save(@Valid @RequestBody Account entity) {
 
-		// perlu ditambahkan binding result?
-
-		Account accountValid = accountService.save(account);
+		Account entityValid = service.save(entity);
 		// log.info("A Account with id " + account.getId() + " created");
-		return new ResponseEntity<Account>(accountValid, HttpStatus.CREATED);
+		return new ResponseEntity<Account>(entityValid, HttpStatus.CREATED);
 
 	}
 
-	// untuk mengakomodasi partial update, tanpa validasi wajib
-	// public ResponseEntity<Account> update(@PathVariable int id, @RequestBody
-	// Account newAccount) {
-
 	@PutMapping("/{id}")
-	public ResponseEntity<Account> update(@PathVariable int id, @Valid @RequestBody Account newAccount) {
+	public ResponseEntity<Account> update(@PathVariable int id, @Valid @RequestBody Account newEntity) {
 
-		// kalau pakai binding result, harus di set manual untuk error response
-		// kalau g pakai binding result, error response dibikin oleh validator
+		Account currentEntity = service.findOne(id);
 
-		// VULNURABLE
-		// log.info("Updating Account " + id);
-
-		// ada kemungkinan dihack
-		// merubah data account dengan id = id
-		// tapi updatedAccount.getId() nye berbeda
-		// pakai postman
-		// terutama dalam bentuk ENDPOINT
-
-		// SOLUSI
-		// masukkan id sebagai field wajib
-		// check PathVariable dan field id harus sama, baru proses update
-
-		// DONE IN CONTROLLER
-
-		// VULNURABLE
-		// update data orang lain
-
-		// SOLUSI
-		// pakai session id, sehingga cuma bisa rubah data diri sendiri
-
-		Account currentAccount = accountService.findOne(id);
-
-		if (currentAccount == null) {
+		if (currentEntity == null) {
 
 			// log.info("Account with id " + id + " not found");
 			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
@@ -125,7 +93,7 @@ public class AccountEndpoint {
 
 			// copy changed field into object
 			// get null value field
-			final BeanWrapper src = new BeanWrapperImpl(newAccount);
+			final BeanWrapper src = new BeanWrapperImpl(newEntity);
 			java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
 			Set<String> emptyNames = new HashSet<String>();
 			for (java.beans.PropertyDescriptor pd : pds) {
@@ -136,12 +104,12 @@ public class AccountEndpoint {
 			String[] result = new String[emptyNames.size()];
 
 			// BeanUtils.copyProperties with ignore field
-			BeanUtils.copyProperties(newAccount, currentAccount, emptyNames.toArray(result));
+			BeanUtils.copyProperties(newEntity, currentEntity, emptyNames.toArray(result));
 
 			// update data
-			Account account = accountService.update(currentAccount);
+			Account entity = service.update(currentEntity);
 
-			return new ResponseEntity<Account>(account, HttpStatus.OK);
+			return new ResponseEntity<Account>(entity, HttpStatus.OK);
 
 		}
 
@@ -152,14 +120,14 @@ public class AccountEndpoint {
 
 		// log.info("Fetching & Deleting User with id " + id);
 
-		Account account = accountService.findOne(id);
+		Account entity = service.findOne(id);
 
-		if (account == null) {
+		if (entity == null) {
 			// log.info("Unable to delete. Account with id " + id + " not
 			// found");
 			return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
 		} else {
-			accountService.delete(id);
+			service.delete(id);
 			return new ResponseEntity<Account>(HttpStatus.GONE);
 		}
 
