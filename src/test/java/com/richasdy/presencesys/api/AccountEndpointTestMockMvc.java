@@ -99,7 +99,7 @@ public class AccountEndpointTestMockMvc extends AbstractControllerTest {
 		assertTrue("failure - expected HTTP response body to have value", content.trim().length() > 0);
 
 		Account confirm = super.mapFromJson(content, Account.class);
-		assertEquals("failure - expected same email ", foo.getEmail(), confirm.getEmail());
+		assertEquals("failure - expected same value ", foo.getEmail(), confirm.getEmail());
 		
 	}
 
@@ -152,7 +152,7 @@ public class AccountEndpointTestMockMvc extends AbstractControllerTest {
 
 		assertThat("failure - expected not null", confirm, notNullValue());
 		assertThat("failure - expected not null id", confirm.getId(), notNullValue());
-		assertEquals("failure - expected same email", bar.getEmail(), confirm.getEmail());
+		assertEquals("failure - expected same value", bar.getEmail(), confirm.getEmail());
 
 	}
 
@@ -163,10 +163,10 @@ public class AccountEndpointTestMockMvc extends AbstractControllerTest {
 		String uri = "/apiv1/account/{id}";
 		int id = foo.getId();
 
-		Account foo = service.findOne(id);
-		foo.setEmail("adminUpdate@email.com");
+		Account bar = service.findOne(id);
+		bar.setEmail("adminUpdate@email.com");
 
-		String inputJson = super.mapToJson(foo);
+		String inputJson = super.mapToJson(bar);
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put(uri, id).contentType(MediaType.APPLICATION_JSON)
@@ -182,8 +182,8 @@ public class AccountEndpointTestMockMvc extends AbstractControllerTest {
 		Account confirm = super.mapFromJson(content, Account.class);
 
 		assertThat("failure - expected not null", confirm, notNullValue());
-		assertEquals("failure - expected account.id unchanged", foo.getId(), confirm.getId());
-		assertEquals("failure - expected updated account email", foo.getEmail(), confirm.getEmail());
+		assertEquals("failure - expected id unchanged", bar.getId(), confirm.getId());
+		assertEquals("failure - expected updated field value", bar.getEmail(), confirm.getEmail());
 
 	}
 
