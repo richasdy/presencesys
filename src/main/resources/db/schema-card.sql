@@ -5,6 +5,7 @@ CREATE TABLE `Card` (
   `card_number` varchar(255) NOT NULL,
   `activated` tinyint(1) DEFAULT '0',
   `note` text,
+  `activated_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL

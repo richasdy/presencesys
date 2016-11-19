@@ -33,6 +33,9 @@ public class Card implements Serializable{
 	private Boolean activated;
 
 	private String note;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date activatedAt;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
@@ -48,13 +51,14 @@ public class Card implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Card(int id, String cardNumber, Boolean activated, String note, Date createdAt, Date updatedAt,
+	public Card(int id, String cardNumber, Boolean activated, String note, Date activatedAt, Date createdAt, Date updatedAt,
 			Date deletedAt) {
 		super();
 		this.id = id;
 		this.cardNumber = cardNumber;
 		this.activated = activated;
 		this.note = note;
+		this.activatedAt = activatedAt;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.deletedAt = deletedAt;
@@ -91,6 +95,14 @@ public class Card implements Serializable{
 	public void setNote(String note) {
 		this.note = note;
 	}
+	
+	public Date getActivatedAt() {
+		return activatedAt;
+	}
+
+	public void setActivatedAt(Date activatedAt) {
+		this.activatedAt = activatedAt;
+	}
 
 	public Date getCreatedAt() {
 		return createdAt;
@@ -119,7 +131,7 @@ public class Card implements Serializable{
 	@Override
 	public String toString() {
 		return this.getClass().getName() + " [ " + id + ", " + cardNumber + ", " + activated + ", " + note + ", "
-				+ createdAt + ", " + updatedAt + ", " + deletedAt + " ]";
+				+ activatedAt + ", "+ createdAt + ", " + updatedAt + ", " + deletedAt + " ]";
 	}
 
 }
