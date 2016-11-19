@@ -7,8 +7,8 @@ import com.richasdy.presencesys.domain.Card;
 @Service
 public interface CardService {
 	
-	Card save(Card card);
-	Card update(Card card);
+	Card save(Card entity);
+	Card update(Card entity);
 	Card findOne(int id);
 	Iterable<Card> findAll();
 	long count();
