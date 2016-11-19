@@ -64,6 +64,8 @@ public class AccountServiceTest extends AbstractTest{
 
 	@Test
 	public void save() {
+		
+		// error jika di test semua, jika di test sendiri all pass
 
 		// prepare
 		Account bar = new Account();
