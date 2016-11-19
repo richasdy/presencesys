@@ -2,6 +2,7 @@ package com.richasdy.presencesys.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,9 +16,10 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Card {
+public class Card implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +27,7 @@ public class Card {
 	private int id;
 
 	@Column(unique = true, nullable = false)
+	@NotEmpty
 	private String cardNumber;
 
 	private Boolean activated;
