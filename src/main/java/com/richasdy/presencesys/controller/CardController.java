@@ -38,7 +38,7 @@ public class CardController {
 		Iterable<Card> listEntity = service.findAll();
 
 		model.addAttribute("listEntity", listEntity);
-		model.addAttribute("pageName", "Card Table");
+		model.addAttribute("pageName", "Tabel Kartu");
 		model.addAttribute("pageNameDesc", "Daftar Kartu Akses System");
 
 		return "card/index";

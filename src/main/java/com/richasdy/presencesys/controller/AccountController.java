@@ -38,7 +38,7 @@ public class AccountController {
 		Iterable<Account> listEntity = service.findAll();
 
 		model.addAttribute("listEntity", listEntity);
-		model.addAttribute("pageName", "Account Table");
+		model.addAttribute("pageName", "Tabel Account");
 		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
 
 		return "account/index";
