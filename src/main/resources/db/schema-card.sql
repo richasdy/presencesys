@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS `Card`;
 CREATE TABLE `Card` (
   `id` int(11) UNSIGNED NOT NULL,
   `card_number` varchar(255) NOT NULL,
-  `status` tinyint(1) DEFAULT '0',
+  `activated` tinyint(1) DEFAULT '0',
   `note` text,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
