@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS `Account`;
+
 CREATE TABLE `Account` (
-  `id` int(11) NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -27,5 +28,5 @@ ALTER TABLE `Account`
 
   
 ALTER TABLE `Account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
