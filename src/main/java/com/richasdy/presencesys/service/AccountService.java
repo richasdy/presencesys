@@ -6,8 +6,8 @@ import com.richasdy.presencesys.domain.Account;
 @Service
 public interface AccountService {
 	
-	Account save(Account account);
-	Account update(Account account);
+	Account save(Account entity);
+	Account update(Account entity);
 	Account findOne(int id);
 	Iterable<Account> findAll();
 	long count();

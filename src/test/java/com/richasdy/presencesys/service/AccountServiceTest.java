@@ -84,9 +84,9 @@ public class AccountServiceTest extends AbstractTest{
 		// accountService.delete(bar.getId());
 
 		// check
-		assertTrue(confirm != null);
-		assertEquals(countAfter, countBefore + 1);
-		assertEquals(bar.getEmail(), confirm.getEmail());
+		assertTrue("failure - expected not null",confirm != null);
+		assertEquals("failure - expected right count", countAfter, countBefore + 1);
+		assertEquals("failure - expected same value", bar.getEmail(), confirm.getEmail());
 
 	}
 
@@ -134,7 +134,7 @@ public class AccountServiceTest extends AbstractTest{
 
 		// check
 		assertTrue("failure - expected not null", confirm != null);
-		assertEquals(foo.getEmail(), confirm.getEmail());
+		assertEquals("failure - expected same value", foo.getEmail(), confirm.getEmail());
 		assertThat("failure - expected has email updated", confirm, hasProperty("email", is(foo.getEmail())));
 
 	}

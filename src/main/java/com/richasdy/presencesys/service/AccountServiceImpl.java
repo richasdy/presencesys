@@ -13,57 +13,57 @@ import com.richasdy.presencesys.repository.AccountRepository;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-	AccountRepository accountRepository;
+	AccountRepository repository;
 	
 	@Autowired
-	public AccountServiceImpl(AccountRepository accountRepository){
-		this.accountRepository = accountRepository;
+	public AccountServiceImpl(AccountRepository repository){
+		this.repository = repository;
 	}
 
 	@Override
-	public Account save(Account account) {
-		account.setCreatedAt(new Date());
-		return accountRepository.save(account);
+	public Account save(Account entity) {
+		entity.setCreatedAt(new Date());
+		return repository.save(entity);
 	}
 	
 	@Override
-	public Account update(Account account) {
-		account.setUpdatedAt(new Date());
-		return accountRepository.save(account);
+	public Account update(Account entity) {
+		entity.setUpdatedAt(new Date());
+		return repository.save(entity);
 	}
 
 	@Override
 	public Account findOne(int id) {
-		return accountRepository.findOne(id);
+		return repository.findOne(id);
 	}
 
 	@Override
 	public Iterable<Account> findAll() {
-		return accountRepository.findAll();
+		return repository.findAll();
 	}
 
 	@Override
 	public long count() {
-		return accountRepository.count();
+		return repository.count();
 	}
 
 	@Override
 	public void delete(int id) {
-		accountRepository.delete(id);
+		repository.delete(id);
 	}
 	
 	@Override
 	public Account deleteSoft(int id) {
-		Account account = accountRepository.findOne(id);
-		account.setDeletedAt(new Date());
-		return accountRepository.save(account);
+		Account entity = repository.findOne(id);
+		entity.setDeletedAt(new Date());
+		return repository.save(entity);
 	}
 	
 	@Override
 	public Account login(int id) {
-		Account account = accountRepository.findOne(id);
-		account.setLastLogin(new Date());
-		return accountRepository.save(account);
+		Account entity = repository.findOne(id);
+		entity.setLastLogin(new Date());
+		return repository.save(entity);
 	}
 
 }
