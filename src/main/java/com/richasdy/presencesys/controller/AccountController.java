@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.richasdy.presencesys.domain.Account;
 import com.richasdy.presencesys.service.AccountService;
@@ -57,19 +59,18 @@ public class AccountController {
 
 	@PostMapping()
 	public String save(@Valid Account entity, BindingResult result) {
-		
+
 		// debug
 		// System.out.println("ganteng");
 		// System.out.println(result.toString());
 		// System.out.println(entity.toString());
 
 		if (result.hasErrors()) {
-			
+
 			// has error
 			return "account/create";
-			
+
 		} else {
-			
 
 			// check activated untuk assign activatedAt
 			// entity.getActivated() == true/false --> saat real
@@ -77,7 +78,7 @@ public class AccountController {
 			// karena nilainya null, bukan hanya true/false
 			if (entity.getActivated() == null || entity.getActivated()) {
 				entity.setActivatedAt(new Date());
-				
+
 			}
 
 			Account confirm = service.save(entity);
@@ -118,7 +119,7 @@ public class AccountController {
 	@PostMapping("/{id}/update")
 	public String update(@PathVariable int id, @Valid Account updatedEntity, BindingResult result) {
 
-		if (result.hasErrors() || id!=updatedEntity.getId()) {
+		if (result.hasErrors() || id != updatedEntity.getId()) {
 
 			// VULNURABLE
 			// ada kemungkinan dihack
@@ -130,12 +131,12 @@ public class AccountController {
 			// masukkan id sebagai hidden input
 			// check PathVariable dan hidden input id harus sama, baru proses
 			// update
-			
+
 			// DONE
-			
+
 			// VULNURABLE
 			// manual edit id target post dan manual edit id hidden input id
-			
+
 			// SOLUSI
 			// id ambil dari session
 
@@ -208,6 +209,19 @@ public class AccountController {
 
 		return "redirect:/account";
 
+	}
+
+	@GetMapping("/search")
+	public String search(@RequestParam String searchTerm, Model model) {
+
+		Iterable<Account> listEntity = service.findAll();
+
+		model.addAttribute("searchTerm", searchTerm);
+		model.addAttribute("listEntity", listEntity);
+		model.addAttribute("pageName", "Tabel Account Pencarian : " + searchTerm);
+		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
+
+		return "account/index";
 	}
 
 }
