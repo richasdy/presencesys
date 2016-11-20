@@ -14,4 +14,6 @@ public interface AccountService {
 	void delete(int id);
 	Account deleteSoft(int id);
 	Account login(int id);
+	Iterable<Account> search(String searchTerm);
+	
 }

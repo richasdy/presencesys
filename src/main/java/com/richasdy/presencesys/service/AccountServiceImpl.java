@@ -14,9 +14,9 @@ import com.richasdy.presencesys.repository.AccountRepository;
 public class AccountServiceImpl implements AccountService {
 
 	AccountRepository repository;
-	
+
 	@Autowired
-	public AccountServiceImpl(AccountRepository repository){
+	public AccountServiceImpl(AccountRepository repository) {
 		this.repository = repository;
 	}
 
@@ -25,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
 		entity.setCreatedAt(new Date());
 		return repository.save(entity);
 	}
-	
+
 	@Override
 	public Account update(Account entity) {
 		entity.setUpdatedAt(new Date());
@@ -51,19 +51,27 @@ public class AccountServiceImpl implements AccountService {
 	public void delete(int id) {
 		repository.delete(id);
 	}
-	
+
 	@Override
 	public Account deleteSoft(int id) {
 		Account entity = repository.findOne(id);
 		entity.setDeletedAt(new Date());
 		return repository.save(entity);
 	}
-	
+
 	@Override
 	public Account login(int id) {
 		Account entity = repository.findOne(id);
 		entity.setLastLogin(new Date());
 		return repository.save(entity);
+	}
+
+	@Override
+	public Iterable<Account> search(String searchTerm) {
+		// return repository.findDistinctAccountByNoteOrEmailOrId(searchTerm,
+		// searchTerm, searchTerm);
+		return repository.findDistinctAccountByIdOrEmailOrPhoneOrUsernameOrNoteOrPermissions(
+				Integer.parseInt(searchTerm), searchTerm, searchTerm, searchTerm, searchTerm, searchTerm);
 	}
 
 }
