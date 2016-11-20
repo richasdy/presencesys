@@ -132,5 +132,20 @@ public class AccountEndpoint {
 		}
 
 	}
+	
+	@GetMapping("/search/{searchTerm}")
+	public ResponseEntity<Iterable<Account>> search(@PathVariable String searchTerm) {
+
+		// log.info("Fetching Account with id " + id);
+
+		Iterable<Account> iterableEntity = service.search(searchTerm);
+
+		if (iterableEntity.iterator().hasNext()) {
+			return new ResponseEntity<Iterable<Account>>(iterableEntity, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Iterable<Account>>(HttpStatus.NO_CONTENT);
+		}
+
+	}
 
 }

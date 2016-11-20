@@ -100,7 +100,7 @@ public class AccountEndpointTest extends AbstractControllerTest {
 
 		Account confirm = super.mapFromJson(content, Account.class);
 		assertEquals("failure - expected same value ", foo.getEmail(), confirm.getEmail());
-		
+
 	}
 
 	@Test
@@ -207,6 +207,26 @@ public class AccountEndpointTest extends AbstractControllerTest {
 		Account confirm = service.findOne(id);
 
 		assertThat("failure - expected null", confirm, nullValue());
+
+	}
+
+	@Test
+	public void search() throws Exception {
+
+		// prepare
+		String uri = "/apiv1/account/search/true";
+
+		// action
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON))
+				// .andDo(print())
+				.andReturn();
+
+		String content = result.getResponse().getContentAsString();
+		int status = result.getResponse().getStatus();
+
+		// check
+		assertEquals("failure - expected HTTP Status 200", status, HttpStatus.OK.value());
+		assertTrue("failure - expected HTTP response body have value", content.trim().length() > 0);
 
 	}
 

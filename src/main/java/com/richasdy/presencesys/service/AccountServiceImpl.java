@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.richasdy.presencesys.domain.Account;
 import com.richasdy.presencesys.repository.AccountRepository;
+import com.richasdy.presencesys.util.Util;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -86,17 +87,33 @@ public class AccountServiceImpl implements AccountService {
 		} else if (searchTerm.equals("false") || searchTerm.equals("true")) {
 
 			// if boolean
-			return repository.findDistinctAccountByActivated(Boolean.getBoolean(searchTerm));
+			return repository.findDistinctAccountByActivated(Boolean.parseBoolean(searchTerm));
 
-		} else if (isValidDate(searchTerm)) {
+		} else if (Util.isValidDate(searchTerm)) {
 
-			// masih belum bisa query tanggal
 			// if date
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			Date searchTermDate = stringToDate(searchTerm);
 
-			return repository.findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(
-					searchTermDate, searchTermDate, searchTermDate, searchTermDate, searchTermDate);
+			Date firstTime = Util.stringToDate(searchTerm);
+			Date lastTime = Util.stringToDate(searchTerm);
+
+			System.out.println("@serviceSearchDate : " + firstTime);
+			System.out.println("@serviceSearchDate : " + lastTime);
+
+			firstTime.setHours(00);
+			firstTime.setMinutes(00);
+			firstTime.setSeconds(00);
+
+			lastTime.setHours(23);
+			lastTime.setMinutes(59);
+			lastTime.setSeconds(59);
+
+			return repository.findDistinctAccountByCreatedAtBetween(firstTime, lastTime);
+
+			// return
+			// repository.findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(
+			// searchTermDate, searchTermDate, searchTermDate, searchTermDate,
+			// searchTermDate);
 
 		} else {
 
@@ -115,31 +132,6 @@ public class AccountServiceImpl implements AccountService {
 		// return
 		// repository.findDistinctAccountById(Integer.decode(searchTerm));
 		// }
-	}
-
-	private Boolean isValidDate(String date) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		dateFormat.setLenient(false);
-		try {
-			dateFormat.parse(date.trim());
-		} catch (ParseException pe) {
-			return false;
-		}
-		return true;
-	}
-
-	private Date stringToDate(String date) {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date output = null;
-
-		try {
-			output = df.parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		return output;
-
 	}
 
 }

@@ -26,7 +26,12 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
 	Iterable<Account> findDistinctAccountByActivated(boolean activated);
 
 	// find by Date
-	Iterable<Account> findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(Date activatedAt,
-			Date lastLogin, Date createdAt, Date updatedAt, Date deletedAt);
+
+	Iterable<Account> findDistinctAccountByCreatedAtBetween(Date start, Date end);
+
+	// Iterable<Account>
+	// findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(Date
+	// activatedAt,
+	// Date lastLogin, Date createdAt, Date updatedAt, Date deletedAt);
 
 }

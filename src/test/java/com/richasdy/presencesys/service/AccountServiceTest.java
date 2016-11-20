@@ -6,6 +6,7 @@ import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInA
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,7 @@ import com.richasdy.presencesys.repository.AccountRepository;
 import com.richasdy.presencesys.service.AccountService;
 
 @Transactional
-public class AccountServiceTest extends AbstractTest{
+public class AccountServiceTest extends AbstractTest {
 
 	// this is integration test
 	// service dont have validation, controller have
@@ -64,7 +65,7 @@ public class AccountServiceTest extends AbstractTest{
 
 	@Test
 	public void save() {
-		
+
 		// error jika di test semua, jika di test sendiri all pass
 
 		// prepare
@@ -86,7 +87,7 @@ public class AccountServiceTest extends AbstractTest{
 		// accountService.delete(bar.getId());
 
 		// check
-		assertTrue("failure - expected not null",confirm != null);
+		assertTrue("failure - expected not null", confirm != null);
 		assertEquals("failure - expected right count", countAfter, countBefore + 1);
 		assertEquals("failure - expected same value", bar.getEmail(), confirm.getEmail());
 
@@ -253,6 +254,77 @@ public class AccountServiceTest extends AbstractTest{
 
 		// check
 		assertTrue("failure - expected not null", confirm.getDeletedAt() != null);
+
+	}
+
+	@Test
+	public void searchEmptyString() {
+		// prepare
+
+		// action
+		Iterable<Account> iterableConfirm = service.search("");
+		List listConfirm = Lists.newArrayList(iterableConfirm);
+
+		// System.out.println("@searchEmptyString : " + iterableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", iterableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchBoolean() {
+		// prepare
+
+		// action
+		Iterable<Account> iterableConfirm = service.search("false");
+		List listConfirm = Lists.newArrayList(iterableConfirm);
+
+		// System.out.println("@searchBoolean : " + iterableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", iterableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchDate() {
+		// prepare
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+		String nowString = dateFormat.format(now);
+
+		// System.out.println("@searchDateTest : " + nowString);
+
+		// action
+		Iterable<Account> iterableConfirm = service.search(nowString);
+		List listConfirm = Lists.newArrayList(iterableConfirm);
+
+		// System.out.println("@searchDateTest : " + iterableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", iterableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchString() {
+
+		// prepare
+
+		// action
+		Iterable<Account> iterableConfirm = service.search(foo.getEmail());
+		List listConfirm = Lists.newArrayList(iterableConfirm);
+
+		// System.out.println("@searchString : " + iterableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", iterableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
 
 	}
 
