@@ -1,6 +1,13 @@
 package com.richasdy.presencesys.service;
 
+import static org.mockito.Matchers.anyList;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.sound.midi.Soundbank;
 
@@ -9,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import com.richasdy.presencesys.domain.Account;
 import com.richasdy.presencesys.repository.AccountRepository;
+
+import org.apache.commons.lang3.StringUtils;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -68,10 +77,69 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Iterable<Account> search(String searchTerm) {
-		// return repository.findDistinctAccountByNoteOrEmailOrId(searchTerm,
-		// searchTerm, searchTerm);
-		return repository.findDistinctAccountByIdOrEmailOrPhoneOrUsernameOrNoteOrPermissions(
-				Integer.parseInt(searchTerm), searchTerm, searchTerm, searchTerm, searchTerm, searchTerm);
+
+		if (searchTerm == "") {
+
+			// if null
+			return repository.findAll();
+
+		} else if (searchTerm.equals("false") || searchTerm.equals("true")) {
+
+			// if boolean
+			return repository.findDistinctAccountByActivated(Boolean.getBoolean(searchTerm));
+
+		} else if (isValidDate(searchTerm)) {
+
+			// masih belum bisa query tanggal
+			// if date
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			Date searchTermDate = stringToDate(searchTerm);
+
+			return repository.findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(
+					searchTermDate, searchTermDate, searchTermDate, searchTermDate, searchTermDate);
+
+		} else {
+
+			// if string
+			return repository
+					.findDistinctAccountByEmailOrPhoneOrUsernameOrNoteOrPermissionsOrActivationCodeOrPersistCodeOrResetPasswordCode(
+							searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm,
+							searchTerm);
+
+		}
+
+		// tidak dipakai karena beririsan dengan phone
+		// bisa diconvert jadi integer
+		// if numeric
+		// else if (StringUtils.isNumeric(searchTerm)) {
+		// return
+		// repository.findDistinctAccountById(Integer.decode(searchTerm));
+		// }
+	}
+
+	private Boolean isValidDate(String date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dateFormat.setLenient(false);
+		try {
+			dateFormat.parse(date.trim());
+		} catch (ParseException pe) {
+			return false;
+		}
+		return true;
+	}
+
+	private Date stringToDate(String date) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date output = null;
+
+		try {
+			output = df.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return output;
+
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.richasdy.presencesys.repository;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -13,24 +14,19 @@ import com.richasdy.presencesys.domain.Account;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Integer> {
 
-	Iterable<Account> findDistinctAccountByIdOrEmailOrPhoneOrUsernameOrNoteOrPermissions(int id, String email,
-			String phone, String username, String note, String permissions);
-	// Iterable<Account> findDistinctAccountByNoteOrEmailOrId(String note,
-	// String email, int id);
-	// id : int
-	// email : String
-	// phone : String
-	// username : String
-	// password : String
-	// note : String
-	// permissions : String
-	// activated : Boolean
-	// activationCode : String
-	// activatedAt : Date
-	// lastLogin : Date
-	// persistCode : String
-	// resetPasswordCode : String
-	// createdAt : Date
-	// updatedAt : Date
-	// deletedAt : Date
+	// find by string type
+	Iterable<Account> findDistinctAccountByEmailOrPhoneOrUsernameOrNoteOrPermissionsOrActivationCodeOrPersistCodeOrResetPasswordCode(
+			String email, String phone, String username, String note, String permissions, String activationCode,
+			String persistCode, String resetPasswordCode);
+
+	// find by integer
+	Iterable<Account> findDistinctAccountById(int id);
+
+	// find by boolean
+	Iterable<Account> findDistinctAccountByActivated(boolean activated);
+
+	// find by Date
+	Iterable<Account> findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(Date activatedAt,
+			Date lastLogin, Date createdAt, Date updatedAt, Date deletedAt);
+
 }
