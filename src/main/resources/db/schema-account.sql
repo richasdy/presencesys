@@ -14,7 +14,8 @@ CREATE TABLE `Account` (
   `last_login` datetime DEFAULT NULL,
   `persist_code` varchar(255) DEFAULT NULL,
   `reset_password_code` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
