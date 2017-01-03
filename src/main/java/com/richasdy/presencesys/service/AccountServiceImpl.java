@@ -1,7 +1,5 @@
 package com.richasdy.presencesys.service;
 
-import static org.mockito.Matchers.anyList;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
