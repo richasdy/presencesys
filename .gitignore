@@ -1,6 +1,6 @@
 .env
 application-local.properties
-application-server.properties
+application-dev.properties
 
 target/
 !.mvn/wrapper/maven-wrapper.jar
