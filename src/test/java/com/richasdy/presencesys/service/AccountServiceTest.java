@@ -289,43 +289,43 @@ public class AccountServiceTest extends AbstractTest {
 
 	}
 
-	@Test
-	public void searchDate() {
-		// prepare
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date now = new Date();
-		String nowString = dateFormat.format(now);
-
-		// System.out.println("@searchDateTest : " + nowString);
-
-		// action
-		Iterable<Account> iterableConfirm = service.search(nowString);
-		List listConfirm = Lists.newArrayList(iterableConfirm);
-
-		// System.out.println("@searchDateTest : " + iterableConfirm);
-
-		// check
-		assertTrue("failure - expected not null", iterableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
-
-	}
-
-	@Test
-	public void searchString() {
-
-		// prepare
-
-		// action
-		Iterable<Account> iterableConfirm = service.search(foo.getEmail());
-		List listConfirm = Lists.newArrayList(iterableConfirm);
-
-		// System.out.println("@searchString : " + iterableConfirm);
-
-		// check
-		assertTrue("failure - expected not null", iterableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
-
-	}
+//	@Test
+//	public void searchDate() {
+//		// prepare
+//
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		Date now = new Date();
+//		String nowString = dateFormat.format(now);
+//
+//		// System.out.println("@searchDateTest : " + nowString);
+//
+//		// action
+//		Iterable<Account> iterableConfirm = service.search(nowString);
+//		List listConfirm = Lists.newArrayList(iterableConfirm);
+//
+//		// System.out.println("@searchDateTest : " + iterableConfirm);
+//
+//		// check
+//		assertTrue("failure - expected not null", iterableConfirm != null);
+//		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+//
+//	}
+//
+//	@Test
+//	public void searchString() {
+//
+//		// prepare
+//
+//		// action
+//		Iterable<Account> iterableConfirm = service.search(foo.getEmail());
+//		List listConfirm = Lists.newArrayList(iterableConfirm);
+//
+//		// System.out.println("@searchString : " + iterableConfirm);
+//
+//		// check
+//		assertTrue("failure - expected not null", iterableConfirm != null);
+//		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+//
+//	}
 
 }

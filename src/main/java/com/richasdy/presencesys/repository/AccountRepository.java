@@ -22,12 +22,34 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
 	// find by integer
 	Iterable<Account> findDistinctAccountById(int id);
 
+	Iterable<Account> findDistinctAccountByEmail(String email);
+
+	Iterable<Account> findDistinctAccountByPhone(String phone);
+
+	Iterable<Account> findDistinctAccountByUsername(String username);
+
+	Iterable<Account> findDistinctAccountByNote(String note);
+
+	Iterable<Account> findDistinctAccountByPermissions(String permissions);
+
+	Iterable<Account> findDistinctAccountByActivated(Boolean activated);
+
+	// kurang between, lessthan, greaterthan
+
 	// find by boolean
-	Iterable<Account> findDistinctAccountByActivated(boolean activated);
+	// Iterable<Account> findDistinctAccountByActivated(boolean activated);
 
 	// find by Date
 
+	Iterable<Account> findDistinctAccountByActivatedAtBetween(Date start, Date end);
+
 	Iterable<Account> findDistinctAccountByCreatedAtBetween(Date start, Date end);
+
+	Iterable<Account> findDistinctAccountByLastLoginBetween(Date start, Date end);
+
+	Iterable<Account> findDistinctAccountByUpdatedAtBetween(Date start, Date end);
+
+	Iterable<Account> findDistinctAccountByDeletedAtBetween(Date start, Date end);
 
 	// Iterable<Account>
 	// findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(Date

@@ -212,13 +212,13 @@ public class AccountController {
 	}
 
 	@GetMapping("/search")
-	public String search(@RequestParam String searchTerm, Model model) {
+	public String search(@RequestParam String q, Model model) {
 
-		Iterable<Account> listEntity = service.search(searchTerm);
+		Iterable<Account> listEntity = service.search(q);
 
-		model.addAttribute("searchTerm", searchTerm);
+		model.addAttribute("q", q);
 		model.addAttribute("listEntity", listEntity);
-		model.addAttribute("pageName", "Tabel Account Pencarian : " + searchTerm);
+		model.addAttribute("pageName", "Tabel Account Pencarian : " + q);
 		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
 
 		return "account/index";
