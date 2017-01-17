@@ -77,6 +77,58 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Iterable<Account> search(String searchTerm) {
 
+		if (searchTerm == "") {
+			// if null
+			return repository.findAll();
+		} else if (searchTerm.equals("false") || searchTerm.equals("true")) {
+			// if boolean
+			return repository.findDistinctAccountByActivated(Boolean.parseBoolean(searchTerm));
+		} else if (Util.isValidDate(searchTerm)) {
+
+			// if date
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date firstTime = Util.stringToDate(searchTerm);
+			Date lastTime = Util.stringToDate(searchTerm);
+
+			System.out.println("@serviceSearchDate : " + firstTime);
+			System.out.println("@serviceSearchDate : " + lastTime);
+
+			firstTime.setHours(00);
+			firstTime.setMinutes(00);
+			firstTime.setSeconds(00);
+
+			lastTime.setHours(23);
+			lastTime.setMinutes(59);
+			lastTime.setSeconds(59);
+
+			return repository.findDistinctAccountByCreatedAtBetween(firstTime, lastTime);
+			// return
+			// repository.findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(searchTermDate,
+			// searchTermDate, searchTermDate, searchTermDate, searchTermDate);
+
+		} else {
+
+			// if string
+			return repository
+					.findDistinctAccountByEmailOrPhoneOrUsernameOrNoteOrPermissionsOrActivationCodeOrPersistCodeOrResetPasswordCode(
+							searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm,
+							searchTerm);
+
+		}
+
+		// tidak dipakai karena beririsan dengan phone
+		// bisa diconvert jadi integer
+		// if numeric
+		// else if (StringUtils.isNumeric(searchTerm)) {
+		// return
+		// repository.findDistinctAccountById(Integer.decode(searchTerm));
+		// }
+	}
+
+	@Override
+	public Iterable<Account> searchBy(String searchTerm) {
+
 		Iterable<Account> retVal = null;
 
 		if (searchTerm == null || searchTerm.isEmpty()) {
@@ -92,28 +144,29 @@ public class AccountServiceImpl implements AccountService {
 			// java 7 above
 			switch (searchSplit[0]) {
 			case "id":
+//				System.out.println("@searchby id");
 				retVal = repository.findDistinctAccountById(Integer.parseInt(searchSplit[1]));
 				break;
 
 			case "email":
 
-				retVal = repository.findDistinctAccountByEmail(searchSplit[1]);
+				retVal = repository.findDistinctAccountByEmailContaining(searchSplit[1]);
 				break;
 
 			case "phone":
-				retVal = repository.findDistinctAccountByPhone(searchSplit[1]);
+				retVal = repository.findDistinctAccountByPhoneContaining(searchSplit[1]);
 				break;
 
 			case "username":
-				retVal = repository.findDistinctAccountByUsername(searchSplit[1]);
+				retVal = repository.findDistinctAccountByUsernameContaining(searchSplit[1]);
 				break;
 
 			case "note":
-				retVal = repository.findDistinctAccountByNote(searchSplit[1]);
+				retVal = repository.findDistinctAccountByNoteContaining(searchSplit[1]);
 				break;
 
 			case "permissions":
-				retVal = repository.findDistinctAccountByPermissions(searchSplit[1]);
+				retVal = repository.findDistinctAccountByPermissionsContaining(searchSplit[1]);
 				break;
 
 			case "activated":
@@ -121,6 +174,8 @@ public class AccountServiceImpl implements AccountService {
 				break;
 
 			case "activatedat":
+				
+				System.out.println("@searchby activateat");
 
 				if (Util.isValidDate(searchSplit[1])) {
 					Date start = Util.stringToDate(searchSplit[1]);
@@ -193,68 +248,8 @@ public class AccountServiceImpl implements AccountService {
 
 			}
 
-			// if (searchTerm == "") {
-			//
-			// // if null
-			// return repository.findAll();
-			//
-			// } else if (searchTerm.equals("false") ||
-			// searchTerm.equals("true")) {
-			//
-			// // if boolean
-			// return
-			// repository.findDistinctAccountByActivated(Boolean.parseBoolean(searchTerm));
-			//
-			// } else if (Util.isValidDate(searchTerm)) {
-			//
-			// // if date
-			// DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			//
-			// Date firstTime = Util.stringToDate(searchTerm);
-			// Date lastTime = Util.stringToDate(searchTerm);
-			//
-			// System.out.println("@serviceSearchDate : " + firstTime);
-			// System.out.println("@serviceSearchDate : " + lastTime);
-			//
-			// firstTime.setHours(00);
-			// firstTime.setMinutes(00);
-			// firstTime.setSeconds(00);
-			//
-			// lastTime.setHours(23);
-			// lastTime.setMinutes(59);
-			// lastTime.setSeconds(59);
-			//
-			// return
-			// repository.findDistinctAccountByCreatedAtBetween(firstTime,
-			// lastTime);
-			//
-			// // return
-			// //
-			// repository.findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(
-			// // searchTermDate, searchTermDate, searchTermDate,
-			// searchTermDate,
-			// // searchTermDate);
-			//
-			// } else {
-			//
-			// // if string
-			// return repository
-			// .findDistinctAccountByEmailOrPhoneOrUsernameOrNoteOrPermissionsOrActivationCodeOrPersistCodeOrResetPasswordCode(
-			// searchTerm, searchTerm, searchTerm, searchTerm, searchTerm,
-			// searchTerm, searchTerm,
-			// searchTerm);
-			//
-			// }
-
-			// tidak dipakai karena beririsan dengan phone
-			// bisa diconvert jadi integer
-			// if numeric
-			// else if (StringUtils.isNumeric(searchTerm)) {
-			// return
-			// repository.findDistinctAccountById(Integer.decode(searchTerm));
-			// }
 		}
-		
+
 		return retVal;
 	}
 }

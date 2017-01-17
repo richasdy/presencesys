@@ -14,33 +14,22 @@ import com.richasdy.presencesys.domain.Account;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Integer> {
 
+	// NOTE :
+	// untuk int, date, kurang between, lessthan, greaterthan
+
 	// find by string type
+	// sementara nanti di dihapus
 	Iterable<Account> findDistinctAccountByEmailOrPhoneOrUsernameOrNoteOrPermissionsOrActivationCodeOrPersistCodeOrResetPasswordCode(
 			String email, String phone, String username, String note, String permissions, String activationCode,
 			String persistCode, String resetPasswordCode);
 
-	// find by integer
+	// integer Equal
 	Iterable<Account> findDistinctAccountById(int id);
 
-	Iterable<Account> findDistinctAccountByEmail(String email);
-
-	Iterable<Account> findDistinctAccountByPhone(String phone);
-
-	Iterable<Account> findDistinctAccountByUsername(String username);
-
-	Iterable<Account> findDistinctAccountByNote(String note);
-
-	Iterable<Account> findDistinctAccountByPermissions(String permissions);
-
+	// Boolean equal
 	Iterable<Account> findDistinctAccountByActivated(Boolean activated);
 
-	// kurang between, lessthan, greaterthan
-
-	// find by boolean
-	// Iterable<Account> findDistinctAccountByActivated(boolean activated);
-
-	// find by Date
-
+	// Date
 	Iterable<Account> findDistinctAccountByActivatedAtBetween(Date start, Date end);
 
 	Iterable<Account> findDistinctAccountByCreatedAtBetween(Date start, Date end);
@@ -51,9 +40,26 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
 
 	Iterable<Account> findDistinctAccountByDeletedAtBetween(Date start, Date end);
 
-	// Iterable<Account>
-	// findDistinctAccountByActivatedAtOrLastLoginOrCreatedAtOrUpdatedAtOrDeletedAt(Date
-	// activatedAt,
-	// Date lastLogin, Date createdAt, Date updatedAt, Date deletedAt);
+	// String Equal
+	Iterable<Account> findDistinctAccountByEmail(String email);
+
+	Iterable<Account> findDistinctAccountByPhone(String phone);
+
+	Iterable<Account> findDistinctAccountByUsername(String username);
+
+	Iterable<Account> findDistinctAccountByNote(String note);
+
+	Iterable<Account> findDistinctAccountByPermissions(String permissions);
+
+	// String Containing
+	Iterable<Account> findDistinctAccountByEmailContaining(String email);
+
+	Iterable<Account> findDistinctAccountByPhoneContaining(String phone);
+
+	Iterable<Account> findDistinctAccountByUsernameContaining(String username);
+
+	Iterable<Account> findDistinctAccountByNoteContaining(String note);
+
+	Iterable<Account> findDistinctAccountByPermissionsContaining(String permissions);
 
 }

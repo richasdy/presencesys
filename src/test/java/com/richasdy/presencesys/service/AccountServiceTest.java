@@ -289,43 +289,76 @@ public class AccountServiceTest extends AbstractTest {
 
 	}
 
-//	@Test
-//	public void searchDate() {
-//		// prepare
-//
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		Date now = new Date();
-//		String nowString = dateFormat.format(now);
-//
-//		// System.out.println("@searchDateTest : " + nowString);
-//
-//		// action
-//		Iterable<Account> iterableConfirm = service.search(nowString);
-//		List listConfirm = Lists.newArrayList(iterableConfirm);
-//
-//		// System.out.println("@searchDateTest : " + iterableConfirm);
-//
-//		// check
-//		assertTrue("failure - expected not null", iterableConfirm != null);
-//		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
-//
-//	}
-//
-//	@Test
-//	public void searchString() {
-//
-//		// prepare
-//
-//		// action
-//		Iterable<Account> iterableConfirm = service.search(foo.getEmail());
-//		List listConfirm = Lists.newArrayList(iterableConfirm);
-//
-//		// System.out.println("@searchString : " + iterableConfirm);
-//
-//		// check
-//		assertTrue("failure - expected not null", iterableConfirm != null);
-//		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
-//
-//	}
+	@Test
+	public void searchDate() {
+		// prepare
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+		String nowString = dateFormat.format(now);
+
+		// System.out.println("@searchDateTest : " + nowString);
+
+		// action
+		Iterable<Account> iterableConfirm = service.search(nowString);
+		List listConfirm = Lists.newArrayList(iterableConfirm);
+
+		// System.out.println("@searchDateTest : " + iterableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", iterableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchString() {
+
+		// prepare
+
+		// action
+		Iterable<Account> iterableConfirm = service.search(foo.getEmail());
+		List listConfirm = Lists.newArrayList(iterableConfirm);
+
+		// System.out.println("@searchString : " + iterableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", iterableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchBy() {
+
+		// prepare
+
+		// action
+		// Iterable<Account> iterableConfirm = service.searchBy(foo.getEmail());
+//		Iterable<Account> iterableConfirm = service.searchBy("id:1");
+//		Iterable<Account> iterableConfirm = service.searchBy("email:admin1@email.com");
+		Iterable<Account> iterableConfirm = service.searchBy("email:admin1@");
+//		Iterable<Account> iterableConfirm = service.searchBy("phone:999999991");
+//		Iterable<Account> iterableConfirm = service.searchBy("username:admin1");
+//		Iterable<Account> iterableConfirm = service.searchBy("note:sample note admin1");
+//		Iterable<Account> iterableConfirm = service.searchBy("permissions:admin");
+//		Iterable<Account> iterableConfirm = service.searchBy("activated:true");
+//		Iterable<Account> iterableConfirm = service.searchBy("activatedat:2017-01-17");
+//		Iterable<Account> iterableConfirm = service.searchBy("lastlogin:2017-01-17");
+//		Iterable<Account> iterableConfirm = service.searchBy("createdat:2017-01-17");
+//		Iterable<Account> iterableConfirm = service.searchBy("updatedat:2017-01-17");
+//		Iterable<Account> iterableConfirm = service.searchBy("deletedat:2017-01-17");
+
+		
+
+		List listConfirm = Lists.newArrayList(iterableConfirm);
+
+		System.out.println("@searchBy : " + iterableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", iterableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
 
 }

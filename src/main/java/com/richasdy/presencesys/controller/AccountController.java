@@ -214,7 +214,8 @@ public class AccountController {
 	@GetMapping("/search")
 	public String search(@RequestParam String q, Model model) {
 
-		Iterable<Account> listEntity = service.search(q);
+		// Iterable<Account> listEntity = service.search(q);
+		Iterable<Account> listEntity = service.searchBy(q);
 
 		model.addAttribute("q", q);
 		model.addAttribute("listEntity", listEntity);
