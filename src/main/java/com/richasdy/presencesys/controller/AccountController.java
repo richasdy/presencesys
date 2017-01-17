@@ -31,7 +31,7 @@ import com.richasdy.presencesys.service.AccountService;
 public class AccountController {
 
 	AccountService service;
-	int SIZE_NUMBER = 10;
+	// int SIZE_NUMBER = 10;
 
 	@Autowired
 	public AccountController(AccountService service) {
@@ -44,7 +44,8 @@ public class AccountController {
 
 		// Iterable<Account> listEntity = service.findAll();
 		Pageable pagination = new PageRequest(page, size);
-		Page<Account> pageEntity = service.findAllPageAndSort(pagination);
+		// Page<Account> pageEntity = service.findAllPageAndSort(pagination);
+		Page<Account> pageEntity = service.findAll(pagination);
 
 		model.addAttribute("listEntity", pageEntity);
 		model.addAttribute("pageName", "Tabel Account");
@@ -58,8 +59,9 @@ public class AccountController {
 			@RequestParam(defaultValue = "10") int size) {
 
 		Pageable pagination = new PageRequest(page, size);
-		Page<Account> pageEntity = service.findAllPageAndSort(pagination);
+		// Page<Account> pageEntity = service.findAllPageAndSort(pagination);
 		// Iterable<Account> listEntity = service.findAllPageAndSort(pageable);
+		Page<Account> pageEntity = service.findAll(pagination);
 
 		model.addAttribute("listEntity", pageEntity);
 		model.addAttribute("pageName", "Tabel Account");

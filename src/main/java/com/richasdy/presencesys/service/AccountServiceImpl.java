@@ -26,8 +26,8 @@ public class AccountServiceImpl implements AccountService {
 
 	AccountRepository repository;
 
-	@Autowired
-	AccountPageAndSortRepository repositoryPageAndSort;
+	// @Autowired
+	// AccountPageAndSortRepository repositoryPageAndSort;
 
 	@Autowired
 	public AccountServiceImpl(AccountRepository repository) {
@@ -262,7 +262,8 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Page<Account> findAllPageAndSort(Pageable pageable) {
 		System.out.println("@findAllPageAndSort" + pageable);
-		Page<Account> retVal = repositoryPageAndSort.findAll(pageable);
+		// Page<Account> retVal = repositoryPageAndSort.findAll(pageable);
+		Page<Account> retVal = repository.findAll(pageable);
 		System.out.println("@findAllPageAndSort retVal:" + retVal);
 		return retVal;
 	}
@@ -272,7 +273,8 @@ public class AccountServiceImpl implements AccountService {
 		Page<Account> retVal = null;
 
 		if (searchTerm == null || searchTerm.isEmpty()) {
-			retVal = repositoryPageAndSort.findAll(pageable);
+			// retVal = repositoryPageAndSort.findAll(pageable);
+			retVal = repository.findAll(pageable);
 
 		} else {
 			// if search not null or empty
@@ -285,32 +287,53 @@ public class AccountServiceImpl implements AccountService {
 			switch (searchSplit[0]) {
 			case "id":
 				// System.out.println("@searchby id");
-				retVal = repositoryPageAndSort.findDistinctAccountById(Integer.parseInt(searchSplit[1]), pageable);
+				// retVal =
+				// repositoryPageAndSort.findDistinctAccountById(Integer.parseInt(searchSplit[1]),
+				// pageable);
+				retVal = repository.findDistinctAccountById(Integer.parseInt(searchSplit[1]), pageable);
 				break;
 
 			case "email":
 
-				retVal = repositoryPageAndSort.findDistinctAccountByEmailContaining(searchSplit[1], pageable);
+				// retVal =
+				// repositoryPageAndSort.findDistinctAccountByEmailContaining(searchSplit[1],
+				// pageable);
+				retVal = repository.findDistinctAccountByEmailContaining(searchSplit[1], pageable);
 				break;
 
 			case "phone":
-				retVal = repositoryPageAndSort.findDistinctAccountByPhoneContaining(searchSplit[1], pageable);
+				// retVal =
+				// repositoryPageAndSort.findDistinctAccountByPhoneContaining(searchSplit[1],
+				// pageable);
+				retVal = repository.findDistinctAccountByPhoneContaining(searchSplit[1], pageable);
 				break;
 
 			case "username":
-				retVal = repositoryPageAndSort.findDistinctAccountByUsernameContaining(searchSplit[1], pageable);
+				// retVal =
+				// repositoryPageAndSort.findDistinctAccountByUsernameContaining(searchSplit[1],
+				// pageable);
+				retVal = repository.findDistinctAccountByUsernameContaining(searchSplit[1], pageable);
 				break;
 
 			case "note":
-				retVal = repositoryPageAndSort.findDistinctAccountByNoteContaining(searchSplit[1], pageable);
+				// retVal =
+				// repositoryPageAndSort.findDistinctAccountByNoteContaining(searchSplit[1],
+				// pageable);
+				retVal = repository.findDistinctAccountByNoteContaining(searchSplit[1], pageable);
 				break;
 
 			case "permissions":
-				retVal = repositoryPageAndSort.findDistinctAccountByPermissionsContaining(searchSplit[1], pageable);
+				// retVal =
+				// repositoryPageAndSort.findDistinctAccountByPermissionsContaining(searchSplit[1],
+				// pageable);
+				retVal = repository.findDistinctAccountByPermissionsContaining(searchSplit[1], pageable);
 				break;
 
 			case "activated":
-				retVal = repositoryPageAndSort.findDistinctAccountByActivated(Boolean.parseBoolean(searchSplit[1]), pageable);
+				// retVal =
+				// repositoryPageAndSort.findDistinctAccountByActivated(Boolean.parseBoolean(searchSplit[1]),
+				// pageable);
+				retVal = repository.findDistinctAccountByActivated(Boolean.parseBoolean(searchSplit[1]), pageable);
 				break;
 
 			case "activatedat":
@@ -326,7 +349,10 @@ public class AccountServiceImpl implements AccountService {
 					end.setHours(23);
 					end.setMinutes(59);
 					end.setSeconds(59);
-					retVal = repositoryPageAndSort.findDistinctAccountByActivatedAtBetween(start, end, pageable);
+					// retVal =
+					// repositoryPageAndSort.findDistinctAccountByActivatedAtBetween(start,
+					// end, pageable);
+					retVal = repository.findDistinctAccountByActivatedAtBetween(start, end, pageable);
 				}
 				break;
 
@@ -340,7 +366,10 @@ public class AccountServiceImpl implements AccountService {
 					end.setHours(23);
 					end.setMinutes(59);
 					end.setSeconds(59);
-					retVal = repositoryPageAndSort.findDistinctAccountByLastLoginBetween(start, end, pageable);
+					// retVal =
+					// repositoryPageAndSort.findDistinctAccountByLastLoginBetween(start,
+					// end, pageable);
+					retVal = repository.findDistinctAccountByLastLoginBetween(start, end, pageable);
 				}
 				break;
 
@@ -354,7 +383,10 @@ public class AccountServiceImpl implements AccountService {
 					end.setHours(23);
 					end.setMinutes(59);
 					end.setSeconds(59);
-					retVal = repositoryPageAndSort.findDistinctAccountByCreatedAtBetween(start, end, pageable);
+					// retVal =
+					// repositoryPageAndSort.findDistinctAccountByCreatedAtBetween(start,
+					// end, pageable);
+					retVal = repository.findDistinctAccountByCreatedAtBetween(start, end, pageable);
 				}
 				break;
 
@@ -368,7 +400,10 @@ public class AccountServiceImpl implements AccountService {
 					end.setHours(23);
 					end.setMinutes(59);
 					end.setSeconds(59);
-					retVal = repositoryPageAndSort.findDistinctAccountByUpdatedAtBetween(start, end, pageable);
+					// retVal =
+					// repositoryPageAndSort.findDistinctAccountByUpdatedAtBetween(start,
+					// end, pageable);
+					retVal = repository.findDistinctAccountByUpdatedAtBetween(start, end, pageable);
 				}
 				break;
 
@@ -382,7 +417,10 @@ public class AccountServiceImpl implements AccountService {
 					end.setHours(23);
 					end.setMinutes(59);
 					end.setSeconds(59);
-					retVal = repositoryPageAndSort.findDistinctAccountByDeletedAtBetween(start, end, pageable);
+					// retVal =
+					// repositoryPageAndSort.findDistinctAccountByDeletedAtBetween(start,
+					// end, pageable);
+					retVal = repository.findDistinctAccountByDeletedAtBetween(start, end, pageable);
 				}
 				break;
 
@@ -391,5 +429,10 @@ public class AccountServiceImpl implements AccountService {
 		}
 
 		return retVal;
+	}
+
+	@Override
+	public Page<Account> findAll(Pageable pageable) {
+		return repository.findAll(pageable);
 	}
 }
