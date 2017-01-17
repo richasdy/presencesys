@@ -27,6 +27,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -335,28 +338,58 @@ public class AccountServiceTest extends AbstractTest {
 
 		// action
 		// Iterable<Account> iterableConfirm = service.searchBy(foo.getEmail());
-//		Iterable<Account> iterableConfirm = service.searchBy("id:1");
-//		Iterable<Account> iterableConfirm = service.searchBy("email:admin1@email.com");
+		// Iterable<Account> iterableConfirm = service.searchBy("id:1");
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("email:admin1@email.com");
 		Iterable<Account> iterableConfirm = service.searchBy("email:admin1@");
-//		Iterable<Account> iterableConfirm = service.searchBy("phone:999999991");
-//		Iterable<Account> iterableConfirm = service.searchBy("username:admin1");
-//		Iterable<Account> iterableConfirm = service.searchBy("note:sample note admin1");
-//		Iterable<Account> iterableConfirm = service.searchBy("permissions:admin");
-//		Iterable<Account> iterableConfirm = service.searchBy("activated:true");
-//		Iterable<Account> iterableConfirm = service.searchBy("activatedat:2017-01-17");
-//		Iterable<Account> iterableConfirm = service.searchBy("lastlogin:2017-01-17");
-//		Iterable<Account> iterableConfirm = service.searchBy("createdat:2017-01-17");
-//		Iterable<Account> iterableConfirm = service.searchBy("updatedat:2017-01-17");
-//		Iterable<Account> iterableConfirm = service.searchBy("deletedat:2017-01-17");
-
-		
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("phone:999999991");
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("username:admin1");
+		// Iterable<Account> iterableConfirm = service.searchBy("note:sample
+		// note admin1");
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("permissions:admin");
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("activated:true");
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("activatedat:2017-01-17");
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("lastlogin:2017-01-17");
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("createdat:2017-01-17");
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("updatedat:2017-01-17");
+		// Iterable<Account> iterableConfirm =
+		// service.searchBy("deletedat:2017-01-17");
 
 		List listConfirm = Lists.newArrayList(iterableConfirm);
 
-		System.out.println("@searchBy : " + iterableConfirm);
+		// System.out.println("@searchBy : " + iterableConfirm);
 
 		// check
 		assertTrue("failure - expected not null", iterableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void pageAndSort() {
+
+		// prepare
+
+		// action
+		System.out.println("@pageAndSort");
+		Page<Account> pageConfirm = service.findAllPageAndSort(new PageRequest(0, 5));
+		List listConfirm = pageConfirm.getContent();
+		
+		
+
+		System.out.println("@pageAndSort : " + pageConfirm);
+		System.out.println("@pageAndSort : " + listConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageConfirm != null);
 		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
 
 	}

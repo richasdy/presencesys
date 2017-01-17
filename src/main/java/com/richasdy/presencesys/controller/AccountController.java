@@ -10,6 +10,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +43,21 @@ public class AccountController {
 		Iterable<Account> listEntity = service.findAll();
 
 		model.addAttribute("listEntity", listEntity);
+		model.addAttribute("pageName", "Tabel Account");
+		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
+
+		return "account/index";
+	}
+	
+	@GetMapping("/page")
+	public String indexPage(Model model, @RequestParam int page, @RequestParam int size ) {
+		
+		Pageable pagination = new PageRequest(page, size);
+		
+		Page<Account> pageEntity = service.findAllPageAndSort(pagination);
+//		Iterable<Account> listEntity = service.findAllPageAndSort(pageable);
+
+		model.addAttribute("listEntity", pageEntity);
 		model.addAttribute("pageName", "Tabel Account");
 		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
 

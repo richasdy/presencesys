@@ -503,8 +503,9 @@
 
 									<div class="input-group input-group-sm" style="width: 300px;">
 										<div class="input-group-btn">
-											<a class="btn btn-info" href="presencesys-account-create.html">
-												<i class="fa fa-plus"></i>
+											<a class="btn btn-info"
+												href="presencesys-account-create.html"> <i
+												class="fa fa-plus"></i>
 											</a>
 										</div>
 										<input type="text" name="table_search"
@@ -537,7 +538,8 @@
 									</tr>
 									<tr>
 										<td>1.</td>
-										<td><a href="presencesys-account-show.html">Update software</a></td>
+										<td><a href="presencesys-account-show.html">Update
+												software</a></td>
 										<td>Update software</td>
 										<td>Update software</td>
 										<td>Update software</td>
@@ -551,9 +553,8 @@
 													style="width: 55%"></div>
 											</div>
 										</td>
-										<td><a href="#"><span class="fa fa-edit" /></a>
-											<a href="#"><span class="fa fa-trash-o" /></a>
-										</td>
+										<td><a href="#"><span class="fa fa-edit" /></a> <a
+											href="#"><span class="fa fa-trash-o" /></a></td>
 									</tr>
 									<tr>
 										<td>2.</td>
@@ -597,7 +598,7 @@
 										<td>Fix and squish bugs</td>
 										<td>Fix and squish bugs</td>
 										<td>Fix and squish bugs</td>
-										<td>Fix and squish bugs</td>	
+										<td>Fix and squish bugs</td>
 										<td>Fix and squish bugs</td>
 										<td>Fix and squish bugs</td>
 										<td>Fix and squish bugs</td>
@@ -612,12 +613,30 @@
 								</table>
 							</div>
 							<!-- /.box-body -->
-							<div class="box-footer clearfix">
+							<div class="box-footer clearfix" th:fragment="pagination">
+								
+								<div class="col-sm-6">
+									<div sd:pagination-summary="">info</div>
+								</div>
+								
+								<div class="col-sm-6">
+									<nav class="pull-right">
+										<ul class="pagination" sd:pagination="full">
+											<!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+											<li class="disabled"><a href="#" aria-label="Previous"><span
+													aria-hidden="true">&laquo;</span></a></li>
+											<li class="active"><a href="#">1 <span
+													class="sr-only">(current)</span></a></li>
+										</ul>
+									</nav>
+								</div>
+
 								<ul class="pagination pagination-sm no-margin pull-right">
-									<li><a href="#">&laquo;</a></li>
+									<li><a href="#"> &laquo; </a></li>
 									<li><a href="#">1</a></li>
 									<li><a href="#">2</a></li>
 									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
 									<li><a href="#">&raquo;</a></li>
 								</ul>
 							</div>

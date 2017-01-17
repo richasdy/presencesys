@@ -1,5 +1,7 @@
 package com.richasdy.presencesys.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.richasdy.presencesys.domain.Account;
 
@@ -16,5 +18,7 @@ public interface AccountService {
 	Account login(int id);
 	Iterable<Account> search(String searchTerm);
 	Iterable<Account> searchBy(String searchTerm);
+	
+	Page<Account> findAllPageAndSort(Pageable pageable);
 	
 }

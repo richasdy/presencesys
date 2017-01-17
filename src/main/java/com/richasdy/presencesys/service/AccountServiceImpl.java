@@ -10,9 +10,12 @@ import java.util.LinkedList;
 import javax.sound.midi.Soundbank;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.richasdy.presencesys.domain.Account;
+import com.richasdy.presencesys.repository.AccountPageAndSortRepository;
 import com.richasdy.presencesys.repository.AccountRepository;
 import com.richasdy.presencesys.util.Util;
 
@@ -22,6 +25,9 @@ import org.apache.commons.lang3.StringUtils;
 public class AccountServiceImpl implements AccountService {
 
 	AccountRepository repository;
+	
+	@Autowired
+	AccountPageAndSortRepository repositoryPageAndSort;
 
 	@Autowired
 	public AccountServiceImpl(AccountRepository repository) {
@@ -250,6 +256,14 @@ public class AccountServiceImpl implements AccountService {
 
 		}
 
+		return retVal;
+	}
+
+	@Override
+	public Page<Account> findAllPageAndSort(Pageable pageable) {
+		System.out.println("@findAllPageAndSort"+pageable);
+		Page<Account> retVal = repositoryPageAndSort.findAll(pageable);
+		System.out.println("@findAllPageAndSort retVal:"+retVal);
 		return retVal;
 	}
 }
