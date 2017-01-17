@@ -18,6 +18,7 @@ public interface AccountService {
 	Account login(int id);
 	Iterable<Account> search(String searchTerm);
 	Iterable<Account> searchBy(String searchTerm);
+	Page<Account> searchBy(String searchTerm, Pageable pageable);
 	
 	Page<Account> findAllPageAndSort(Pageable pageable);
 	

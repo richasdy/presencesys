@@ -31,6 +31,7 @@ import com.richasdy.presencesys.service.AccountService;
 public class AccountController {
 
 	AccountService service;
+	int SIZE_NUMBER = 10;
 
 	@Autowired
 	public AccountController(AccountService service) {
@@ -38,30 +39,33 @@ public class AccountController {
 	}
 
 	@GetMapping()
-	public String index(Model model) {
+	public String index(Model model, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
 
-		Iterable<Account> listEntity = service.findAll();
-
-		model.addAttribute("listEntity", listEntity);
-		model.addAttribute("pageName", "Tabel Account");
-		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
-
-		return "account/index";
-	}
-	
-	@GetMapping("/page")
-	public String indexPage(Model model, @RequestParam int page, @RequestParam int size ) {
-		
+		// Iterable<Account> listEntity = service.findAll();
 		Pageable pagination = new PageRequest(page, size);
-		
 		Page<Account> pageEntity = service.findAllPageAndSort(pagination);
-//		Iterable<Account> listEntity = service.findAllPageAndSort(pageable);
 
 		model.addAttribute("listEntity", pageEntity);
 		model.addAttribute("pageName", "Tabel Account");
 		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
 
-		return "account/index";
+		return "account/index-page";
+	}
+
+	@GetMapping("/page")
+	public String indexPage(Model model, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+
+		Pageable pagination = new PageRequest(page, size);
+		Page<Account> pageEntity = service.findAllPageAndSort(pagination);
+		// Iterable<Account> listEntity = service.findAllPageAndSort(pageable);
+
+		model.addAttribute("listEntity", pageEntity);
+		model.addAttribute("pageName", "Tabel Account");
+		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
+
+		return "account/index-page";
 	}
 
 	@GetMapping("/create")
@@ -225,22 +229,27 @@ public class AccountController {
 
 		service.save(currentEntity);
 
+		// return "redirect:/account?size=10&page=0";
 		return "redirect:/account";
 
 	}
 
 	@GetMapping("/search")
-	public String search(@RequestParam String q, Model model) {
+	public String search(@RequestParam String q, Model model, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
 
 		// Iterable<Account> listEntity = service.search(q);
-		Iterable<Account> listEntity = service.searchBy(q);
+
+		Pageable pagination = new PageRequest(page, size);
+		Page<Account> pageEntity = service.searchBy(q, pagination);
 
 		model.addAttribute("q", q);
-		model.addAttribute("listEntity", listEntity);
+		model.addAttribute("listEntity", pageEntity);
 		model.addAttribute("pageName", "Tabel Account Pencarian : " + q);
 		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
 
-		return "account/index";
+		// return "account/index";
+		return "account/index-page";
 	}
 
 }

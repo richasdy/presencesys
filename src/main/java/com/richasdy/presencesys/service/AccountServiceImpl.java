@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 public class AccountServiceImpl implements AccountService {
 
 	AccountRepository repository;
-	
+
 	@Autowired
 	AccountPageAndSortRepository repositoryPageAndSort;
 
@@ -150,7 +150,7 @@ public class AccountServiceImpl implements AccountService {
 			// java 7 above
 			switch (searchSplit[0]) {
 			case "id":
-//				System.out.println("@searchby id");
+				// System.out.println("@searchby id");
 				retVal = repository.findDistinctAccountById(Integer.parseInt(searchSplit[1]));
 				break;
 
@@ -180,7 +180,7 @@ public class AccountServiceImpl implements AccountService {
 				break;
 
 			case "activatedat":
-				
+
 				System.out.println("@searchby activateat");
 
 				if (Util.isValidDate(searchSplit[1])) {
@@ -261,9 +261,135 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Page<Account> findAllPageAndSort(Pageable pageable) {
-		System.out.println("@findAllPageAndSort"+pageable);
+		System.out.println("@findAllPageAndSort" + pageable);
 		Page<Account> retVal = repositoryPageAndSort.findAll(pageable);
-		System.out.println("@findAllPageAndSort retVal:"+retVal);
+		System.out.println("@findAllPageAndSort retVal:" + retVal);
+		return retVal;
+	}
+
+	@Override
+	public Page<Account> searchBy(String searchTerm, Pageable pageable) {
+		Page<Account> retVal = null;
+
+		if (searchTerm == null || searchTerm.isEmpty()) {
+			retVal = repositoryPageAndSort.findAll(pageable);
+
+		} else {
+			// if search not null or empty
+
+			// explode string
+			searchTerm = searchTerm.toLowerCase();
+			String[] searchSplit = searchTerm.split(":");
+
+			// java 7 above
+			switch (searchSplit[0]) {
+			case "id":
+				// System.out.println("@searchby id");
+				retVal = repositoryPageAndSort.findDistinctAccountById(Integer.parseInt(searchSplit[1]), pageable);
+				break;
+
+			case "email":
+
+				retVal = repositoryPageAndSort.findDistinctAccountByEmailContaining(searchSplit[1], pageable);
+				break;
+
+			case "phone":
+				retVal = repositoryPageAndSort.findDistinctAccountByPhoneContaining(searchSplit[1], pageable);
+				break;
+
+			case "username":
+				retVal = repositoryPageAndSort.findDistinctAccountByUsernameContaining(searchSplit[1], pageable);
+				break;
+
+			case "note":
+				retVal = repositoryPageAndSort.findDistinctAccountByNoteContaining(searchSplit[1], pageable);
+				break;
+
+			case "permissions":
+				retVal = repositoryPageAndSort.findDistinctAccountByPermissionsContaining(searchSplit[1], pageable);
+				break;
+
+			case "activated":
+				retVal = repositoryPageAndSort.findDistinctAccountByActivated(Boolean.parseBoolean(searchSplit[1]), pageable);
+				break;
+
+			case "activatedat":
+
+				System.out.println("@searchby activateat");
+
+				if (Util.isValidDate(searchSplit[1])) {
+					Date start = Util.stringToDate(searchSplit[1]);
+					Date end = Util.stringToDate(searchSplit[1]);
+					start.setHours(00);
+					start.setMinutes(00);
+					start.setSeconds(00);
+					end.setHours(23);
+					end.setMinutes(59);
+					end.setSeconds(59);
+					retVal = repositoryPageAndSort.findDistinctAccountByActivatedAtBetween(start, end, pageable);
+				}
+				break;
+
+			case "lastlogin":
+				if (Util.isValidDate(searchSplit[1])) {
+					Date start = Util.stringToDate(searchSplit[1]);
+					Date end = Util.stringToDate(searchSplit[1]);
+					start.setHours(00);
+					start.setMinutes(00);
+					start.setSeconds(00);
+					end.setHours(23);
+					end.setMinutes(59);
+					end.setSeconds(59);
+					retVal = repositoryPageAndSort.findDistinctAccountByLastLoginBetween(start, end, pageable);
+				}
+				break;
+
+			case "createdat":
+				if (Util.isValidDate(searchSplit[1])) {
+					Date start = Util.stringToDate(searchSplit[1]);
+					Date end = Util.stringToDate(searchSplit[1]);
+					start.setHours(00);
+					start.setMinutes(00);
+					start.setSeconds(00);
+					end.setHours(23);
+					end.setMinutes(59);
+					end.setSeconds(59);
+					retVal = repositoryPageAndSort.findDistinctAccountByCreatedAtBetween(start, end, pageable);
+				}
+				break;
+
+			case "updatedat":
+				if (Util.isValidDate(searchSplit[1])) {
+					Date start = Util.stringToDate(searchSplit[1]);
+					Date end = Util.stringToDate(searchSplit[1]);
+					start.setHours(00);
+					start.setMinutes(00);
+					start.setSeconds(00);
+					end.setHours(23);
+					end.setMinutes(59);
+					end.setSeconds(59);
+					retVal = repositoryPageAndSort.findDistinctAccountByUpdatedAtBetween(start, end, pageable);
+				}
+				break;
+
+			case "deleteddat":
+				if (Util.isValidDate(searchSplit[1])) {
+					Date start = Util.stringToDate(searchSplit[1]);
+					Date end = Util.stringToDate(searchSplit[1]);
+					start.setHours(00);
+					start.setMinutes(00);
+					start.setSeconds(00);
+					end.setHours(23);
+					end.setMinutes(59);
+					end.setSeconds(59);
+					retVal = repositoryPageAndSort.findDistinctAccountByDeletedAtBetween(start, end, pageable);
+				}
+				break;
+
+			}
+
+		}
+
 		return retVal;
 	}
 }

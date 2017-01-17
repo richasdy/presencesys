@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Component;
@@ -20,47 +22,49 @@ public interface AccountPageAndSortRepository extends PagingAndSortingRepository
 
 	// find by string type
 	// sementara nanti di dihapus
-	Iterable<Account> findDistinctAccountByEmailOrPhoneOrUsernameOrNoteOrPermissionsOrActivationCodeOrPersistCodeOrResetPasswordCode(
-			String email, String phone, String username, String note, String permissions, String activationCode,
-			String persistCode, String resetPasswordCode);
+	// Page<Account>
+	// findDistinctAccountByEmailOrPhoneOrUsernameOrNoteOrPermissionsOrActivationCodeOrPersistCodeOrResetPasswordCode(
+	// String email, String phone, String username, String note, String
+	// permissions, String activationCode,
+	// String persistCode, String resetPasswordCode);
 
 	// integer Equal
-	Iterable<Account> findDistinctAccountById(int id);
+	Page<Account> findDistinctAccountById(int id, Pageable pageable);
 
 	// Boolean equal
-	Iterable<Account> findDistinctAccountByActivated(Boolean activated);
+	Page<Account> findDistinctAccountByActivated(Boolean activated, Pageable pageable);
 
 	// Date
-	Iterable<Account> findDistinctAccountByActivatedAtBetween(Date start, Date end);
+	Page<Account> findDistinctAccountByActivatedAtBetween(Date start, Date end, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByCreatedAtBetween(Date start, Date end);
+	Page<Account> findDistinctAccountByCreatedAtBetween(Date start, Date end, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByLastLoginBetween(Date start, Date end);
+	Page<Account> findDistinctAccountByLastLoginBetween(Date start, Date end, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByUpdatedAtBetween(Date start, Date end);
+	Page<Account> findDistinctAccountByUpdatedAtBetween(Date start, Date end, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByDeletedAtBetween(Date start, Date end);
+	Page<Account> findDistinctAccountByDeletedAtBetween(Date start, Date end, Pageable pageable);
 
 	// String Equal
-	Iterable<Account> findDistinctAccountByEmail(String email);
+	Page<Account> findDistinctAccountByEmail(String email, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByPhone(String phone);
+	Page<Account> findDistinctAccountByPhone(String phone, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByUsername(String username);
+	Page<Account> findDistinctAccountByUsername(String username, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByNote(String note);
+	Page<Account> findDistinctAccountByNote(String note, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByPermissions(String permissions);
+	Page<Account> findDistinctAccountByPermissions(String permissions, Pageable pageable);
 
 	// String Containing
-	Iterable<Account> findDistinctAccountByEmailContaining(String email);
+	Page<Account> findDistinctAccountByEmailContaining(String email, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByPhoneContaining(String phone);
+	Page<Account> findDistinctAccountByPhoneContaining(String phone, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByUsernameContaining(String username);
+	Page<Account> findDistinctAccountByUsernameContaining(String username, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByNoteContaining(String note);
+	Page<Account> findDistinctAccountByNoteContaining(String note, Pageable pageable);
 
-	Iterable<Account> findDistinctAccountByPermissionsContaining(String permissions);
+	Page<Account> findDistinctAccountByPermissionsContaining(String permissions, Pageable pageable);
 
 }
