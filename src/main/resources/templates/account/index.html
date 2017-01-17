@@ -40,8 +40,8 @@
 													class="fa fa-plus"></i>
 												</a>
 											</div>
-											<input type="text" name="q"
-												class="form-control pull-right" placeholder="Search" />
+											<input type="text" name="q" class="form-control pull-right"
+												placeholder="Search" />
 											<div class="input-group-btn">
 												<button type="submit" class="btn btn-info">
 													<i class="fa fa-search"></i>
@@ -93,8 +93,15 @@
 								</table>
 							</div>
 							<!-- /.box-body -->
-							<div class="box-footer clearfix" th:replace="base/table :: pagination" />
-								
+							<div class="box-footer clearfix">
+								<ul class="pagination pagination-sm no-margin pull-right">
+									<li><a href="#">&laquo;</a></li>
+									<li><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">&raquo;</a></li>
+								</ul>
+							</div>
 						</div>
 						<!-- /.box -->
 					</div>
