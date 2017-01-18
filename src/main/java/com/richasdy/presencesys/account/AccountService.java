@@ -1,9 +1,8 @@
-package com.richasdy.presencesys.service;
+package com.richasdy.presencesys.account;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.richasdy.presencesys.domain.Account;
 
 @Service
 public interface AccountService {

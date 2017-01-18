@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.controller;
+package com.richasdy.presencesys.account;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.richasdy.presencesys.domain.Account;
-import com.richasdy.presencesys.service.AccountService;
 
 @Controller
 @RequestMapping("account")

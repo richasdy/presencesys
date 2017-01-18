@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.richasdy.presencesys.domain.Account;
+import com.richasdy.presencesys.account.Account;
 
 @Component
 public class AccountRestRepository extends BaseRestRepository {

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import com.richasdy.presencesys.domain.Account;
+import com.richasdy.presencesys.account.Account;
 import com.richasdy.presencesys.domain.Card;
 
 @Repository

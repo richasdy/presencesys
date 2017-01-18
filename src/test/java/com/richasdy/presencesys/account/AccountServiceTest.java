@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.service;
+package com.richasdy.presencesys.account;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -34,9 +34,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.richasdy.presencesys.AbstractTest;
-import com.richasdy.presencesys.domain.Account;
-import com.richasdy.presencesys.repository.AccountRepository;
-import com.richasdy.presencesys.service.AccountService;
+import com.richasdy.presencesys.account.Account;
+import com.richasdy.presencesys.account.AccountRepository;
+import com.richasdy.presencesys.account.AccountService;
 
 @Transactional
 public class AccountServiceTest extends AbstractTest {

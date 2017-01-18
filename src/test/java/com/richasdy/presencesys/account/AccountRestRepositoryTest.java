@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.repository.rest;
+package com.richasdy.presencesys.account;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -32,9 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.richasdy.presencesys.AbstractTest;
-import com.richasdy.presencesys.domain.Account;
+import com.richasdy.presencesys.account.Account;
+import com.richasdy.presencesys.account.AccountService;
 import com.richasdy.presencesys.repository.rest.AccountRestRepository;
-import com.richasdy.presencesys.service.AccountService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) // autoconfigure

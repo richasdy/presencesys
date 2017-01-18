@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.domain;
+package com.richasdy.presencesys.account;
 
 import java.io.Serializable;
 import java.util.Date;

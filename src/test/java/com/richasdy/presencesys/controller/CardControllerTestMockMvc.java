@@ -61,7 +61,7 @@ import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richasdy.presencesys.AbstractControllerTest;
-import com.richasdy.presencesys.api.AccountEndpoint;
+import com.richasdy.presencesys.account.AccountEndpoint;
 import com.richasdy.presencesys.domain.Card;
 import com.richasdy.presencesys.domain.Quote;
 import com.richasdy.presencesys.service.CardService;

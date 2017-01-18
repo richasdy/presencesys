@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.service;
+package com.richasdy.presencesys.account;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -14,9 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.richasdy.presencesys.domain.Account;
-import com.richasdy.presencesys.repository.AccountPageAndSortRepository;
-import com.richasdy.presencesys.repository.AccountRepository;
 import com.richasdy.presencesys.util.Util;
 
 import org.apache.commons.lang3.StringUtils;

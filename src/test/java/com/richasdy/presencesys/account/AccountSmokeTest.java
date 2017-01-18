@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.smoketest;
+package com.richasdy.presencesys.account;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.richasdy.presencesys.api.AccountEndpoint;
-import com.richasdy.presencesys.controller.AccountController;
-import com.richasdy.presencesys.domain.Account;
-import com.richasdy.presencesys.repository.AccountRepository;
-import com.richasdy.presencesys.service.AccountService;
-import com.richasdy.presencesys.service.AccountServiceImpl;
+import com.richasdy.presencesys.account.Account;
+import com.richasdy.presencesys.account.AccountController;
+import com.richasdy.presencesys.account.AccountEndpoint;
+import com.richasdy.presencesys.account.AccountRepository;
+import com.richasdy.presencesys.account.AccountService;
+import com.richasdy.presencesys.account.AccountServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

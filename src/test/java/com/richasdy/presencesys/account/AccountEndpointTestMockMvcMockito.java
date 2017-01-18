@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.api;
+package com.richasdy.presencesys.account;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -6,50 +6,85 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richasdy.presencesys.AbstractControllerTest;
-import com.richasdy.presencesys.domain.Account;
-import com.richasdy.presencesys.service.AccountService;
+import com.richasdy.presencesys.account.Account;
+import com.richasdy.presencesys.account.AccountEndpoint;
+import com.richasdy.presencesys.account.AccountService;
 
 @Transactional
-public class AccountEndpointTest extends AbstractControllerTest {
+public class AccountEndpointTestMockMvcMockito extends AbstractControllerTest {
 
 	// connection using mockmvc
+	// mock stub
 
-	@Autowired
+	@Mock
 	private AccountService service;
 
-	private Account foo;
+	@InjectMocks
+	private AccountEndpoint endpoint;
+
+	// private Account foo;
 
 	@Before
 	public void setUp() {
-		super.setUp();
 
-		foo = new Account();
-		foo.setEmail("foo@email.com");
-		foo.setPhone("000000000000");
-		foo.setUsername("fooUsername");
-		foo.setPassword("fooPassword");
+		mockMvc = MockMvcBuilders.standaloneSetup(endpoint).build();
+		MockitoAnnotations.initMocks(this);
 
-		foo = service.save(foo);
+		// foo = new Account();
+		// foo.setEmail("foo@email.com");
+		// foo.setPhone("000000000000");
+		// foo.setUsername("fooUsername");
+		// foo.setPassword("fooPassword");
 
+		// foo = service.save(foo);
+
+	}
+
+	private Collection<Account> getEntityListStubData() {
+		Collection<Account> list = new ArrayList<Account>();
+		list.add(getEntityStubData());
+		return list;
+	}
+
+	private Account getEntityStubData() {
+		Account bar = new Account();
+		bar.setId(1);
+		bar.setEmail("bar@email.com");
+		bar.setPhone("000000000000");
+		bar.setUsername("barUsername");
+		bar.setPassword("barPassword");
+
+		return bar;
 	}
 
 	@Test
@@ -58,23 +93,23 @@ public class AccountEndpointTest extends AbstractControllerTest {
 		// prepare
 		String uri = "/apiv1/account";
 
+		Collection<Account> list = getEntityListStubData();
+
+		when(service.findAll()).thenReturn(list);
+
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON))
-				// .andDo(print())
 				.andReturn();
 
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
 
-		// System.out.println(content);
-		// System.out.println(content.length());
-		// System.out.println(content.trim());
-		// System.out.println(content.trim().length());
-		// System.out.println(result.getResponse().getLocale());
+		// verify that service.findAll() method was invoked once
+		verify(service, times(1)).findAll();
 
 		// check
 		assertEquals("failure - expected HTTP Status 200", status, HttpStatus.OK.value());
-		assertTrue("failure - expected HTTP response body have value", content.trim().length() > 0);
+		assertTrue("failure - expected HTTP response body to have value", content.trim().length() > 0);
 
 	}
 
@@ -83,23 +118,24 @@ public class AccountEndpointTest extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/apiv1/account/{id}";
-		int id = foo.getId();
+		Account bar = getEntityStubData();
+		int id = bar.getId();
+
+		when(service.findOne(id)).thenReturn(bar);
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.APPLICATION_JSON))
-				// .andDo(print())
-				// .andExpect(jsonPath("$.id").value(foo.getId()))
 				.andReturn();
 
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
 
+		// verify that service.findOne(id) method was invoked once
+		verify(service, times(1)).findOne(id);
+
 		// check
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
 		assertTrue("failure - expected HTTP response body to have value", content.trim().length() > 0);
-
-		Account confirm = super.mapFromJson(content, Account.class);
-		assertEquals("failure - expected same value ", foo.getEmail(), confirm.getEmail());
 
 	}
 
@@ -110,12 +146,17 @@ public class AccountEndpointTest extends AbstractControllerTest {
 		String uri = "/apiv1/account/{id}";
 		int id = Integer.MAX_VALUE;
 
+		when(service.findOne(id)).thenReturn(null);
+
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.APPLICATION_JSON))
 				.andReturn();
 
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
+
+		// verify that service.findOne(id) method was invoked once
+		verify(service, times(1)).findOne(id);
 
 		// check
 		assertEquals("failure - expected HTTP Status 404", HttpStatus.NOT_FOUND.value(), status);
@@ -129,11 +170,10 @@ public class AccountEndpointTest extends AbstractControllerTest {
 		// prepare
 		String uri = "/apiv1/account";
 
-		Account bar = new Account();
-		bar.setEmail("bar@email.com");
-		bar.setPhone("999999999999");
-		bar.setUsername("barUsername");
-		bar.setPassword("barPassword");
+		Account bar = getEntityStubData();
+		int id = bar.getId();
+
+		when(service.save(any(Account.class))).thenReturn(bar);
 
 		String inputJson = super.mapToJson(bar);
 
@@ -144,6 +184,9 @@ public class AccountEndpointTest extends AbstractControllerTest {
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
 
+		// verify that service.save() method was invoked once
+		verify(service, times(1)).save(any(Account.class));
+
 		// check
 		assertEquals("failure - expected HTTP Status 201", HttpStatus.CREATED.value(), status);
 		assertTrue("failure - expected HTTP response body to have value", content.trim().length() > 0);
@@ -152,7 +195,7 @@ public class AccountEndpointTest extends AbstractControllerTest {
 
 		assertThat("failure - expected not null", confirm, notNullValue());
 		assertThat("failure - expected not null id", confirm.getId(), notNullValue());
-		assertEquals("failure - expected same value", bar.getEmail(), confirm.getEmail());
+		assertEquals("failure - expected same email", bar.getEmail(), confirm.getEmail());
 
 	}
 
@@ -161,10 +204,15 @@ public class AccountEndpointTest extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/apiv1/account/{id}";
-		int id = foo.getId();
 
-		Account bar = service.findOne(id);
+		Account bar = getEntityStubData();
+		int id = bar.getId();
+
 		bar.setEmail("adminUpdate@email.com");
+
+		// findOne() used in update
+		when(service.findOne(id)).thenReturn(bar);
+		when(service.update(any(Account.class))).thenReturn(bar);
 
 		String inputJson = super.mapToJson(bar);
 
@@ -175,6 +223,10 @@ public class AccountEndpointTest extends AbstractControllerTest {
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
 
+		// verify that service.xx() method was invoked once
+		verify(service, times(1)).findOne(id);
+		verify(service, times(1)).update(any(Account.class));
+
 		// check
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
 		assertTrue("failure - expected HTTP response body to have value", content.trim().length() > 0);
@@ -182,51 +234,37 @@ public class AccountEndpointTest extends AbstractControllerTest {
 		Account confirm = super.mapFromJson(content, Account.class);
 
 		assertThat("failure - expected not null", confirm, notNullValue());
-		assertEquals("failure - expected id unchanged", bar.getId(), confirm.getId());
-		assertEquals("failure - expected updated field value", bar.getEmail(), confirm.getEmail());
+		assertEquals("failure - expected account.id unchanged", bar.getId(), confirm.getId());
+		assertEquals("failure - expected updated account email", bar.getEmail(), confirm.getEmail());
 
 	}
 
-	@Test
+	 @Test
 	public void delete() throws Exception {
 
 		// prepare
 		String uri = "/apiv1/account/{id}";
-		int id = foo.getId();
+		
+		Account bar = getEntityStubData();
+		int id = bar.getId();
+		
+
+		// findOne() used in delete
+		when(service.findOne(id)).thenReturn(bar);
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete(uri, id)).andReturn();
 
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
+		
+		// verify that service.xx() method was invoked once
+		verify(service, times(1)).findOne(id);
+		verify(service, times(1)).delete(id);
 
 		// check
 		assertEquals("failure - expected HTTP Status 401", HttpStatus.GONE.value(), status);
 		assertTrue("failure - expected HTTP response body to be empty", content.trim().length() == 0);
-
-		Account confirm = service.findOne(id);
-
-		assertThat("failure - expected null", confirm, nullValue());
-
-	}
-
-	@Test
-	public void search() throws Exception {
-
-		// prepare
-		String uri = "/apiv1/account/search/true";
-
-		// action
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON))
-				// .andDo(print())
-				.andReturn();
-
-		String content = result.getResponse().getContentAsString();
-		int status = result.getResponse().getStatus();
-
-		// check
-		assertEquals("failure - expected HTTP Status 200", status, HttpStatus.OK.value());
-		assertTrue("failure - expected HTTP response body have value", content.trim().length() > 0);
 
 	}
 

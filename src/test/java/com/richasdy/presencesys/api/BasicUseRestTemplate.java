@@ -50,11 +50,11 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.richasdy.presencesys.api.AccountEndpoint;
-import com.richasdy.presencesys.domain.Account;
+import com.richasdy.presencesys.account.Account;
+import com.richasdy.presencesys.account.AccountEndpoint;
+import com.richasdy.presencesys.account.AccountService;
 import com.richasdy.presencesys.domain.Quote;
 import com.richasdy.presencesys.domain.Value;
-import com.richasdy.presencesys.service.AccountService;
 
 import org.junit.runners.MethodSorters;
 

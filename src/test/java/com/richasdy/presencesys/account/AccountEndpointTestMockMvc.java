@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.api;
+package com.richasdy.presencesys.account;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -25,8 +25,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richasdy.presencesys.AbstractControllerTest;
-import com.richasdy.presencesys.domain.Account;
-import com.richasdy.presencesys.service.AccountService;
+import com.richasdy.presencesys.account.Account;
+import com.richasdy.presencesys.account.AccountService;
 
 @Transactional
 public class AccountEndpointTestMockMvc extends AbstractControllerTest {

@@ -30,8 +30,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.richasdy.presencesys.AbstractTest;
+import com.richasdy.presencesys.account.AccountRepository;
 import com.richasdy.presencesys.domain.Card;
-import com.richasdy.presencesys.repository.AccountRepository;
 import com.richasdy.presencesys.service.CardService;
 
 @Transactional
