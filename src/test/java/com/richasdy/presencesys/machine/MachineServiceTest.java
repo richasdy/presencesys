@@ -286,6 +286,22 @@ public class MachineServiceTest extends AbstractTest {
 
 	}
 
+	@Test(expected = NumberFormatException.class)
+	public void searchByIdWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Machine> pageableConfirm = service.searchBy("id:a", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
 	@Test
 	public void searchByIp() {
 
