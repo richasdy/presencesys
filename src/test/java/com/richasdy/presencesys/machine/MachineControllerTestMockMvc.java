@@ -61,9 +61,8 @@ import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richasdy.presencesys.AbstractControllerTest;
-import com.richasdy.presencesys.account.Account;
-import com.richasdy.presencesys.account.AccountEndpoint;
-import com.richasdy.presencesys.account.AccountService;
+import com.richasdy.presencesys.machine.Machine;
+import com.richasdy.presencesys.machine.MachineService;
 import com.richasdy.presencesys.domain.Quote;
 
 @Transactional
@@ -73,19 +72,17 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	// this is integration test
 
 	@Autowired
-	private AccountService service;
+	private MachineService service;
 
-	private Account foo;
+	private Machine foo;
 
 	@Before
 	public void setUp() {
 		super.setUp();
 
-		foo = new Account();
-		foo.setEmail("foo@email.com");
-		foo.setPhone("000000000000");
-		foo.setUsername("fooUsername");
-		foo.setPassword("fooPassword");
+		foo = new Machine();
+		foo.setIp("fooIp");
+		foo.setNote("fooNote");
 
 		foo = service.save(foo);
 
@@ -95,7 +92,7 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void index() throws Exception {
 
 		// prepare
-		String uri = "/account";
+		String uri = "/machine";
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL))
@@ -108,11 +105,11 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 		int status = result.getResponse().getStatus();
 
 		// check
-		assertTrue("failure - expected model attribute listAccount", model.containsKey("listEntity"));
+		assertTrue("failure - expected model attribute listMachine", model.containsKey("listEntity"));
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view account/index", "account/index", view);
+		assertEquals("failure - expected view machine/index", "machine/index", view);
 
 	}
 
@@ -120,7 +117,7 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void create() throws Exception {
 
 		// prepare
-		String uri = "/account/create";
+		String uri = "/machine/create";
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL)).andReturn();
@@ -131,12 +128,12 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 		int status = result.getResponse().getStatus();
 
 		// check
-		assertTrue("failure - expected model attribute account", model.containsKey("account"));
-		assertTrue("failure - expected model attribute account", model.get("account") != null);
+		assertTrue("failure - expected model attribute machine", model.containsKey("machine"));
+		assertTrue("failure - expected model attribute machine", model.get("machine") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view account/index", "account/create", view);
+		assertEquals("failure - expected view machine/index", "machine/create", view);
 
 	}
 
@@ -144,13 +141,11 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void save() throws Exception {
 
 		// prepare
-		String uri = "/account";
+		String uri = "/machine";
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("email", "bar@email.com");
-		params.set("phone", "999999999999");
-		params.set("username", "barUsername");
-		params.set("password", "barPassword");
+		params.set("ip", "barIp");
+		params.set("note", "barNote");
 
 		// action
 		MvcResult result = mockMvc
@@ -169,7 +164,7 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 		// assertEquals("failure - expected HTTP Status 3XX", 3, status / 100);
 
 		// wrong assert
-		// view name = redirect:/account/5
+		// view name = redirect:/machine/5
 		// assertThat("failure - expected null view", view, nullValue());
 		// content = ""
 		// assertThat("failure - expected null content", content, nullValue());
@@ -182,13 +177,11 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void saveValidationErrorEmptyField() throws Exception {
 
 		// prepare
-		String uri = "/account";
+		String uri = "/machine";
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("email", "bar@email.com");
-		params.set("phone", "999999999999");
-		params.set("username", "barUsername");
-		// params.set("password", "barPassword");
+		// params.set("ip", "barIp");
+		params.set("note", "barNote");
 		// System.out.println(params);
 
 		// action
@@ -214,8 +207,8 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void show() throws Exception {
 
 		// prepare
-		String uri = "/account/{id}";
-		int id = foo.getId();
+		String uri = "/machine/{id}";
+		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL)).andReturn();
@@ -231,7 +224,7 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view account/show", "account/show", view);
+		assertEquals("failure - expected view machine/show", "machine/show", view);
 
 	}
 
@@ -239,15 +232,15 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void showOtherAssertTechniqueShowcase() throws Exception {
 
 		// prepare
-		String uri = "/account/{id}";
-		int id = foo.getId();
+		String uri = "/machine/{id}";
+		long id = foo.getId();
 
 		// action
 		mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
 				.andExpect(model().attributeExists("pageName")).andExpect(model().attributeExists("pageNameDesc"))
 				.andExpect(model().attributeExists("entity"))
-				.andExpect(model().attribute("entity", hasProperty("email", is(foo.getEmail()))))
-				.andExpect(model().attributeExists("entity")).andExpect(view().name("account/show"));
+				.andExpect(model().attribute("entity", hasProperty("ip", is(foo.getIp()))))
+				.andExpect(model().attributeExists("entity")).andExpect(view().name("machine/show"));
 
 	}
 
@@ -255,12 +248,12 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void showNotFound() throws Exception {
 
 		// prepare
-		String uri = "/account/{id}";
+		String uri = "/machine/{id}";
 		int id = Integer.MAX_VALUE;
 
 		// action
 		// proses mock tidak jalan, null pointer di theamleaf.
-		// saat akses account.id padahal account = null
+		// saat akses machine.id padahal machine = null
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
 				.andExpect(model().attributeExists("entity")).andExpect(model().attribute("entity", nullValue()))
 				.andReturn();
@@ -271,8 +264,8 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void edit() throws Exception {
 
 		// prepare
-		String uri = "/account/{id}/edit";
-		int id = foo.getId();
+		String uri = "/machine/{id}/edit";
+		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL)).andReturn();
@@ -283,12 +276,12 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 		int status = result.getResponse().getStatus();
 
 		// check
-		assertTrue("failure - expected model attribute account", model.containsKey("account"));
-		assertTrue("failure - expected model attribute account", model.get("account") != null);
+		assertTrue("failure - expected model attribute machine", model.containsKey("machine"));
+		assertTrue("failure - expected model attribute machine", model.get("machine") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view account/edit", "account/edit", view);
+		assertEquals("failure - expected view machine/edit", "machine/edit", view);
 
 	}
 
@@ -296,14 +289,12 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void update() throws Exception {
 
 		// prepare
-		String uri = "/account/{id}/update";
-		int id = foo.getId();
+		String uri = "/machine/{id}/update";
+		long id = foo.getId();
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("email", "fooUpdate@email.com");
-		params.set("phone", "999999999999");
-		params.set("username", "fooUpdateUsername");
-		params.set("password", "fooUpdatePassword");
+		params.set("ip", "fooIpUpdate");
+		params.set("note", "fooNoteUpdate");
 
 		// action
 		MvcResult result = mockMvc
@@ -328,14 +319,12 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void updateValidationErrorEmptyField() throws Exception {
 
 		// prepare
-		String uri = "/account/{id}/update";
-		int id = foo.getId();
+		String uri = "/machine/{id}/update";
+		long id = foo.getId();
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("email", "fooUpdate@email.com");
-		params.set("phone", "999999999999");
-		params.set("username", "fooUpdateUsername");
-		// params.set("password", "fooUpdatePassword");
+		// params.set("ip", "fooIpUpdate");
+		params.set("note", "fooNoteUpdate");
 
 		// action
 		MvcResult result = mockMvc.perform(
@@ -362,24 +351,23 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 		// accont.id != pathVariable
 		// SOLUSI : check controller
 		// JIKA sudah disolusikan :
-		// hapus model().hasNoErrors()) dibawah, ganti dengan view().name("account/edit")
+		// hapus model().hasNoErrors()) dibawah, ganti dengan
+		// view().name("machine/edit")
 		// ganti nama test menjadi updateValidationErrorNotConsistentId
 
 		// prepare
-		String uri = "/account/{id}/update";
+		String uri = "/machine/{id}/update";
 		int id = 1;
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("email", "fooUpdate@email.com");
-		params.set("phone", "999999999999");
-		params.set("username", "fooUpdateUsername");
-		params.set("password", "fooUpdatePassword");
+		params.set("ip", "fooIpUpdate");
+		params.set("note", "fooNoteUpdate");
 
 		// action
 		MvcResult result = mockMvc.perform(
 				MockMvcRequestBuilders.post(uri, id).contentType(MediaType.ALL).accept(MediaType.ALL).params(params))
 				.andExpect(model().hasNoErrors()).andReturn();
-		
+
 		System.out.println(service.findOne(id).toString());
 
 	}
@@ -388,12 +376,12 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void delete() throws Exception {
 
 		// prepare
-		String uri = "/account/{id}/delete";
-		int id = foo.getId();
+		String uri = "/machine/{id}/delete";
+		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
-				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/account")).andReturn();
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/machine")).andReturn();
 
 		// Map<String, Object> model = result.getModelAndView().getModel();
 		// String view = result.getModelAndView().getViewName();
@@ -408,12 +396,12 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 	public void deleteNotFound() throws Exception {
 
 		// prepare
-		String uri = "/account/{id}/delete";
+		String uri = "/machine/{id}/delete";
 		int id = Integer.MAX_VALUE;
 
 		// action
 		// proses mock tidak jalan, null pointer di controller.
-		// saat akses account.activated padahal account = null
+		// saat akses machine.activated padahal machine = null
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL)).andDo(print())
 				.andReturn();
 
