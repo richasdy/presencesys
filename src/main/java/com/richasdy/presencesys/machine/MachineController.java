@@ -54,9 +54,9 @@ public class MachineController {
 	@GetMapping("/create")
 	public String create(Model model) {
 		
-		// kemungkinan error disini
+		// ubah machine jadi entity biar universal
 
-		model.addAttribute("entity", new Machine());
+		model.addAttribute("machine", new Machine());
 
 		model.addAttribute("pageName", "Machine Baru");
 		model.addAttribute("pageNameDesc", "Daftar Isian Akun");
@@ -97,7 +97,7 @@ public class MachineController {
 
 		model.addAttribute("entity", entity);
 		model.addAttribute("pageName", "Machine Detail");
-		model.addAttribute("pageNameDesc", "Detail Data Akun");
+		model.addAttribute("pageNameDesc", "Detail Data Mesin");
 
 		return "machine/show";
 	}
@@ -108,9 +108,9 @@ public class MachineController {
 		Machine entity = service.findOne(id);
 
 		// kemungkinan error disini
-		model.addAttribute("entity", entity);
+		model.addAttribute("machine", entity);
 		model.addAttribute("pageName", "Machine Edit");
-		model.addAttribute("pageNameDesc", "Detail Perubahan Data Akun");
+		model.addAttribute("pageNameDesc", "Detail Perubahan Data Mesin");
 
 		return "machine/edit";
 	}

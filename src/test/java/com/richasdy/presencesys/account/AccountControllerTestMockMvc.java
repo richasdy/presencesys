@@ -112,7 +112,8 @@ public class AccountControllerTestMockMvc extends AbstractControllerTest {
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view account/index", "account/index", view);
+//		assertEquals("failure - expected view account/index", "account/index", view);
+		assertEquals("failure - expected view account/index", "account/index-page", view);
 
 	}
 
