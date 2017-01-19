@@ -235,7 +235,7 @@ public class AccountServiceImpl implements AccountService {
 				}
 				break;
 
-			case "deleteddat":
+			case "deletedat":
 				if (Util.isValidDate(searchSplit[1])) {
 					Date start = Util.stringToDate(searchSplit[1]);
 					Date end = Util.stringToDate(searchSplit[1]);
