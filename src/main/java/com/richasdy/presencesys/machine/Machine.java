@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+
 @Entity
 public class Machine {
 	
@@ -54,7 +55,7 @@ public class Machine {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

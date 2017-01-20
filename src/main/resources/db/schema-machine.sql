@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS `Machine`;
 
 CREATE TABLE `Machine` (
+--  `id` bigint(11) UNSIGNED NOT NULL,
   `id` int(11) UNSIGNED NOT NULL,
   `ip` varchar(255) NOT NULL,
   `note` text,

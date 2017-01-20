@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.richasdy.presencesys.machine.Machine;
 import com.richasdy.presencesys.machine.MachineService;
@@ -50,16 +51,15 @@ public class MachineController {
 		return "machine/index";
 	}
 
-
 	@GetMapping("/create")
 	public String create(Model model) {
-		
+
 		// ubah machine jadi entity biar universal
 
 		model.addAttribute("machine", new Machine());
 
 		model.addAttribute("pageName", "Machine Baru");
-		model.addAttribute("pageNameDesc", "Daftar Isian Akun");
+		model.addAttribute("pageNameDesc", "Daftar Isian Machine");
 
 		return "machine/create";
 	}
@@ -103,6 +103,7 @@ public class MachineController {
 	}
 
 	@GetMapping("/{id}/edit")
+	// @ResponseBody
 	public String edit(Model model, @PathVariable int id) {
 
 		Machine entity = service.findOne(id);
@@ -113,6 +114,8 @@ public class MachineController {
 		model.addAttribute("pageNameDesc", "Detail Perubahan Data Mesin");
 
 		return "machine/edit";
+		// return new Machine();
+		// return service.findOne(id);
 	}
 
 	@PostMapping("/{id}/update")

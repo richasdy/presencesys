@@ -33,7 +33,7 @@ public class MachineServiceImpl implements MachineService{
 
 	@Override
 	public Machine findOne(long id) {
-		return repository.findOne( id);
+		return repository.findOne(id);
 	}
 
 	@Override

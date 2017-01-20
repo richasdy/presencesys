@@ -126,11 +126,11 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 		String view = result.getModelAndView().getViewName();
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
-
+		
 		// check
-//		 assertTrue("failure - expected model attribute machine", model.containsKey("entity"));
+		// assertTrue("failure - expected model attribute machine", model.containsKey("entity"));
 		assertTrue("failure - expected model attribute machine", model.containsKey("machine"));
-//		 assertTrue("failure - expected model attribute machine", model.get("entity") != null);
+		// assertTrue("failure - expected model attribute machine", model.get("entity") != null);
 		assertTrue("failure - expected model attribute machine", model.get("machine") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
@@ -276,11 +276,13 @@ public class MachineControllerTestMockMvc extends AbstractControllerTest {
 		String view = result.getModelAndView().getViewName();
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
-
+		
 		// check
-//		assertTrue("failure - expected model attribute machine", model.containsKey("entity"));
+		// assertTrue("failure - expected model attribute machine",
+		// model.containsKey("entity"));
 		assertTrue("failure - expected model attribute machine", model.containsKey("machine"));
-//		assertTrue("failure - expected model attribute machine", model.get("entity") != null);
+		// assertTrue("failure - expected model attribute machine",
+		// model.get("entity") != null);
 		assertTrue("failure - expected model attribute machine", model.get("machine") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));

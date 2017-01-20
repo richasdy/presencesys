@@ -177,6 +177,7 @@ public class MachineServiceTest extends AbstractTest {
 
 		// action
 		Machine confirm = service.findOne(foo.getId());
+		System.out.println(confirm.toString());
 
 		// check
 		assertTrue("failure - expected not null", confirm != null);
