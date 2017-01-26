@@ -134,7 +134,7 @@ public class MachineServiceTest extends AbstractTest {
 		// check
 		assertTrue("failure - expected not null", confirm != null);
 		assertEquals("failure - expected same value", foo.getIp(), confirm.getIp());
-		assertThat("failure - expected has email updated", confirm, hasProperty("ip", is(foo.getIp())));
+		assertThat("failure - expected has ip updated", confirm, hasProperty("ip", is(foo.getIp())));
 
 	}
 
@@ -329,8 +329,8 @@ public class MachineServiceTest extends AbstractTest {
 		Page<Machine> pageableConfirm = service.searchBy("ip:notFoundIp", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
-		System.out.println("@searchByIpNotFound" + pageableConfirm);
-		System.out.println("@searchByIpNotFound" + listConfirm);
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
 
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm == null);
@@ -411,8 +411,8 @@ public class MachineServiceTest extends AbstractTest {
 		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
-		System.out.println("@searchByCreatedAt" + pageableConfirm);
-		System.out.println("@searchByCreatedAt" + listConfirm);
+//		System.out.println("@searchByCreatedAt" + pageableConfirm);
+//		System.out.println("@searchByCreatedAt" + listConfirm);
 
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm != null);
@@ -436,8 +436,8 @@ public class MachineServiceTest extends AbstractTest {
 		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
-		System.out.println("@searchByCreatedAt" + pageableConfirm);
-		System.out.println("@searchByCreatedAt" + listConfirm);
+//		System.out.println("@searchByCreatedAt" + pageableConfirm);
+//		System.out.println("@searchByCreatedAt" + listConfirm);
 
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm != null);
