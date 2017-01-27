@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.group;
+package com.richasdy.presencesys.kelompok;
 
 import java.util.Date;
 
@@ -10,29 +10,29 @@ import org.springframework.stereotype.Service;
 import com.richasdy.presencesys.util.Util;
 
 @Service
-public class GroupServiceImpl implements GroupService{
+public class KelompokServiceImpl implements KelompokService{
 	
-	GroupRepository repository;
+	KelompokRepository repository;
 
 	@Autowired
-	public GroupServiceImpl(GroupRepository repository) {
+	public KelompokServiceImpl(KelompokRepository repository) {
 		this.repository = repository;
 	}
 
 	@Override
-	public Group save(Group entity) {
+	public Kelompok save(Kelompok entity) {
 		entity.setCreatedAt(new Date());
 		return repository.save(entity);
 	}
 
 	@Override
-	public Group update(Group entity) {
+	public Kelompok update(Kelompok entity) {
 		entity.setUpdatedAt(new Date());
 		return repository.save(entity);
 	}
 
 	@Override
-	public Group findOne(long id) {
+	public Kelompok findOne(long id) {
 		return repository.findOne(id);
 	}
 
@@ -47,15 +47,15 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public Group deleteSoft(long id) {
-		Group entity = repository.findOne(id);
+	public Kelompok deleteSoft(long id) {
+		Kelompok entity = repository.findOne(id);
 		entity.setDeletedAt(new Date());
 		return repository.save(entity);
 	}
 
 	@Override
-	public Page<Group> searchBy(String searchTerm, Pageable pageable) {
-		Page<Group> retVal = null;
+	public Page<Kelompok> searchBy(String searchTerm, Pageable pageable) {
+		Page<Kelompok> retVal = null;
 
 		if (searchTerm == null || searchTerm.isEmpty()) {
 			retVal = repository.findAll(pageable);
@@ -70,15 +70,15 @@ public class GroupServiceImpl implements GroupService{
 			// java 7 above
 			switch (searchSplit[0]) {
 			case "id":
-				retVal = repository.findDistinctMachineById(Integer.parseInt(searchSplit[1]), pageable);
+				retVal = repository.findDistinctGroupById(Integer.parseInt(searchSplit[1]), pageable);
 				break;
 
-			case "name":
-				retVal = repository.findDistinctMachineByNameContaining(searchSplit[1], pageable);
+			case "nama":
+				retVal = repository.findDistinctGroupByNamaContaining(searchSplit[1], pageable);
 				break;
 
 			case "note":
-				retVal = repository.findDistinctMachineByNoteContaining(searchSplit[1], pageable);
+				retVal = repository.findDistinctGroupByNoteContaining(searchSplit[1], pageable);
 				break;
 
 			case "createdat":
@@ -91,7 +91,7 @@ public class GroupServiceImpl implements GroupService{
 					end.setHours(23);
 					end.setMinutes(59);
 					end.setSeconds(59);
-					retVal = repository.findDistinctMachineByCreatedAtBetween(start, end, pageable);
+					retVal = repository.findDistinctGroupByCreatedAtBetween(start, end, pageable);
 				}
 				break;
 
@@ -105,7 +105,7 @@ public class GroupServiceImpl implements GroupService{
 					end.setHours(23);
 					end.setMinutes(59);
 					end.setSeconds(59);
-					retVal = repository.findDistinctMachineByUpdatedAtBetween(start, end, pageable);
+					retVal = repository.findDistinctGroupByUpdatedAtBetween(start, end, pageable);
 				}
 				break;
 
@@ -119,7 +119,7 @@ public class GroupServiceImpl implements GroupService{
 					end.setHours(23);
 					end.setMinutes(59);
 					end.setSeconds(59);
-					retVal = repository.findDistinctMachineByDeletedAtBetween(start, end, pageable);
+					retVal = repository.findDistinctGroupByDeletedAtBetween(start, end, pageable);
 				}
 				break;
 
@@ -131,7 +131,7 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public Page<Group> findAll(Pageable pageable) {
+	public Page<Kelompok> findAll(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
 

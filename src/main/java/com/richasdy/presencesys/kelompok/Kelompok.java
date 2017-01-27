@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.group;
+package com.richasdy.presencesys.kelompok;
 
 import java.util.Date;
 
@@ -14,16 +14,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
-public class Group {
+public class Kelompok {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
 	private long id;
 	
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	@NotEmpty // validator
-	private String name;
+	private String nama;
 	
 	private String note;
 	
@@ -36,15 +36,15 @@ public class Group {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date deletedAt;
     
-    public Group() {
+    public Kelompok() {
 		super();
 		// TODO Auto-generated constructor stub
     }
 
-	public Group(long id, String name, String note, Date createdAt, Date updatedAt, Date deletedAt) {
+	public Kelompok(long id, String nama, String note, Date createdAt, Date updatedAt, Date deletedAt) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.nama = nama;
 		this.note = note;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -59,12 +59,12 @@ public class Group {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNama() {
+		return nama;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNama(String nama) {
+		this.nama = nama;
 	}
 
 	public String getNote() {
@@ -101,7 +101,7 @@ public class Group {
 	
 	@Override
 	public String toString() {
-		return this.getClass().getName() + " [ " + id + ", " + name + ", " + note + ", " + createdAt + ", "
+		return this.getClass().getName() + " [ " + id + ", " + nama + ", " + note + ", " + createdAt + ", "
 				+ updatedAt + ", " + deletedAt + " ]";
 	}
     

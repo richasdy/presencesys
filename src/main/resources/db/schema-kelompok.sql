@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS `Group`;
+DROP TABLE IF EXISTS `Kelompok`;
 
-CREATE TABLE `Group` (
+CREATE TABLE `Kelompok` (
   `id` int(11) UNSIGNED NOT NULL,
-  `name` text NOT NULL,
+  `nama` text NOT NULL,
   `note` text,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -10,10 +10,10 @@ CREATE TABLE `Group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-ALTER TABLE `Group`
+ALTER TABLE `Kelompok`
   ADD PRIMARY KEY (`id`);
 
   
-ALTER TABLE `Group`
+ALTER TABLE `Kelompok`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 

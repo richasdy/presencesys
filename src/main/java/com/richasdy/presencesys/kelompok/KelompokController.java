@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.group;
+package com.richasdy.presencesys.kelompok;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.richasdy.presencesys.group.Group;
-import com.richasdy.presencesys.group.GroupService;
+import com.richasdy.presencesys.kelompok.Kelompok;
+import com.richasdy.presencesys.kelompok.KelompokService;
 
 @Controller
 @RequestMapping("group")
-public class GroupController {
+public class KelompokController {
 
-	GroupService service;
+	KelompokService service;
 
 	@Autowired
-	public GroupController(GroupService service) {
+	public KelompokController(KelompokService service) {
 		this.service = service;
 	}
 
@@ -42,7 +42,7 @@ public class GroupController {
 			@RequestParam(defaultValue = "10") int size) {
 
 		Pageable pagination = new PageRequest(page, size);
-		Page<Group> pageEntity = service.findAll(pagination);
+		Page<Kelompok> pageEntity = service.findAll(pagination);
 
 		model.addAttribute("listEntity", pageEntity);
 		model.addAttribute("pageName", "Tabel Group");
@@ -56,7 +56,7 @@ public class GroupController {
 
 		// ubah machine jadi entity biar universal
 
-		model.addAttribute("machine", new Group());
+		model.addAttribute("machine", new Kelompok());
 
 		model.addAttribute("pageName", "Group Baru");
 		model.addAttribute("pageNameDesc", "Daftar Isian Group");
@@ -65,7 +65,7 @@ public class GroupController {
 	}
 
 	@PostMapping()
-	public String save(@Valid Group entity, BindingResult result) {
+	public String save(@Valid Kelompok entity, BindingResult result) {
 
 		// debug
 		// System.out.println("ganteng");
@@ -79,7 +79,7 @@ public class GroupController {
 
 		} else {
 
-			Group confirm = service.save(entity);
+			Kelompok confirm = service.save(entity);
 
 			return "redirect:/group/" + confirm.getId();
 		}
@@ -89,7 +89,7 @@ public class GroupController {
 	@GetMapping("/{id}")
 	public String show(Model model, @PathVariable int id) {
 
-		Group entity = service.findOne(id);
+		Kelompok entity = service.findOne(id);
 
 		// debug
 		// System.out.println("id @show" + id);
@@ -106,7 +106,7 @@ public class GroupController {
 	// @ResponseBody
 	public String edit(Model model, @PathVariable int id) {
 
-		Group entity = service.findOne(id);
+		Kelompok entity = service.findOne(id);
 
 		// kemungkinan error disini
 		model.addAttribute("machine", entity);
@@ -119,7 +119,7 @@ public class GroupController {
 	}
 
 	@PostMapping("/{id}/update")
-	public String update(@PathVariable int id, @Valid Group updatedEntity, BindingResult result) {
+	public String update(@PathVariable int id, @Valid Kelompok updatedEntity, BindingResult result) {
 
 		if (result.hasErrors() || id != updatedEntity.getId()) {
 
@@ -151,7 +151,7 @@ public class GroupController {
 			// System.out.println(result);
 			// System.out.println(updatedGroup.toString());
 
-			Group currentEntity = service.findOne(id);
+			Kelompok currentEntity = service.findOne(id);
 			currentEntity.setUpdatedAt(new Date());
 
 			// copy changed field into object
@@ -183,7 +183,7 @@ public class GroupController {
 		// tidak terpakai
 		// service.deleteSoft(id);
 
-		Group currentEntity = service.findOne(id);
+		Kelompok currentEntity = service.findOne(id);
 		currentEntity.setUpdatedAt(new Date());
 		currentEntity.setDeletedAt(new Date());
 
@@ -198,7 +198,7 @@ public class GroupController {
 			@RequestParam(defaultValue = "10") int size) {
 
 		Pageable pagination = new PageRequest(page, size);
-		Page<Group> pageEntity = service.searchBy(q, pagination);
+		Page<Kelompok> pageEntity = service.searchBy(q, pagination);
 
 		model.addAttribute("q", q);
 		model.addAttribute("listEntity", pageEntity);

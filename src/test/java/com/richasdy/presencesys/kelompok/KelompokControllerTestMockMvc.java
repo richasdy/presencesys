@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.group;
+package com.richasdy.presencesys.kelompok;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -66,7 +66,7 @@ import com.richasdy.presencesys.machine.MachineService;
 import com.richasdy.presencesys.domain.Quote;
 
 @Transactional
-public class GroupControllerTestMockMvc extends AbstractControllerTest {
+public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 
 	// connection using mockmvc
 	// this is integration test

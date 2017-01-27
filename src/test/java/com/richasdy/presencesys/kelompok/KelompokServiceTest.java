@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.group;
+package com.richasdy.presencesys.kelompok;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -34,12 +34,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.richasdy.presencesys.AbstractTest;
-import com.richasdy.presencesys.machine.Machine;
-import com.richasdy.presencesys.machine.MachineRepository;
-import com.richasdy.presencesys.machine.MachineService;
+import com.richasdy.presencesys.kelompok.Kelompok;
+import com.richasdy.presencesys.kelompok.KelompokRepository;
+import com.richasdy.presencesys.kelompok.KelompokService;
 
 @Transactional
-public class GroupServiceTest extends AbstractTest {
+public class KelompokServiceTest extends AbstractTest {
 
 	// this is integration test
 	// service dont have validation, controller have
@@ -47,13 +47,13 @@ public class GroupServiceTest extends AbstractTest {
 	// no change db status, no left some garbage data in db
 
 	@Autowired
-	private MachineService service;
-	private Machine foo;
+	private KelompokService service;
+	private Kelompok foo;
 
 	@Before
 	public void init() {
-		foo = new Machine();
-		foo.setIp("fooIp");
+		foo = new Kelompok();
+		foo.setNama("fooNama");
 		foo.setNote("fooNote");
 
 		foo = service.save(foo);
@@ -61,7 +61,7 @@ public class GroupServiceTest extends AbstractTest {
 
 	@After
 	public void destroy() {
-		// MachineService.delete(foo.getId());
+		// GroupService.delete(foo.getId());
 	}
 
 	@Test
@@ -70,25 +70,25 @@ public class GroupServiceTest extends AbstractTest {
 		// error jika di test semua, jika di test sendiri all pass
 
 		// prepare
-		Machine bar = new Machine();
-		bar.setIp("barIp");
+		Kelompok bar = new Kelompok();
+		bar.setNama("barNama");
 		bar.setNote("barNote");
 
 		long countBefore = service.count();
 
 		// action
-		Machine confirm = service.save(bar);
+		Kelompok confirm = service.save(bar);
 
 		long countAfter = service.count();
 
 		// delete data
 		// handle by transactional
-		// MachineService.delete(bar.getId());
+		// GroupService.delete(bar.getId());
 
 		// check
 		assertTrue("failure - expected not null", confirm != null);
 		assertEquals("failure - expected right count", countAfter, countBefore + 1);
-		assertEquals("failure - expected same value", bar.getIp(), confirm.getIp());
+		assertEquals("failure - expected same value", bar.getNama(), confirm.getNama());
 
 	}
 
@@ -96,45 +96,45 @@ public class GroupServiceTest extends AbstractTest {
 	public void saveValidationErrorEmptyField() {
 
 		// prepare
-		Machine bar = new Machine();
-		// bar.setIp("barIp");
+		Kelompok bar = new Kelompok();
+		// bar.setNama("barNama");
 		bar.setNote("barNote");
 
 		// action
-		Machine confirm = service.save(bar);
+		Kelompok confirm = service.save(bar);
 
 		// check
 
 	}
 
-	@Test(expected = DataIntegrityViolationException.class)
-	public void saveValidationErrorDupicate() {
-
-		// prepare
-		Machine bar = new Machine();
-		bar.setIp("fooIp");
-		bar.setNote("fooNote");
-
-		// action
-		Machine confirm = service.save(bar);
-
-		// check
-
-	}
+	// @Test(expected = DataIntegrityViolationException.class)
+	// public void saveValidationErrorDupicate() {
+	//
+	// // prepare
+	// Kelompok bar = new Kelompok();
+	// bar.setNama("fooNama");
+	// bar.setNote("fooNote");
+	//
+	// // action
+	// Kelompok confirm = service.save(bar);
+	//
+	// // check
+	//
+	// }
 
 	@Test
 	public void update() {
 
 		// prepare
-		foo.setIp("fooIpUpdate");
+		foo.setNama("fooNamaUpdate");
 
 		// action
-		Machine confirm = service.update(foo);
+		Kelompok confirm = service.update(foo);
 
 		// check
 		assertTrue("failure - expected not null", confirm != null);
-		assertEquals("failure - expected same value", foo.getIp(), confirm.getIp());
-		assertThat("failure - expected has email updated", confirm, hasProperty("ip", is(foo.getIp())));
+		assertEquals("failure - expected same value", foo.getNama(), confirm.getNama());
+		assertThat("failure - expected has name updated", confirm, hasProperty("nama", is(foo.getNama())));
 
 	}
 
@@ -142,10 +142,10 @@ public class GroupServiceTest extends AbstractTest {
 	public void updateNotFound() {
 
 		// prepare
-		Machine notFound = service.findOne(Integer.MAX_VALUE);
+		Kelompok notFound = service.findOne(Integer.MAX_VALUE);
 
 		// action
-		Machine confirm = service.update(notFound);
+		Kelompok confirm = service.update(notFound);
 
 		// check
 
@@ -155,16 +155,16 @@ public class GroupServiceTest extends AbstractTest {
 	public void updateValidationErrorEmptyField() {
 
 		// prepare
-		Machine bar = new Machine();
+		Kelompok bar = new Kelompok();
 		bar.setId(Integer.MAX_VALUE);
-		// bar.setIp("barIp");
+		// bar.setNama("barNama");
 		bar.setNote("barNote");
 		// createdAt tidak boleh null, diset di fungsi save
 		bar.setCreatedAt(new Date());
 
 		// action
 		// kalau lolos menjadi save
-		Machine confirm = service.update(bar);
+		Kelompok confirm = service.update(bar);
 
 		// check
 
@@ -176,7 +176,7 @@ public class GroupServiceTest extends AbstractTest {
 		// prepare
 
 		// action
-		Machine confirm = service.findOne(foo.getId());
+		Kelompok confirm = service.findOne(foo.getId());
 		System.out.println(confirm.toString());
 
 		// check
@@ -191,7 +191,7 @@ public class GroupServiceTest extends AbstractTest {
 		int id = Integer.MAX_VALUE;
 
 		// action
-		Machine confirm = service.findOne(id);
+		Kelompok confirm = service.findOne(id);
 
 		// check
 		assertTrue("failure - expected null", confirm == null);
@@ -204,7 +204,7 @@ public class GroupServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Machine> pageableConfirm = service.findAll(page);
+		Page<Kelompok> pageableConfirm = service.findAll(page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -233,7 +233,7 @@ public class GroupServiceTest extends AbstractTest {
 		// action
 		service.delete(foo.getId());
 
-		Machine confirm = service.findOne(foo.getId());
+		Kelompok confirm = service.findOne(foo.getId());
 
 		// check
 		assertTrue("failure - expected null", confirm == null);
@@ -246,7 +246,7 @@ public class GroupServiceTest extends AbstractTest {
 		// prepare
 
 		// action
-		Machine confirm = service.deleteSoft(foo.getId());
+		Kelompok confirm = service.deleteSoft(foo.getId());
 
 		// check
 		assertTrue("failure - expected not null", confirm.getDeletedAt() != null);
@@ -260,7 +260,7 @@ public class GroupServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Machine> pageableConfirm = service.searchBy("", page);
+		Page<Kelompok> pageableConfirm = service.searchBy("", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchEmptyString : " + iterableConfirm);
@@ -278,7 +278,7 @@ public class GroupServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Machine> pageableConfirm = service.searchBy("id:1", page);
+		Page<Kelompok> pageableConfirm = service.searchBy("id:1", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -294,7 +294,7 @@ public class GroupServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Machine> pageableConfirm = service.searchBy("id:a", page);
+		Page<Kelompok> pageableConfirm = service.searchBy("id:a", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -304,13 +304,13 @@ public class GroupServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void searchByIp() {
+	public void searchByNama() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Machine> pageableConfirm = service.searchBy("ip:fooIp", page);
+		Page<Kelompok> pageableConfirm = service.searchBy("nama:fooNama", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -320,17 +320,17 @@ public class GroupServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void searchByIpNotFound() {
+	public void searchByNamaNotFound() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Machine> pageableConfirm = service.searchBy("ip:notFoundIp", page);
+		Page<Kelompok> pageableConfirm = service.searchBy("nama:notFoundNama", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
-		System.out.println("@searchByIpNotFound" + pageableConfirm);
-		System.out.println("@searchByIpNotFound" + listConfirm);
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
 
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm == null);
@@ -345,7 +345,7 @@ public class GroupServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Machine> pageableConfirm = service.searchBy("note:note", page);
+		Page<Kelompok> pageableConfirm = service.searchBy("note:fooNote", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -361,7 +361,7 @@ public class GroupServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Machine> pageableConfirm = service.searchBy("note:notFoundNote", page);
+		Page<Kelompok> pageableConfirm = service.searchBy("note:notFoundNote", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -383,7 +383,7 @@ public class GroupServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Kelompok> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt"+pageableConfirm);
@@ -408,7 +408,7 @@ public class GroupServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Kelompok> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -433,7 +433,7 @@ public class GroupServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Kelompok> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -449,7 +449,7 @@ public class GroupServiceTest extends AbstractTest {
 	public void searchByDeteledAt() {
 
 		// prepare
-		Machine confirm = service.deleteSoft(foo.getId());
+		Kelompok confirm = service.deleteSoft(foo.getId());
 		Pageable page = new PageRequest(0, 2);
 		Date date = new Date();
 
@@ -461,7 +461,7 @@ public class GroupServiceTest extends AbstractTest {
 		// service.findOne(foo.getId()));
 		// System.out.println("@searchByDeletedAt" + searchTerm);
 		// action
-		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Kelompok> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByDeletedAt" + pageableConfirm);
@@ -486,7 +486,7 @@ public class GroupServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Kelompok> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -511,7 +511,7 @@ public class GroupServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Kelompok> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -527,8 +527,8 @@ public class GroupServiceTest extends AbstractTest {
 	public void searchByUpdatedAt() {
 
 		// prepare
-		foo.setIp("fooIpUpdate");
-		Machine confirm = service.update(foo);
+		foo.setNama("fooNamaUpdate");
+		Kelompok confirm = service.update(foo);
 		Pageable page = new PageRequest(0, 2);
 		Date date = new Date();
 
@@ -538,7 +538,7 @@ public class GroupServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Kelompok> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt"+pageableConfirm);
@@ -563,7 +563,7 @@ public class GroupServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Kelompok> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -588,7 +588,7 @@ public class GroupServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Kelompok> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);

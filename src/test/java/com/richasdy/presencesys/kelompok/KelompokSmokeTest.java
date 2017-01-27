@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.group;
+package com.richasdy.presencesys.kelompok;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,26 +8,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.richasdy.presencesys.group.GroupController;
-import com.richasdy.presencesys.group.GroupRepository;
-import com.richasdy.presencesys.group.GroupService;
-import com.richasdy.presencesys.group.GroupServiceImpl;
+import com.richasdy.presencesys.kelompok.KelompokController;
+import com.richasdy.presencesys.kelompok.KelompokRepository;
+import com.richasdy.presencesys.kelompok.KelompokService;
+import com.richasdy.presencesys.kelompok.KelompokServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class GroupSmokeTest {
+public class KelompokSmokeTest {
 	
 	@Autowired
-	private GroupRepository groupRepository;
+	private KelompokRepository groupRepository;
 
 	@Autowired
-	private GroupController groupController;
+	private KelompokController groupController;
 
 	@Autowired
-	private GroupService groupService;
+	private KelompokService groupService;
 	
 	@Autowired
-	private GroupServiceImpl groupServiceImpl;
+	private KelompokServiceImpl groupServiceImpl;
 	
 	
 	
