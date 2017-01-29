@@ -27,7 +27,7 @@ import com.richasdy.presencesys.kelompok.Kelompok;
 import com.richasdy.presencesys.kelompok.KelompokService;
 
 @Controller
-@RequestMapping("group")
+@RequestMapping("kelompok")
 public class KelompokController {
 
 	KelompokService service;
@@ -45,23 +45,23 @@ public class KelompokController {
 		Page<Kelompok> pageEntity = service.findAll(pagination);
 
 		model.addAttribute("listEntity", pageEntity);
-		model.addAttribute("pageName", "Tabel Group");
-		model.addAttribute("pageNameDesc", "Daftar Group System");
+		model.addAttribute("pageName", "Tabel Kelompok");
+		model.addAttribute("pageNameDesc", "Daftar Kelompok System");
 
-		return "group/index";
+		return "kelompok/index";
 	}
 
 	@GetMapping("/create")
 	public String create(Model model) {
 
-		// ubah machine jadi entity biar universal
+		// ubah kelompok jadi entity biar universal
 
-		model.addAttribute("machine", new Kelompok());
+		model.addAttribute("kelompok", new Kelompok());
 
-		model.addAttribute("pageName", "Group Baru");
-		model.addAttribute("pageNameDesc", "Daftar Isian Group");
+		model.addAttribute("pageName", "Kelompok Baru");
+		model.addAttribute("pageNameDesc", "Daftar Isian Kelompok");
 
-		return "group/create";
+		return "kelompok/create";
 	}
 
 	@PostMapping()
@@ -75,13 +75,13 @@ public class KelompokController {
 		if (result.hasErrors()) {
 
 			// has error
-			return "group/create";
+			return "kelompok/create";
 
 		} else {
 
 			Kelompok confirm = service.save(entity);
 
-			return "redirect:/group/" + confirm.getId();
+			return "redirect:/kelompok/" + confirm.getId();
 		}
 
 	}
@@ -96,10 +96,10 @@ public class KelompokController {
 		// System.out.println("ganteng" + account);
 
 		model.addAttribute("entity", entity);
-		model.addAttribute("pageName", "Group Detail");
-		model.addAttribute("pageNameDesc", "Detail Data Group");
+		model.addAttribute("pageName", "Kelompok Detail");
+		model.addAttribute("pageNameDesc", "Detail Data Kelompok");
 
-		return "group/show";
+		return "kelompok/show";
 	}
 
 	@GetMapping("/{id}/edit")
@@ -109,12 +109,12 @@ public class KelompokController {
 		Kelompok entity = service.findOne(id);
 
 		// kemungkinan error disini
-		model.addAttribute("machine", entity);
-		model.addAttribute("pageName", "Group Edit");
-		model.addAttribute("pageNameDesc", "Detail Perubahan Data Group");
+		model.addAttribute("kelompok", entity);
+		model.addAttribute("pageName", "Kelompok Edit");
+		model.addAttribute("pageNameDesc", "Detail Perubahan Data Kelompok");
 
-		return "group/edit";
-		// return new Group();
+		return "kelompok/edit";
+		// return new Kelompok();
 		// return service.findOne(id);
 	}
 
@@ -126,7 +126,7 @@ public class KelompokController {
 			// VULNURABLE
 			// ada kemungkinan dihack
 			// merubah data account dengan id = id
-			// tapi updatedGroup.getId() nya berbeda
+			// tapi updatedKelompok.getId() nya berbeda
 			// pakai postman
 
 			// SOLUSI
@@ -142,14 +142,14 @@ public class KelompokController {
 			// SOLUSI
 			// id ambil dari session
 
-			return "group/edit";
+			return "kelompok/edit";
 
 		} else {
 
 			// debug
 			// System.out.println("im here");
 			// System.out.println(result);
-			// System.out.println(updatedGroup.toString());
+			// System.out.println(updatedKelompok.toString());
 
 			Kelompok currentEntity = service.findOne(id);
 			currentEntity.setUpdatedAt(new Date());
@@ -171,7 +171,7 @@ public class KelompokController {
 
 			service.update(currentEntity);
 
-			return "redirect:/group/" + currentEntity.getId();
+			return "redirect:/kelompok/" + currentEntity.getId();
 
 		}
 
@@ -189,7 +189,7 @@ public class KelompokController {
 
 		service.save(currentEntity);
 
-		return "redirect:/machine";
+		return "redirect:/kelompok";
 
 	}
 
@@ -202,10 +202,10 @@ public class KelompokController {
 
 		model.addAttribute("q", q);
 		model.addAttribute("listEntity", pageEntity);
-		model.addAttribute("pageName", "Tabel Group Pencarian : " + q);
-		model.addAttribute("pageNameDesc", "Daftar Group System");
+		model.addAttribute("pageName", "Tabel Kelompok Pencarian : " + q);
+		model.addAttribute("pageNameDesc", "Daftar Kelompok System");
 
-		return "group/index";
+		return "kelompok/index";
 	}
 
 }

@@ -61,8 +61,8 @@ import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richasdy.presencesys.AbstractControllerTest;
-import com.richasdy.presencesys.machine.Machine;
-import com.richasdy.presencesys.machine.MachineService;
+import com.richasdy.presencesys.kelompok.Kelompok;
+import com.richasdy.presencesys.kelompok.KelompokService;
 import com.richasdy.presencesys.domain.Quote;
 
 @Transactional
@@ -72,16 +72,16 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	// this is integration test
 
 	@Autowired
-	private MachineService service;
+	private KelompokService service;
 
-	private Machine foo;
+	private Kelompok foo;
 
 	@Before
 	public void setUp() {
 		super.setUp();
 
-		foo = new Machine();
-		foo.setIp("fooIp");
+		foo = new Kelompok();
+		foo.setNama("fooNama");
 		foo.setNote("fooNote");
 
 		foo = service.save(foo);
@@ -92,7 +92,7 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void index() throws Exception {
 
 		// prepare
-		String uri = "/machine";
+		String uri = "/kelompok";
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL))
@@ -105,11 +105,11 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 		int status = result.getResponse().getStatus();
 
 		// check
-		assertTrue("failure - expected model attribute listMachine", model.containsKey("listEntity"));
+		assertTrue("failure - expected model attribute listKelompok", model.containsKey("listEntity"));
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view machine/index", "machine/index", view);
+		assertEquals("failure - expected view kelompok/index", "kelompok/index", view);
 
 	}
 
@@ -117,7 +117,7 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void create() throws Exception {
 
 		// prepare
-		String uri = "/machine/create";
+		String uri = "/kelompok/create";
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL)).andReturn();
@@ -126,16 +126,18 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 		String view = result.getModelAndView().getViewName();
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
-		
+
 		// check
-		// assertTrue("failure - expected model attribute machine", model.containsKey("entity"));
-		assertTrue("failure - expected model attribute machine", model.containsKey("machine"));
-		// assertTrue("failure - expected model attribute machine", model.get("entity") != null);
-		assertTrue("failure - expected model attribute machine", model.get("machine") != null);
+		// assertTrue("failure - expected model attribute kelompok",
+		// model.containsKey("entity"));
+		assertTrue("failure - expected model attribute kelompok", model.containsKey("kelompok"));
+		// assertTrue("failure - expected model attribute kelompok",
+		// model.get("entity") != null);
+		assertTrue("failure - expected model attribute kelompok", model.get("kelompok") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view machine/index", "machine/create", view);
+		assertEquals("failure - expected view kelompok/index", "kelompok/create", view);
 
 	}
 
@@ -143,10 +145,10 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void save() throws Exception {
 
 		// prepare
-		String uri = "/machine";
+		String uri = "/kelompok";
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("ip", "barIp");
+		params.set("nama", "barNama");
 		params.set("note", "barNote");
 
 		// action
@@ -166,7 +168,7 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 		// assertEquals("failure - expected HTTP Status 3XX", 3, status / 100);
 
 		// wrong assert
-		// view name = redirect:/machine/5
+		// view name = redirect:/kelompok/5
 		// assertThat("failure - expected null view", view, nullValue());
 		// content = ""
 		// assertThat("failure - expected null content", content, nullValue());
@@ -179,10 +181,10 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void saveValidationErrorEmptyField() throws Exception {
 
 		// prepare
-		String uri = "/machine";
+		String uri = "/kelompok";
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		// params.set("ip", "barIp");
+		// params.set("nama", "barNama");
 		params.set("note", "barNote");
 		// System.out.println(params);
 
@@ -209,7 +211,7 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void show() throws Exception {
 
 		// prepare
-		String uri = "/machine/{id}";
+		String uri = "/kelompok/{id}";
 		long id = foo.getId();
 
 		// action
@@ -226,7 +228,7 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view machine/show", "machine/show", view);
+		assertEquals("failure - expected view kelompok/show", "kelompok/show", view);
 
 	}
 
@@ -234,15 +236,15 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void showOtherAssertTechniqueShowcase() throws Exception {
 
 		// prepare
-		String uri = "/machine/{id}";
+		String uri = "/kelompok/{id}";
 		long id = foo.getId();
 
 		// action
 		mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
 				.andExpect(model().attributeExists("pageName")).andExpect(model().attributeExists("pageNameDesc"))
 				.andExpect(model().attributeExists("entity"))
-				.andExpect(model().attribute("entity", hasProperty("ip", is(foo.getIp()))))
-				.andExpect(model().attributeExists("entity")).andExpect(view().name("machine/show"));
+				.andExpect(model().attribute("entity", hasProperty("nama", is(foo.getNama()))))
+				.andExpect(model().attributeExists("entity")).andExpect(view().name("kelompok/show"));
 
 	}
 
@@ -250,12 +252,12 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void showNotFound() throws Exception {
 
 		// prepare
-		String uri = "/machine/{id}";
+		String uri = "/kelompok/{id}";
 		int id = Integer.MAX_VALUE;
 
 		// action
 		// proses mock tidak jalan, null pointer di theamleaf.
-		// saat akses machine.id padahal machine = null
+		// saat akses kelompok.id padahal kelompok = null
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
 				.andExpect(model().attributeExists("entity")).andExpect(model().attribute("entity", nullValue()))
 				.andReturn();
@@ -266,7 +268,7 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void edit() throws Exception {
 
 		// prepare
-		String uri = "/machine/{id}/edit";
+		String uri = "/kelompok/{id}/edit";
 		long id = foo.getId();
 
 		// action
@@ -276,18 +278,18 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 		String view = result.getModelAndView().getViewName();
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
-		
+
 		// check
-		// assertTrue("failure - expected model attribute machine",
+		// assertTrue("failure - expected model attribute kelompok",
 		// model.containsKey("entity"));
-		assertTrue("failure - expected model attribute machine", model.containsKey("machine"));
-		// assertTrue("failure - expected model attribute machine",
+		assertTrue("failure - expected model attribute kelompok", model.containsKey("kelompok"));
+		// assertTrue("failure - expected model attribute kelompok",
 		// model.get("entity") != null);
-		assertTrue("failure - expected model attribute machine", model.get("machine") != null);
+		assertTrue("failure - expected model attribute kelompok", model.get("kelompok") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view machine/edit", "machine/edit", view);
+		assertEquals("failure - expected view kelompok/edit", "kelompok/edit", view);
 
 	}
 
@@ -295,11 +297,11 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void update() throws Exception {
 
 		// prepare
-		String uri = "/machine/{id}/update";
+		String uri = "/kelompok/{id}/update";
 		long id = foo.getId();
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("ip", "fooIpUpdate");
+		params.set("nama", "fooNamaUpdate");
 		params.set("note", "fooNoteUpdate");
 
 		// action
@@ -325,11 +327,11 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void updateValidationErrorEmptyField() throws Exception {
 
 		// prepare
-		String uri = "/machine/{id}/update";
+		String uri = "/kelompok/{id}/update";
 		long id = foo.getId();
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		// params.set("ip", "fooIpUpdate");
+		// params.set("nama", "fooNamaUpdate");
 		params.set("note", "fooNoteUpdate");
 
 		// action
@@ -358,15 +360,15 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 		// SOLUSI : check controller
 		// JIKA sudah disolusikan :
 		// hapus model().hasNoErrors()) dibawah, ganti dengan
-		// view().name("machine/edit")
+		// view().name("kelompok/edit")
 		// ganti nama test menjadi updateValidationErrorNotConsistentId
 
 		// prepare
-		String uri = "/machine/{id}/update";
+		String uri = "/kelompok/{id}/update";
 		int id = 1;
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("ip", "fooIpUpdate");
+		params.set("nama", "fooNamaUpdate");
 		params.set("note", "fooNoteUpdate");
 
 		// action
@@ -382,12 +384,12 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void delete() throws Exception {
 
 		// prepare
-		String uri = "/machine/{id}/delete";
+		String uri = "/kelompok/{id}/delete";
 		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
-				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/machine")).andReturn();
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/kelompok")).andReturn();
 
 		// Map<String, Object> model = result.getModelAndView().getModel();
 		// String view = result.getModelAndView().getViewName();
@@ -402,12 +404,12 @@ public class KelompokControllerTestMockMvc extends AbstractControllerTest {
 	public void deleteNotFound() throws Exception {
 
 		// prepare
-		String uri = "/machine/{id}/delete";
+		String uri = "/kelompok/{id}/delete";
 		int id = Integer.MAX_VALUE;
 
 		// action
 		// proses mock tidak jalan, null pointer di controller.
-		// saat akses machine.activated padahal machine = null
+		// saat akses kelompok.activated padahal kelompok = null
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL)).andDo(print())
 				.andReturn();
 
