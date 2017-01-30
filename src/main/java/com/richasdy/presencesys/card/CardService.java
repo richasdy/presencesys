@@ -1,8 +1,6 @@
-package com.richasdy.presencesys.service;
+package com.richasdy.presencesys.card;
 
 import org.springframework.stereotype.Service;
-import com.richasdy.presencesys.domain.Card;
-import com.richasdy.presencesys.domain.Card;
 
 @Service
 public interface CardService {

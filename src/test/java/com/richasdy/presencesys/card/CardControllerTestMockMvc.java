@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.controller;
+package com.richasdy.presencesys.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -62,9 +62,9 @@ import org.springframework.web.util.NestedServletException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richasdy.presencesys.AbstractControllerTest;
 import com.richasdy.presencesys.account.AccountEndpoint;
-import com.richasdy.presencesys.domain.Card;
+import com.richasdy.presencesys.card.Card;
+import com.richasdy.presencesys.card.CardService;
 import com.richasdy.presencesys.domain.Quote;
-import com.richasdy.presencesys.service.CardService;
 
 @Transactional
 public class CardControllerTestMockMvc extends AbstractControllerTest {

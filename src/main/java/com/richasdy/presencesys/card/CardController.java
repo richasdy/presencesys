@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.controller;
+package com.richasdy.presencesys.card;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.richasdy.presencesys.domain.Card;
-import com.richasdy.presencesys.service.CardService;
 
 @Controller
 @RequestMapping("card")

@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.service;
+package com.richasdy.presencesys.card;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.richasdy.presencesys.AbstractTest;
 import com.richasdy.presencesys.account.AccountRepository;
-import com.richasdy.presencesys.domain.Card;
-import com.richasdy.presencesys.service.CardService;
+import com.richasdy.presencesys.card.Card;
+import com.richasdy.presencesys.card.CardService;
 
 @Transactional
 public class CardServiceTest extends AbstractTest {

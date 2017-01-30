@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.domain;
+package com.richasdy.presencesys.card;
 
 import static javax.persistence.GenerationType.IDENTITY;
 

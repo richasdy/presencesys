@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.api;
+package com.richasdy.presencesys.card;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -24,9 +24,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.richasdy.presencesys.domain.Card;
-import com.richasdy.presencesys.service.CardService;
 
 @RestController
 @RequestMapping("apiv1/card")

@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.service;
+package com.richasdy.presencesys.card;
 
 import java.util.Date;
 
@@ -6,9 +6,6 @@ import javax.sound.midi.Soundbank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.richasdy.presencesys.domain.Card;
-import com.richasdy.presencesys.repository.CardRepository;
 
 @Service
 public class CardServiceImpl implements CardService {

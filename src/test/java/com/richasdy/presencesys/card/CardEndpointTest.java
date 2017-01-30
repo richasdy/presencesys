@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.api;
+package com.richasdy.presencesys.card;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -25,8 +25,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richasdy.presencesys.AbstractControllerTest;
-import com.richasdy.presencesys.domain.Card;
-import com.richasdy.presencesys.service.CardService;
+import com.richasdy.presencesys.card.Card;
+import com.richasdy.presencesys.card.CardService;
 
 @Transactional
 public class CardEndpointTest extends AbstractControllerTest {
