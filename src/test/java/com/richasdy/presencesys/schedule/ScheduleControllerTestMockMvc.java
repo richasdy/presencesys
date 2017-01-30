@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,8 +62,8 @@ import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richasdy.presencesys.AbstractControllerTest;
-import com.richasdy.presencesys.user.User;
-import com.richasdy.presencesys.user.UserService;
+import com.richasdy.presencesys.schedule.Schedule;
+import com.richasdy.presencesys.schedule.ScheduleService;
 import com.richasdy.presencesys.domain.Quote;
 
 @Transactional
@@ -72,18 +73,21 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	// this is integration test
 
 	@Autowired
-	private UserService service;
+	private ScheduleService service;
 
-	private User foo;
+	private Schedule foo;
 
 	@Before
 	public void setUp() {
 		super.setUp();
 
-		foo = new User();
-		foo.setIdCard(99);
-		foo.setNama("fooNama");
+		foo = new Schedule();
+		foo.setIdKelompok(99);
+		foo.setTipe("fooTipe");
 		foo.setNote("fooNote");
+		foo.setTanggal(new Date());
+		foo.setStart(new Date());
+		foo.setStop(new Date());
 
 		foo = service.save(foo);
 
@@ -93,7 +97,7 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void index() throws Exception {
 
 		// prepare
-		String uri = "/user";
+		String uri = "/schedule";
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL))
@@ -106,11 +110,11 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		int status = result.getResponse().getStatus();
 
 		// check
-		assertTrue("failure - expected model attribute listUser", model.containsKey("listEntity"));
+		assertTrue("failure - expected model attribute listSchedule", model.containsKey("listEntity"));
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view user/index", "user/index", view);
+		assertEquals("failure - expected view schedule/index", "schedule/index", view);
 
 	}
 
@@ -118,7 +122,7 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void create() throws Exception {
 
 		// prepare
-		String uri = "/user/create";
+		String uri = "/schedule/create";
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL)).andReturn();
@@ -129,14 +133,14 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		int status = result.getResponse().getStatus();
 		
 		// check
-		// assertTrue("failure - expected model attribute user", model.containsKey("entity"));
-		assertTrue("failure - expected model attribute user", model.containsKey("user"));
-		// assertTrue("failure - expected model attribute user", model.get("entity") != null);
-		assertTrue("failure - expected model attribute user", model.get("user") != null);
+		// assertTrue("failure - expected model attribute schedule", model.containsKey("entity"));
+		assertTrue("failure - expected model attribute schedule", model.containsKey("schedule"));
+		// assertTrue("failure - expected model attribute schedule", model.get("entity") != null);
+		assertTrue("failure - expected model attribute schedule", model.get("schedule") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view user/index", "user/create", view);
+		assertEquals("failure - expected view schedule/index", "schedule/create", view);
 
 	}
 
@@ -144,12 +148,22 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void save() throws Exception {
 
 		// prepare
-		String uri = "/user";
+		String uri = "/schedule";
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("idCard", "100");
-		params.set("nama", "barNama");
+		params.set("idKelompok", "100");
+		params.set("tipe", "barTipe");
 		params.set("note", "barNote");
+		params.set("tanggal", "2017-01-30");
+		params.set("start", "2017-01-30 00:00:00");
+		params.set("stop", "2017-01-30 23:59:59");
+		
+		// MultiValueMap<String, Date> paramsDate = new
+		// LinkedMultiValueMap<String, Date>();
+		// paramsDate.set("tanggal", new Date());
+		// paramsDate.set("start", new Date());
+		// paramsDate.set("stop", new Date());
+
 
 		// action
 		MvcResult result = mockMvc
@@ -168,7 +182,7 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		// assertEquals("failure - expected HTTP Status 3XX", 3, status / 100);
 
 		// wrong assert
-		// view name = redirect:/user/5
+		// view name = redirect:/schedule/5
 		// assertThat("failure - expected null view", view, nullValue());
 		// content = ""
 		// assertThat("failure - expected null content", content, nullValue());
@@ -181,14 +195,20 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void saveValidationErrorEmptyField() throws Exception {
 
 		// prepare
-		String uri = "/user";
+		String uri = "/schedule";
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("idCard", "100");
+		params.set("idKelompok", "100");
 		// validation using hibernate validator
-		// params.set("nama", "barNama");
+		// params.set("tipe", "barTipe");
 		params.set("note", "barNote");
+		params.set("tanggal", "2017-01-30");
+		params.set("start", "2017-01-30 00:00:00");
+		params.set("stop", "2017-01-30 23:59:59");
 		// System.out.println(params);
+
+
+
 
 		// action
 		// check using mockmvc assert
@@ -213,7 +233,7 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void show() throws Exception {
 
 		// prepare
-		String uri = "/user/{id}";
+		String uri = "/schedule/{id}";
 		long id = foo.getId();
 
 		// action
@@ -230,7 +250,7 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view user/show", "user/show", view);
+		assertEquals("failure - expected view schedule/show", "schedule/show", view);
 
 	}
 
@@ -238,15 +258,15 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void showOtherAssertTechniqueShowcase() throws Exception {
 
 		// prepare
-		String uri = "/user/{id}";
+		String uri = "/schedule/{id}";
 		long id = foo.getId();
 
 		// action
 		mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
 				.andExpect(model().attributeExists("pageName")).andExpect(model().attributeExists("pageNameDesc"))
 				.andExpect(model().attributeExists("entity"))
-				.andExpect(model().attribute("entity", hasProperty("idCard", is(foo.getIdCard()))))
-				.andExpect(model().attributeExists("entity")).andExpect(view().name("user/show"));
+				.andExpect(model().attribute("entity", hasProperty("idKelompok", is(foo.getIdKelompok()))))
+				.andExpect(model().attributeExists("entity")).andExpect(view().name("schedule/show"));
 
 	}
 
@@ -254,12 +274,12 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void showNotFound() throws Exception {
 
 		// prepare
-		String uri = "/user/{id}";
+		String uri = "/schedule/{id}";
 		int id = Integer.MAX_VALUE;
 
 		// action
 		// proses mock tidak jalan, null pointer di theamleaf.
-		// saat akses user.id padahal user = null
+		// saat akses schedule.id padahal schedule = null
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
 				.andExpect(model().attributeExists("entity")).andExpect(model().attribute("entity", nullValue()))
 				.andReturn();
@@ -270,7 +290,7 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void edit() throws Exception {
 
 		// prepare
-		String uri = "/user/{id}/edit";
+		String uri = "/schedule/{id}/edit";
 		long id = foo.getId();
 
 		// action
@@ -282,16 +302,16 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		int status = result.getResponse().getStatus();
 		
 		// check
-		// assertTrue("failure - expected model attribute user",
+		// assertTrue("failure - expected model attribute schedule",
 		// model.containsKey("entity"));
-		assertTrue("failure - expected model attribute user", model.containsKey("user"));
-		// assertTrue("failure - expected model attribute user",
+		assertTrue("failure - expected model attribute schedule", model.containsKey("schedule"));
+		// assertTrue("failure - expected model attribute schedule",
 		// model.get("entity") != null);
-		assertTrue("failure - expected model attribute user", model.get("user") != null);
+		assertTrue("failure - expected model attribute schedule", model.get("schedule") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected view user/edit", "user/edit", view);
+		assertEquals("failure - expected view schedule/edit", "schedule/edit", view);
 
 	}
 
@@ -299,13 +319,18 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void update() throws Exception {
 
 		// prepare
-		String uri = "/user/{id}/update";
+		String uri = "/schedule/{id}/update";
 		long id = foo.getId();
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("idCard", "1001");
-		params.set("nama", "fooNamaUpdate");
+		params.set("idKelompok", "1001");
+		params.set("tipe", "fooTipeUpdate");
 		params.set("note", "fooNoteUpdate");
+		params.set("tanggal", "2017-01-30");
+		params.set("start", "2017-01-30 00:00:00");
+		params.set("stop", "2017-01-30 23:59:59");
+
+
 
 		// action
 		MvcResult result = mockMvc
@@ -330,14 +355,17 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void updateValidationErrorEmptyField() throws Exception {
 
 		// prepare
-		String uri = "/user/{id}/update";
+		String uri = "/schedule/{id}/update";
 		long id = foo.getId();
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("idCard", "1001");
+		params.set("idKelompok", "1001");
 		// validation using hibernate validator
-		// params.set("nama", "fooNamaUpdate");
+		// params.set("tipe", "fooTipeUpdate");
 		params.set("note", "fooNoteUpdate");
+		params.set("tanggal", "2017-01-30");
+		params.set("start", "2017-01-30 00:00:00");
+		params.set("stop", "2017-01-30 23:59:59");
 
 		// action
 		MvcResult result = mockMvc.perform(
@@ -365,18 +393,21 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		// SOLUSI : check controller
 		// JIKA sudah disolusikan :
 		// hapus model().hasNoErrors()) dibawah, ganti dengan
-		// view().name("user/edit")
+		// view().name("schedule/edit")
 		// ganti nama test menjadi updateValidationErrorNotConsistentId
 
 		// prepare
-		String uri = "/user/{id}/update";
+		String uri = "/schedule/{id}/update";
 		int id = 1;
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("idCard", "1001");
+		params.set("idKelompok", "1001");
 		// validation using hibernate validator
-		params.set("nama", "fooNamaUpdate");
+		// params.set("tipe", "fooTipeUpdate");
 		params.set("note", "fooNoteUpdate");
+		params.set("tanggal", "2017-01-30");
+		params.set("start", "2017-01-30 00:00:00");
+		params.set("stop", "2017-01-30 23:59:59");
 
 		// action
 		MvcResult result = mockMvc.perform(
@@ -391,12 +422,12 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void delete() throws Exception {
 
 		// prepare
-		String uri = "/user/{id}/delete";
+		String uri = "/schedule/{id}/delete";
 		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
-				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/user")).andReturn();
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/schedule")).andReturn();
 
 		// Map<String, Object> model = result.getModelAndView().getModel();
 		// String view = result.getModelAndView().getViewName();
@@ -411,12 +442,12 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 	public void deleteNotFound() throws Exception {
 
 		// prepare
-		String uri = "/user/{id}/delete";
+		String uri = "/schedule/{id}/delete";
 		int id = Integer.MAX_VALUE;
 
 		// action
 		// proses mock tidak jalan, null pointer di controller.
-		// saat akses user.activated padahal user = null
+		// saat akses schedule.activated padahal schedule = null
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL)).andDo(print())
 				.andReturn();
 

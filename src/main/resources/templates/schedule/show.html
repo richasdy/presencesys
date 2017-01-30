@@ -38,7 +38,7 @@
 								<div class="box-body">
 								
 								<div class="form-group">
-										<label for="inputEmail" class="col-sm-2 control-label">Id</label>
+										<label for="inputId" class="col-sm-2 control-label">Id</label>
 
 										<div class="col-sm-9">
 											<span class="form-control" th:text="${entity.id}">
@@ -46,20 +46,20 @@
 										</div>
 									</div>
 
-<div class="form-group">
-										<label for="inputEmail" class="col-sm-2 control-label">Id Card</label>
+									<div class="form-group">
+										<label for="inputIdKelompok" class="col-sm-2 control-label">Id Kelompok</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${entity.idCard}">
+											<span class="form-control" th:text="${entity.idKelompok}">
 												1 </span>
 										</div>
 									</div>
 
 									<div class="form-group">
-										<label for="inputEmail" class="col-sm-2 control-label">Nama</label>
+										<label for="inputTipe" class="col-sm-2 control-label">Tipe</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${entity.nama}">
+											<span class="form-control" th:text="${entity.tipe}">
 												1 </span>
 										</div>
 									</div>
@@ -73,6 +73,30 @@
 										</div>
 									</div>
 
+									<div class="form-group">
+										<label for="inputTanggal" class="col-sm-2 control-label">Tanggal</label>
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.tanggal}">
+												Sekarang </span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputStart" class="col-sm-2 control-label">Start</label>
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.start}">
+												Sekarang </span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputStop" class="col-sm-2 control-label">Stop</label>
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.stop}">
+												Sekarang </span>
+										</div>
+									</div>
+									
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Created At</label>
 										<div class="col-sm-9">
@@ -100,9 +124,9 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<a class="btn btn-default" th:href="@{/user}">Back to table</a> <a
+									<a class="btn btn-default" th:href="@{/schedule}">Back to table</a> <a
 										class="btn btn-info pull-right"
-										th:href="@{/user/{id}/edit(id=${entity.id})}">Edit</a>
+										th:href="@{/schedule/{id}/edit(id=${entity.id})}">Edit</a>
 								</div>
 								<!-- /.box-footer -->
 							</form>

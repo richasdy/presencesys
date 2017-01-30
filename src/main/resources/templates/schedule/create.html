@@ -35,31 +35,31 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form class="form-horizontal" action="#" th:action="@{/user}"
-								th:object="${user}" method="post">
+							<form class="form-horizontal" action="#" th:action="@{/schedule}"
+								th:object="${schedule}" method="post">
 								<div class="box-body">
 
 									<div
-										th:class="${#fields.hasErrors('idCard')} ? 'form-group  has-error' : 'form-group'">
-										<label for="inputIdCard" class="col-sm-2 control-label">Id Card</label>
+										th:class="${#fields.hasErrors('idKelompok')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputIdKelompok" class="col-sm-2 control-label">Id Kelompok</label>
 
 										<div class="col-sm-9">
-											<input type="text" class="form-control" id="inputIdCard"
-												placeholder="Id Card" th:field="*{idCard}" /> <span
-												class="help-block" th:if="${#fields.hasErrors('idCard')}"
-												th:errors="*{idCard}">Help block with error</span>
+											<input type="text" class="form-control" id="inputIdKelompok"
+												placeholder="Id Kelompok" th:field="*{idKelompok}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('idKelompok')}"
+												th:errors="*{idKelompok}">Help block with error</span>
 										</div>
 									</div>
 
 									<div
-										th:class="${#fields.hasErrors('nama')} ? 'form-group  has-error' : 'form-group'">
-										<label for="inputNama" class="col-sm-2 control-label">Nama</label>
+										th:class="${#fields.hasErrors('tipe')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputTipe" class="col-sm-2 control-label">Tipe</label>
 
 										<div class="col-sm-9">
-											<input type="text" class="form-control" id="inputNama"
-												placeholder="Nama" th:field="*{nama}" /> <span
-												class="help-block" th:if="${#fields.hasErrors('nama')}"
-												th:errors="*{nama}">Help block with error</span>
+											<input type="text" class="form-control" id="inputTipe"
+												placeholder="Tipe" th:field="*{tipe}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('tipe')}"
+												th:errors="*{tipe}">Help block with error</span>
 										</div>
 									</div>
 
@@ -72,10 +72,49 @@
 										</div>
 									</div>
 
+
+									<div
+										th:class="${#fields.hasErrors('tanggal')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputTanggal" class="col-sm-2 control-label">Tanggal</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputTanggal"
+												placeholder="Tanggal" th:field="*{tanggal}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('tanggal')}"
+												th:errors="*{tanggal}">Help block with error</span>
+										</div>
+									</div>
+
+
+									<div
+										th:class="${#fields.hasErrors('start')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputStart" class="col-sm-2 control-label">Start</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputStart"
+												placeholder="Start" th:field="*{start}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('start')}"
+												th:errors="*{start}">Help block with error</span>
+										</div>
+									</div>
+
+
+									<div
+										th:class="${#fields.hasErrors('stop')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputStop" class="col-sm-2 control-label">Stop</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputStop"
+												placeholder="Stop" th:field="*{stop}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('stop')}"
+												th:errors="*{stop}">Help block with error</span>
+										</div>
+									</div>
+
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<a class="btn btn-default" th:href="@{/user}">Back</a>
+									<a class="btn btn-default" th:href="@{/schedule}">Back</a>
 									<button type="submit" class="btn btn-info pull-right">Save</button>
 								</div>
 								<!-- /.box-footer -->
