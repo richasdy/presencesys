@@ -53,6 +53,7 @@ public class AccountServiceTest extends AbstractTest {
 	@Before
 	public void init() {
 		foo = new Account();
+		// validation using hibernate validator
 		foo.setEmail("foo@email.com");
 		foo.setPhone("000000000000");
 		foo.setUsername("fooUsername");
@@ -117,6 +118,8 @@ public class AccountServiceTest extends AbstractTest {
 
 		// prepare
 		Account bar = new Account();
+		// validation using hibernate validator
+		// email
 		bar.setEmail("foo@email.com");
 		bar.setPhone("000000000000");
 		bar.setUsername("fooUsername");
