@@ -183,11 +183,13 @@ public class UserController {
 		// tidak terpakai
 		// service.deleteSoft(id);
 
-		User currentEntity = service.findOne(id);
-		currentEntity.setUpdatedAt(new Date());
-		currentEntity.setDeletedAt(new Date());
+		// User currentEntity = service.findOne(id);
+		// currentEntity.setUpdatedAt(new Date());
+		// currentEntity.setDeletedAt(new Date());
 
-		service.save(currentEntity);
+		service.delete(id);
+
+		// service.save(currentEntity);
 
 		return "redirect:/user";
 

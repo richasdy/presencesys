@@ -151,13 +151,15 @@ public class CardController {
 		// tidak terpakai
 		// accountService.deleteSoft(id);
 
-		Card currentEntity = service.findOne(id);
-		currentEntity.setActivated(false);
-		currentEntity.setActivatedAt(null);
-		currentEntity.setUpdatedAt(new Date());
-		currentEntity.setDeletedAt(new Date());
-
-		service.save(currentEntity);
+		// Card currentEntity = service.findOne(id);
+		// currentEntity.setActivated(false);
+		// currentEntity.setActivatedAt(null);
+		// currentEntity.setUpdatedAt(new Date());
+		// currentEntity.setDeletedAt(new Date());
+		//
+		// service.save(currentEntity);
+		
+		service.delete(id);
 
 		return "redirect:/card";
 

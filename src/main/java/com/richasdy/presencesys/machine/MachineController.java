@@ -183,11 +183,13 @@ public class MachineController {
 		// tidak terpakai
 		// service.deleteSoft(id);
 
-		Machine currentEntity = service.findOne(id);
-		currentEntity.setUpdatedAt(new Date());
-		currentEntity.setDeletedAt(new Date());
-
-		service.save(currentEntity);
+		// Machine currentEntity = service.findOne(id);
+		// currentEntity.setUpdatedAt(new Date());
+		// currentEntity.setDeletedAt(new Date());
+		//
+		// service.save(currentEntity);
+		
+		service.delete(id);
 
 		return "redirect:/machine";
 

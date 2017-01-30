@@ -183,11 +183,13 @@ public class KelompokController {
 		// tidak terpakai
 		// service.deleteSoft(id);
 
-		Kelompok currentEntity = service.findOne(id);
-		currentEntity.setUpdatedAt(new Date());
-		currentEntity.setDeletedAt(new Date());
-
-		service.save(currentEntity);
+		// Kelompok currentEntity = service.findOne(id);
+		// currentEntity.setUpdatedAt(new Date());
+		// currentEntity.setDeletedAt(new Date());
+		//
+		// service.save(currentEntity);
+		
+		service.delete(id);
 
 		return "redirect:/kelompok";
 
