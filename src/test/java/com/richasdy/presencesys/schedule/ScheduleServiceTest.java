@@ -34,9 +34,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.richasdy.presencesys.AbstractTest;
-import com.richasdy.presencesys.user.User;
-import com.richasdy.presencesys.user.UserRepository;
-import com.richasdy.presencesys.user.UserService;
+import com.richasdy.presencesys.schedule.Schedule;
+import com.richasdy.presencesys.schedule.ScheduleRepository;
+import com.richasdy.presencesys.schedule.ScheduleService;
 
 @Transactional
 public class ScheduleServiceTest extends AbstractTest {
@@ -47,22 +47,25 @@ public class ScheduleServiceTest extends AbstractTest {
 	// no change db status, no left some garbage data in db
 
 	@Autowired
-	private UserService service;
-	private User foo;
+	private ScheduleService service;
+	private Schedule foo;
 
 	@Before
 	public void init() {
-		foo = new User();
-		foo.setIdCard(99);
-		foo.setNama("fooNama");
+		foo = new Schedule();
+		foo.setIdKelompok(99);
+		foo.setTipe("fooTipe");
 		foo.setNote("fooNote");
+		foo.setTanggal(new Date());
+		foo.setStart(new Date());
+		foo.setStop(new Date());
 
 		foo = service.save(foo);
 	}
 
 	@After
 	public void destroy() {
-		// UserService.delete(foo.getId());
+		// ScheduleService.delete(foo.getId());
 	}
 
 	@Test
@@ -71,26 +74,29 @@ public class ScheduleServiceTest extends AbstractTest {
 		// error jika di test semua, jika di test sendiri all pass
 
 		// prepare
-		User bar = new User();
-		bar.setIdCard(100);
-		bar.setNama("barNama");
+		Schedule bar = new Schedule();
+		bar.setIdKelompok(100);
+		bar.setTipe("barTipe");
 		bar.setNote("barNote");
+		bar.setTanggal(new Date());
+		bar.setStart(new Date());
+		bar.setStop(new Date());
 
 		long countBefore = service.count();
 
 		// action
-		User confirm = service.save(bar);
+		Schedule confirm = service.save(bar);
 
 		long countAfter = service.count();
 
 		// delete data
 		// handle by transactional
-		// UserService.delete(bar.getId());
+		// ScheduleService.delete(bar.getId());
 
 		// check
 		assertTrue("failure - expected not null", confirm != null);
 		assertEquals("failure - expected right count", countAfter, countBefore + 1);
-		assertEquals("failure - expected same value", bar.getIdCard(), confirm.getIdCard());
+		assertEquals("failure - expected same value", bar.getIdKelompok(), confirm.getIdKelompok());
 
 	}
 
@@ -98,30 +104,37 @@ public class ScheduleServiceTest extends AbstractTest {
 	public void saveValidationErrorEmptyField() {
 
 		// prepare
-		User bar = new User();
-		bar.setIdCard(100);
+		Schedule bar = new Schedule();
+		bar.setIdKelompok(100);
 		// validation using hibernate validator
-		// bar.setNama("barNama");
+		// bar.setTipe("barTipe");
 		bar.setNote("barNote");
+		bar.setTanggal(new Date());
+		bar.setStart(new Date());
+		bar.setStop(new Date());
 
 		// action
-		User confirm = service.save(bar);
+		Schedule confirm = service.save(bar);
 
 		// check
 
 	}
 
-	@Test(expected = DataIntegrityViolationException.class)
+	// validation cant executed, because validator for unique not exist
+	// @Test(expected = DataIntegrityViolationException.class)
 	public void saveValidationErrorDupicate() {
 
 		// prepare
-		User bar = new User();
-		bar.setIdCard(99);
-		bar.setNama("fooNama");
+		Schedule bar = new Schedule();
+		bar.setIdKelompok(99);
+		bar.setTipe("fooNama");
 		bar.setNote("fooNote");
+		bar.setTanggal(new Date());
+		bar.setStart(new Date());
+		bar.setStop(new Date());
 
 		// action
-		User confirm = service.save(bar);
+		Schedule confirm = service.save(bar);
 
 		// check
 
@@ -131,15 +144,16 @@ public class ScheduleServiceTest extends AbstractTest {
 	public void update() {
 
 		// prepare
-		foo.setIdCard(100);
+		foo.setIdKelompok(100);
 
 		// action
-		User confirm = service.update(foo);
+		Schedule confirm = service.update(foo);
 
 		// check
 		assertTrue("failure - expected not null", confirm != null);
-		assertEquals("failure - expected same value", foo.getIdCard(), confirm.getIdCard());
-		assertThat("failure - expected has idCard updated", confirm, hasProperty("idCard", is(foo.getIdCard())));
+		assertEquals("failure - expected same value", foo.getIdKelompok(), confirm.getIdKelompok());
+		assertThat("failure - expected has idCard updated", confirm,
+				hasProperty("idKelompok", is(foo.getIdKelompok())));
 
 	}
 
@@ -147,10 +161,10 @@ public class ScheduleServiceTest extends AbstractTest {
 	public void updateNotFound() {
 
 		// prepare
-		User notFound = service.findOne(Integer.MAX_VALUE);
+		Schedule notFound = service.findOne(Integer.MAX_VALUE);
 
 		// action
-		User confirm = service.update(notFound);
+		Schedule confirm = service.update(notFound);
 
 		// check
 
@@ -160,18 +174,21 @@ public class ScheduleServiceTest extends AbstractTest {
 	public void updateValidationErrorEmptyField() {
 
 		// prepare
-		User bar = new User();
+		Schedule bar = new Schedule();
 		bar.setId(Integer.MAX_VALUE);
-		bar.setIdCard(100);
+		bar.setIdKelompok(100);
 		// validation using hibernate validator
-		// bar.setNama("barNama");
+		// bar.setTipe("barTipe");
 		bar.setNote("barNote");
+		bar.setTanggal(new Date());
+		bar.setStart(new Date());
+		bar.setStop(new Date());
 		// createdAt tidak boleh null, diset di fungsi save
 		bar.setCreatedAt(new Date());
 
 		// action
 		// kalau lolos menjadi save
-		User confirm = service.update(bar);
+		Schedule confirm = service.update(bar);
 
 		// check
 
@@ -183,7 +200,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		// prepare
 
 		// action
-		User confirm = service.findOne(foo.getId());
+		Schedule confirm = service.findOne(foo.getId());
 		System.out.println(confirm.toString());
 
 		// check
@@ -198,7 +215,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		int id = Integer.MAX_VALUE;
 
 		// action
-		User confirm = service.findOne(id);
+		Schedule confirm = service.findOne(id);
 
 		// check
 		assertTrue("failure - expected null", confirm == null);
@@ -211,7 +228,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<User> pageableConfirm = service.findAll(page);
+		Page<Schedule> pageableConfirm = service.findAll(page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -240,7 +257,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		// action
 		service.delete(foo.getId());
 
-		User confirm = service.findOne(foo.getId());
+		Schedule confirm = service.findOne(foo.getId());
 
 		// check
 		assertTrue("failure - expected null", confirm == null);
@@ -253,7 +270,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		// prepare
 
 		// action
-		User confirm = service.deleteSoft(foo.getId());
+		Schedule confirm = service.deleteSoft(foo.getId());
 
 		// check
 		assertTrue("failure - expected not null", confirm.getDeletedAt() != null);
@@ -267,7 +284,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<User> pageableConfirm = service.searchBy("", page);
+		Page<Schedule> pageableConfirm = service.searchBy("", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchEmptyString : " + iterableConfirm);
@@ -285,7 +302,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<User> pageableConfirm = service.searchBy("id:1", page);
+		Page<Schedule> pageableConfirm = service.searchBy("id:1", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -301,7 +318,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<User> pageableConfirm = service.searchBy("id:a", page);
+		Page<Schedule> pageableConfirm = service.searchBy("id:a", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -311,14 +328,14 @@ public class ScheduleServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void searchByIdCard() {
+	public void searchByIdKelompok() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
-		String searchTerm = "idcard:" + foo.getIdCard();
+		String searchTerm = "idkelompok:" + foo.getIdKelompok();
 
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -328,13 +345,13 @@ public class ScheduleServiceTest extends AbstractTest {
 	}
 
 	@Test(expected = NumberFormatException.class)
-	public void searchByIdCardWrongFormat() {
+	public void searchByIdKelompokWrongFormat() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<User> pageableConfirm = service.searchBy("idcard:a", page);
+		Page<Schedule> pageableConfirm = service.searchBy("idkelompok:a", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -344,13 +361,13 @@ public class ScheduleServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void searchByNama() {
+	public void searchByTipe() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<User> pageableConfirm = service.searchBy("nama:fooNama", page);
+		Page<Schedule> pageableConfirm = service.searchBy("tipe:fooTipe", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -360,13 +377,13 @@ public class ScheduleServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void searchByNamaNotFound() {
+	public void searchByTipeNotFound() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<User> pageableConfirm = service.searchBy("nama:notFoundNama", page);
+		Page<Schedule> pageableConfirm = service.searchBy("tipe:notFoundTipe", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByIpNotFound" + pageableConfirm);
@@ -385,7 +402,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<User> pageableConfirm = service.searchBy("note:note", page);
+		Page<Schedule> pageableConfirm = service.searchBy("note:note", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -401,8 +418,233 @@ public class ScheduleServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<User> pageableConfirm = service.searchBy("note:notFoundNote", page);
+		Page<Schedule> pageableConfirm = service.searchBy("note:notFoundNote", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void searchByTanggal() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "tanggal:" + (date.getYear() + 1900) + "-" + String.format("%02d", date.getMonth() + 1)
+				+ "-" + date.getDate();
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt"+pageableConfirm);
+		// System.out.println("@searchByCreatedAt"+listConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByTanggalNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		// String searchTerm = "createdat:0000-00-00";
+		String searchTerm = "tanggal:1990-10-06";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void searchByTanggalWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "tanggal:0000";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void searchByStart() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "start:" + (date.getYear() + 1900) + "-" + String.format("%02d", date.getMonth() + 1) + "-"
+				+ date.getDate();
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt"+pageableConfirm);
+		// System.out.println("@searchByCreatedAt"+listConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByStartNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		// String searchTerm = "createdat:0000-00-00";
+		String searchTerm = "start:1990-10-06";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void searchByStartWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "start:0000";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void searchByStop() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "stop:" + (date.getYear() + 1900) + "-" + String.format("%02d", date.getMonth() + 1) + "-"
+				+ date.getDate();
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt"+pageableConfirm);
+		// System.out.println("@searchByCreatedAt"+listConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByStopNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		// String searchTerm = "createdat:0000-00-00";
+		String searchTerm = "stop:1990-10-06";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void searchByStopWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "stop:0000";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
 
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm != null);
@@ -423,7 +665,7 @@ public class ScheduleServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt"+pageableConfirm);
@@ -448,7 +690,7 @@ public class ScheduleServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -473,7 +715,7 @@ public class ScheduleServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -489,7 +731,7 @@ public class ScheduleServiceTest extends AbstractTest {
 	public void searchByDeteledAt() {
 
 		// prepare
-		User confirm = service.deleteSoft(foo.getId());
+		Schedule confirm = service.deleteSoft(foo.getId());
 		Pageable page = new PageRequest(0, 2);
 		Date date = new Date();
 
@@ -501,7 +743,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		// service.findOne(foo.getId()));
 		// System.out.println("@searchByDeletedAt" + searchTerm);
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByDeletedAt" + pageableConfirm);
@@ -526,7 +768,7 @@ public class ScheduleServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -551,7 +793,7 @@ public class ScheduleServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -567,8 +809,8 @@ public class ScheduleServiceTest extends AbstractTest {
 	public void searchByUpdatedAt() {
 
 		// prepare
-		foo.setNama("fooNamaUpdate");
-		User confirm = service.update(foo);
+		foo.setNote("fooNoteUpdate");
+		Schedule confirm = service.update(foo);
 		Pageable page = new PageRequest(0, 2);
 		Date date = new Date();
 
@@ -578,7 +820,7 @@ public class ScheduleServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt"+pageableConfirm);
@@ -603,7 +845,7 @@ public class ScheduleServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);
@@ -628,7 +870,7 @@ public class ScheduleServiceTest extends AbstractTest {
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
 		// action
-		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByCreatedAt" + pageableConfirm);
