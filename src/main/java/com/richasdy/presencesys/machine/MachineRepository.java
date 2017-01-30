@@ -20,7 +20,7 @@ public interface MachineRepository extends JpaRepository<Machine, Long> {
 	Page<Machine> findDistinctMachineByDeletedAtBetween(Date start, Date end, Pageable pageable);
 
 	// String Containing
-	Page<Machine> findDistinctMachineByIpContaining(String email, Pageable pageable);
+	Page<Machine> findDistinctMachineByIpContaining(String ip, Pageable pageable);
 
 	Page<Machine> findDistinctMachineByNoteContaining(String note, Pageable pageable);
 

@@ -1,4 +1,4 @@
-package com.richasdy.presencesys.machine;
+package com.richasdy.presencesys.user;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.richasdy.presencesys.machine.Machine;
-import com.richasdy.presencesys.machine.MachineService;
+import com.richasdy.presencesys.user.User;
+import com.richasdy.presencesys.user.UserService;
 
 @Controller
-@RequestMapping("machine")
-public class MachineController {
+@RequestMapping("user")
+public class UserController {
 
-	MachineService service;
+	UserService service;
 
 	@Autowired
-	public MachineController(MachineService service) {
+	public UserController(UserService service) {
 		this.service = service;
 	}
 
@@ -42,30 +42,30 @@ public class MachineController {
 			@RequestParam(defaultValue = "10") int size) {
 
 		Pageable pagination = new PageRequest(page, size);
-		Page<Machine> pageEntity = service.findAll(pagination);
+		Page<User> pageEntity = service.findAll(pagination);
 
 		model.addAttribute("listEntity", pageEntity);
-		model.addAttribute("pageName", "Tabel Machine");
+		model.addAttribute("pageName", "Tabel User");
 		model.addAttribute("pageNameDesc", "Daftar Akun Akses System");
 
-		return "machine/index";
+		return "user/index";
 	}
 
 	@GetMapping("/create")
 	public String create(Model model) {
 
-		// ubah machine jadi entity biar universal
+		// ubah user jadi entity biar universal
 
-		model.addAttribute("machine", new Machine());
+		model.addAttribute("user", new User());
 
-		model.addAttribute("pageName", "Machine Baru");
-		model.addAttribute("pageNameDesc", "Daftar Isian Machine");
+		model.addAttribute("pageName", "User Baru");
+		model.addAttribute("pageNameDesc", "Daftar Isian User");
 
-		return "machine/create";
+		return "user/create";
 	}
 
 	@PostMapping()
-	public String save(@Valid Machine entity, BindingResult result) {
+	public String save(@Valid User entity, BindingResult result) {
 
 		// debug
 		// System.out.println("ganteng");
@@ -75,13 +75,13 @@ public class MachineController {
 		if (result.hasErrors()) {
 
 			// has error
-			return "machine/create";
+			return "user/create";
 
 		} else {
 
-			Machine confirm = service.save(entity);
+			User confirm = service.save(entity);
 
-			return "redirect:/machine/" + confirm.getId();
+			return "redirect:/user/" + confirm.getId();
 		}
 
 	}
@@ -89,44 +89,44 @@ public class MachineController {
 	@GetMapping("/{id}")
 	public String show(Model model, @PathVariable int id) {
 
-		Machine entity = service.findOne(id);
+		User entity = service.findOne(id);
 
 		// debug
 		// System.out.println("id @show" + id);
 		// System.out.println("ganteng" + account);
 
 		model.addAttribute("entity", entity);
-		model.addAttribute("pageName", "Machine Detail");
+		model.addAttribute("pageName", "User Detail");
 		model.addAttribute("pageNameDesc", "Detail Data Mesin");
 
-		return "machine/show";
+		return "user/show";
 	}
 
 	@GetMapping("/{id}/edit")
 	// @ResponseBody
 	public String edit(Model model, @PathVariable int id) {
 
-		Machine entity = service.findOne(id);
+		User entity = service.findOne(id);
 
 		// kemungkinan error disini
-		model.addAttribute("machine", entity);
-		model.addAttribute("pageName", "Machine Edit");
+		model.addAttribute("user", entity);
+		model.addAttribute("pageName", "User Edit");
 		model.addAttribute("pageNameDesc", "Detail Perubahan Data Mesin");
 
-		return "machine/edit";
-		// return new Machine();
+		return "user/edit";
+		// return new User();
 		// return service.findOne(id);
 	}
 
 	@PostMapping("/{id}/update")
-	public String update(@PathVariable int id, @Valid Machine updatedEntity, BindingResult result) {
+	public String update(@PathVariable int id, @Valid User updatedEntity, BindingResult result) {
 
 		if (result.hasErrors() || id != updatedEntity.getId()) {
 
 			// VULNURABLE
 			// ada kemungkinan dihack
 			// merubah data account dengan id = id
-			// tapi updatedMachine.getId() nya berbeda
+			// tapi updatedUser.getId() nya berbeda
 			// pakai postman
 
 			// SOLUSI
@@ -142,16 +142,16 @@ public class MachineController {
 			// SOLUSI
 			// id ambil dari session
 
-			return "machine/edit";
+			return "user/edit";
 
 		} else {
 
 			// debug
 			// System.out.println("im here");
 			// System.out.println(result);
-			// System.out.println(updatedMachine.toString());
+			// System.out.println(updatedUser.toString());
 
-			Machine currentEntity = service.findOne(id);
+			User currentEntity = service.findOne(id);
 			currentEntity.setUpdatedAt(new Date());
 
 			// copy changed field into object
@@ -171,7 +171,7 @@ public class MachineController {
 
 			service.update(currentEntity);
 
-			return "redirect:/machine/" + currentEntity.getId();
+			return "redirect:/user/" + currentEntity.getId();
 
 		}
 
@@ -183,13 +183,13 @@ public class MachineController {
 		// tidak terpakai
 		// service.deleteSoft(id);
 
-		Machine currentEntity = service.findOne(id);
+		User currentEntity = service.findOne(id);
 		currentEntity.setUpdatedAt(new Date());
 		currentEntity.setDeletedAt(new Date());
 
 		service.save(currentEntity);
 
-		return "redirect:/machine";
+		return "redirect:/user";
 
 	}
 
@@ -198,14 +198,14 @@ public class MachineController {
 			@RequestParam(defaultValue = "10") int size) {
 
 		Pageable pagination = new PageRequest(page, size);
-		Page<Machine> pageEntity = service.searchBy(q, pagination);
+		Page<User> pageEntity = service.searchBy(q, pagination);
 
 		model.addAttribute("q", q);
 		model.addAttribute("listEntity", pageEntity);
-		model.addAttribute("pageName", "Tabel Machine Pencarian : " + q);
-		model.addAttribute("pageNameDesc", "Daftar Machine Akses System");
+		model.addAttribute("pageName", "Tabel User Pencarian : " + q);
+		model.addAttribute("pageNameDesc", "Daftar User Akses System");
 
-		return "machine/index";
+		return "user/index";
 	}
 
 }
