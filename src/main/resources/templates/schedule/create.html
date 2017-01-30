@@ -79,7 +79,7 @@
 
 										<div class="col-sm-9">
 											<input type="text" class="form-control" id="inputTanggal"
-												placeholder="Tanggal" th:field="*{tanggal}" /> <span
+												placeholder="yyyy-MM-dd" th:field="*{tanggal}" /> <span
 												class="help-block" th:if="${#fields.hasErrors('tanggal')}"
 												th:errors="*{tanggal}">Help block with error</span>
 										</div>
@@ -92,7 +92,7 @@
 
 										<div class="col-sm-9">
 											<input type="text" class="form-control" id="inputStart"
-												placeholder="Start" th:field="*{start}" /> <span
+												placeholder="yyyy-MM-dd HH:mm:ss" th:field="*{start}" /> <span
 												class="help-block" th:if="${#fields.hasErrors('start')}"
 												th:errors="*{start}">Help block with error</span>
 										</div>
@@ -105,7 +105,7 @@
 
 										<div class="col-sm-9">
 											<input type="text" class="form-control" id="inputStop"
-												placeholder="Stop" th:field="*{stop}" /> <span
+												placeholder="yyyy-MM-dd HH:mm:ss" th:field="*{stop}" /> <span
 												class="help-block" th:if="${#fields.hasErrors('stop')}"
 												th:errors="*{stop}">Help block with error</span>
 										</div>

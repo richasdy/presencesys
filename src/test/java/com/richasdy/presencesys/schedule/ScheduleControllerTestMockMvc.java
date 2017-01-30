@@ -24,11 +24,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.Map.Entry;
 
 import javax.transaction.Transactional;
@@ -93,6 +96,46 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 
 	}
 
+	// @Test
+	public void datetry() throws ParseException {
+
+		Date sekarang = new Date();
+
+		try {
+			TimeUnit.SECONDS.sleep(3);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Date setelah = new Date();
+
+		System.out.println("COMPARE");
+		System.out.println("sekarang : " + sekarang);
+		System.out.println("setelah : " + setelah);
+		System.out.println("operation : " + setelah.compareTo(sekarang));
+		System.out.println("operation : " + sekarang.compareTo(setelah));
+
+		System.out.println("DATE FORMAT");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date parsingTanggal = format.parse("2016-01-13");
+		System.out.println("sekarang : " + format.format(sekarang));
+		System.out.println("parsingTanggal : " + parsingTanggal);
+		System.out.println("parsingTanggal : " + format.format(parsingTanggal));
+
+		System.out.println("COMPARE WITH DATE FROMAT");
+		Date parsingTanggalsekarang = format.parse("2017-01-31");
+		System.out.println(parsingTanggalsekarang);
+		System.out.println(sekarang);
+		System.out.println("parsing");
+		System.out.println(format.format(parsingTanggalsekarang));
+		System.out.println(format.format(sekarang));
+
+		System.out.println(parsingTanggalsekarang.equals(format.format(sekarang)));
+		System.out.println(format.format(parsingTanggalsekarang).equals(format.format(sekarang)));
+
+	}
+
 	@Test
 	public void index() throws Exception {
 
@@ -131,11 +174,13 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		String view = result.getModelAndView().getViewName();
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
-		
+
 		// check
-		// assertTrue("failure - expected model attribute schedule", model.containsKey("entity"));
+		// assertTrue("failure - expected model attribute schedule",
+		// model.containsKey("entity"));
 		assertTrue("failure - expected model attribute schedule", model.containsKey("schedule"));
-		// assertTrue("failure - expected model attribute schedule", model.get("entity") != null);
+		// assertTrue("failure - expected model attribute schedule",
+		// model.get("entity") != null);
 		assertTrue("failure - expected model attribute schedule", model.get("schedule") != null);
 		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
 		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
@@ -154,16 +199,15 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		params.set("idKelompok", "100");
 		params.set("tipe", "barTipe");
 		params.set("note", "barNote");
-		params.set("tanggal", "2017-01-30");
-		params.set("start", "2017-01-30 00:00:00");
-		params.set("stop", "2017-01-30 23:59:59");
-		
+		params.set("tanggal", "2017-01-31");
+		params.set("start", "2017-01-31 00:00:00");
+		params.set("stop", "2017-01-31 00:00:00");
+
 		// MultiValueMap<String, Date> paramsDate = new
 		// LinkedMultiValueMap<String, Date>();
 		// paramsDate.set("tanggal", new Date());
 		// paramsDate.set("start", new Date());
 		// paramsDate.set("stop", new Date());
-
 
 		// action
 		MvcResult result = mockMvc
@@ -206,9 +250,6 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		params.set("start", "2017-01-30 00:00:00");
 		params.set("stop", "2017-01-30 23:59:59");
 		// System.out.println(params);
-
-
-
 
 		// action
 		// check using mockmvc assert
@@ -300,7 +341,7 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		String view = result.getModelAndView().getViewName();
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
-		
+
 		// check
 		// assertTrue("failure - expected model attribute schedule",
 		// model.containsKey("entity"));
@@ -329,8 +370,6 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		params.set("tanggal", "2017-01-30");
 		params.set("start", "2017-01-30 00:00:00");
 		params.set("stop", "2017-01-30 23:59:59");
-
-
 
 		// action
 		MvcResult result = mockMvc
@@ -403,7 +442,7 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.set("idKelompok", "1001");
 		// validation using hibernate validator
-		// params.set("tipe", "fooTipeUpdate");
+		 params.set("tipe", "fooTipeUpdate");
 		params.set("note", "fooNoteUpdate");
 		params.set("tanggal", "2017-01-30");
 		params.set("start", "2017-01-30 00:00:00");

@@ -66,6 +66,7 @@ public class AccountController {
 
 		return "account/index-page";
 	}
+	
 
 	@GetMapping("/create")
 	public String create(Model model) {

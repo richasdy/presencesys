@@ -1,5 +1,6 @@
 package com.richasdy.presencesys.schedule;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +32,8 @@ import com.richasdy.presencesys.schedule.ScheduleService;
 public class ScheduleController {
 
 	ScheduleService service;
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+	
 
 	@Autowired
 	public ScheduleController(ScheduleService service) {
@@ -78,7 +81,9 @@ public class ScheduleController {
 			return "schedule/create";
 
 		} else {
-
+			
+			System.out.println("@save "+entity.getTanggal());
+			
 			Schedule confirm = service.save(entity);
 
 			return "redirect:/schedule/" + confirm.getId();
