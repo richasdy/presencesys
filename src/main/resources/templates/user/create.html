@@ -50,6 +50,18 @@
 												th:errors="*{idCard}">Help block with error</span>
 										</div>
 									</div>
+									
+									<div
+										th:class="${#fields.hasErrors('userNumber')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputUserNumber" class="col-sm-2 control-label">User Number</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputUserNumber"
+												placeholder="User Number" th:field="*{userNumber}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('userNumber')}"
+												th:errors="*{userNumber}">Help block with error</span>
+										</div>
+									</div>
 
 									<div
 										th:class="${#fields.hasErrors('nama')} ? 'form-group  has-error' : 'form-group'">

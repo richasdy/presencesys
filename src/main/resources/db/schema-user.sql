@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
   `id` int(11) UNSIGNED NOT NULL,
   `id_card` int(11) NOT NULL,
+  `user_number` varchar(255) NOT NULL, -- nip / nik / nis 
   `nama` varchar(255) NOT NULL,
   `note` text,
   `created_at` datetime NOT NULL,

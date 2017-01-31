@@ -58,6 +58,7 @@
 									<tr>
 										<th style="width: 10px">id</th>
 										<th>idCard</th>
+										<th>userNumber</th>
 										<th>nama</th>
 										<th>note</th>
 										<th>createdAt</th>
@@ -67,9 +68,11 @@
 									</tr>
 									<tr th:each="entity : ${listEntity}">
 										<td th:text="${{entity.id}}" />
-										<td><a th:href="@{/user/{id}(id=${entity.id})}"><span
+										<td><a th:href="@{/card/{id}(id=${entity.idCard})}"><span
 												th:text="${{entity.idCard}}">idCard</span></a></td>
-										<td th:text="${{entity.nama}}" />
+										<td><a th:href="@{/user/{id}(id=${entity.id})}"><span
+												th:text="${{entity.userNumber}}">userNumber</span></a></td>
+										<td><span th:text="${{entity.nama}}">nama</span></td>
 										<td th:text="${{entity.note}}" />
 										<td th:text="${{entity.createdAt}}" />
 										<td th:text="${{entity.updatedAt}}" />
@@ -91,7 +94,8 @@
 
 								<div class="col-sm-6">
 									<nav class="pull-right">
-										<ul class="pagination pagination-sm no-margin pull-right" sd:pagination="full">
+										<ul class="pagination pagination-sm no-margin pull-right"
+											sd:pagination="full">
 											<!-- Pagination created by SpringDataDialect, this content is just for mockup -->
 											<li class="disabled"><a href="#" aria-label="Previous">
 													<span aria-hidden="true">&laquo;</span>

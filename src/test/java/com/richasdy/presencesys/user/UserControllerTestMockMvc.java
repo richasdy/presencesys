@@ -82,6 +82,7 @@ public class UserControllerTestMockMvc extends AbstractControllerTest {
 
 		foo = new User();
 		foo.setIdCard(99);
+		foo.setUserNumber("fooUserNumber");
 		foo.setNama("fooNama");
 		foo.setNote("fooNote");
 
@@ -148,6 +149,7 @@ public class UserControllerTestMockMvc extends AbstractControllerTest {
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.set("idCard", "100");
+		params.set("userNumber", "barUserNumber");
 		params.set("nama", "barNama");
 		params.set("note", "barNote");
 
@@ -185,6 +187,7 @@ public class UserControllerTestMockMvc extends AbstractControllerTest {
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.set("idCard", "100");
+		params.set("userNumber", "barUserNumber");
 		// validation using hibernate validator
 		// params.set("nama", "barNama");
 		params.set("note", "barNote");
@@ -304,6 +307,7 @@ public class UserControllerTestMockMvc extends AbstractControllerTest {
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.set("idCard", "1001");
+		params.set("userNumber", "fooUserNumber");
 		params.set("nama", "fooNamaUpdate");
 		params.set("note", "fooNoteUpdate");
 
@@ -335,6 +339,7 @@ public class UserControllerTestMockMvc extends AbstractControllerTest {
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.set("idCard", "1001");
+		params.set("userNumber", "fooUserNumber");
 		// validation using hibernate validator
 		// params.set("nama", "fooNamaUpdate");
 		params.set("note", "fooNoteUpdate");
@@ -374,6 +379,7 @@ public class UserControllerTestMockMvc extends AbstractControllerTest {
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.set("idCard", "1001");
+		params.set("userNumber", "fooUserNumberUpdate");
 		// validation using hibernate validator
 		params.set("nama", "fooNamaUpdate");
 		params.set("note", "fooNoteUpdate");

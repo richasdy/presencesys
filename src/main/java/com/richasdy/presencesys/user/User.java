@@ -24,6 +24,9 @@ public class User {
 	// number cant use @notEmpty Validator
 	// @NotEmpty // validator
 	private long idCard;
+	
+	@Column(nullable = false)
+	private String userNumber;
 
 	@Column(nullable = false)
 	@NotEmpty // validator
@@ -45,10 +48,11 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(long id, long idCard, String nama, String note, Date createdAt, Date updatedAt, Date deletedAt) {
+	public User(long id, long idCard, String userNumber, String nama, String note, Date createdAt, Date updatedAt, Date deletedAt) {
 		super();
 		this.id = id;
 		this.idCard = idCard;
+		this.userNumber = userNumber;
 		this.nama = nama;
 		this.note = note;
 		this.createdAt = createdAt;
@@ -70,6 +74,14 @@ public class User {
 
 	public void setIdCard(long idCard) {
 		this.idCard = idCard;
+	}
+	
+	public String getUserNumber() {
+		return userNumber;
+	}
+
+	public void setUserNumber(String userNumber) {
+		this.userNumber = userNumber;
 	}
 
 	public String getNama() {
@@ -114,7 +126,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return this.getClass().getName() + " [ " + id + ", " + idCard + ", " + nama + ", " + note + ", " + createdAt
+		return this.getClass().getName() + " [ " + id + ", " + idCard + ", " + userNumber + ", " +nama + ", " + note + ", " + createdAt
 				+ ", " + updatedAt + ", " + deletedAt + " ]";
 	}
 

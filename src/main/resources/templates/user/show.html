@@ -13,7 +13,8 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					<span th:text="${pageName}">Simple Tables</span> <small th:text="${pageNameDesc}">preview of simple tables</small>
+					<span th:text="${pageName}">Simple Tables</span> <small
+						th:text="${pageNameDesc}">preview of simple tables</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -36,21 +37,30 @@
 
 							<form class="form-horizontal" action="#">
 								<div class="box-body">
-								
-								<div class="form-group">
+
+									<div class="form-group">
 										<label for="inputEmail" class="col-sm-2 control-label">Id</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${entity.id}">
-												1 </span>
+											<span class="form-control" th:text="${entity.id}"> 1 </span>
 										</div>
 									</div>
 
-<div class="form-group">
-										<label for="inputEmail" class="col-sm-2 control-label">Id Card</label>
+									<div class="form-group">
+										<label for="inputEmail" class="col-sm-2 control-label">Id
+											Card</label>
 
 										<div class="col-sm-9">
 											<span class="form-control" th:text="${entity.idCard}">
+												1 </span>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputUserNumber" class="col-sm-2 control-label">User Number</label>
+
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.userNumber}">
 												1 </span>
 										</div>
 									</div>
@@ -59,38 +69,42 @@
 										<label for="inputEmail" class="col-sm-2 control-label">Nama</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${entity.nama}">
-												1 </span>
+											<span class="form-control" th:text="${entity.nama}"> 1
+											</span>
 										</div>
 									</div>
-									
+
 									<div class="form-group">
 										<label for="inputNote" class="col-sm-2 control-label">Note</label>
 
 										<div class="col-sm-9">
 											<textarea class="form-control" rows="3" id="inputNote"
-												placeholder="Enter ..." th:text="${entity.note}" disabled="disabled">this is note</textarea>
+												placeholder="Enter ..." th:text="${entity.note}"
+												disabled="disabled">this is note</textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
-										<label for="inputNote" class="col-sm-2 control-label">Created At</label>
+										<label for="inputNote" class="col-sm-2 control-label">Created
+											At</label>
 										<div class="col-sm-9">
 											<span class="form-control" th:text="${entity.createdAt}">
 												Sekarang </span>
 										</div>
 									</div>
-									
+
 									<div class="form-group">
-										<label for="inputNote" class="col-sm-2 control-label">Updated At</label>
+										<label for="inputNote" class="col-sm-2 control-label">Updated
+											At</label>
 										<div class="col-sm-9">
 											<span class="form-control" th:text="${entity.updatedAt}">
 												Sekarang </span>
 										</div>
 									</div>
-									
+
 									<div class="form-group">
-										<label for="inputNote" class="col-sm-2 control-label">Deleted At</label>
+										<label for="inputNote" class="col-sm-2 control-label">Deleted
+											At</label>
 										<div class="col-sm-9">
 											<span class="form-control" th:text="${entity.deletedAt}">
 												Sekarang </span>
@@ -100,8 +114,8 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<a class="btn btn-default" th:href="@{/user}">Back to table</a> <a
-										class="btn btn-info pull-right"
+									<a class="btn btn-default" th:href="@{/user}">Back to table</a>
+									<a class="btn btn-info pull-right"
 										th:href="@{/user/{id}/edit(id=${entity.id})}">Edit</a>
 								</div>
 								<!-- /.box-footer -->

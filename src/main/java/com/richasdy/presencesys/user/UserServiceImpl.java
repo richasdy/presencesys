@@ -70,11 +70,15 @@ public class UserServiceImpl implements UserService{
 			// java 7 above
 			switch (searchSplit[0]) {
 			case "id":
-				retVal = repository.findDistinctUserById(Integer.parseInt(searchSplit[1]), pageable);
+				retVal = repository.findDistinctUserById(Long.parseLong(searchSplit[1]), pageable);
 				break;
 				
 			case "idcard":
-				retVal = repository.findDistinctUserByIdCard(Integer.parseInt(searchSplit[1]), pageable);
+				retVal = repository.findDistinctUserByIdCard(Long.parseLong(searchSplit[1]), pageable);
+				break;
+				
+			case "usernumber":
+				retVal = repository.findDistinctUserByUserNumberContaining(searchSplit[1], pageable);
 				break;
 
 			case "nama":

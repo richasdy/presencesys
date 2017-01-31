@@ -54,6 +54,7 @@ public class UserServiceTest extends AbstractTest {
 	public void init() {
 		foo = new User();
 		foo.setIdCard(99);
+		foo.setUserNumber("fooUserNumber");
 		foo.setNama("fooNama");
 		foo.setNote("fooNote");
 
@@ -73,6 +74,7 @@ public class UserServiceTest extends AbstractTest {
 		// prepare
 		User bar = new User();
 		bar.setIdCard(100);
+		bar.setUserNumber("barUserNumber");
 		bar.setNama("barNama");
 		bar.setNote("barNote");
 
@@ -100,6 +102,7 @@ public class UserServiceTest extends AbstractTest {
 		// prepare
 		User bar = new User();
 		bar.setIdCard(100);
+		bar.setUserNumber("barUserNumber");
 		// validation using hibernate validator
 		// bar.setNama("barNama");
 		bar.setNote("barNote");
@@ -117,6 +120,7 @@ public class UserServiceTest extends AbstractTest {
 		// prepare
 		User bar = new User();
 		bar.setIdCard(99);
+		bar.setUserNumber("barUserNumber");
 		bar.setNama("fooNama");
 		bar.setNote("fooNote");
 
@@ -163,6 +167,7 @@ public class UserServiceTest extends AbstractTest {
 		User bar = new User();
 		bar.setId(Integer.MAX_VALUE);
 		bar.setIdCard(100);
+		bar.setUserNumber("barUserNumber");
 		// validation using hibernate validator
 		// bar.setNama("barNama");
 		bar.setNote("barNote");
@@ -184,7 +189,7 @@ public class UserServiceTest extends AbstractTest {
 
 		// action
 		User confirm = service.findOne(foo.getId());
-		System.out.println(confirm.toString());
+		// System.out.println(confirm.toString());
 
 		// check
 		assertTrue("failure - expected not null", confirm != null);
@@ -294,6 +299,25 @@ public class UserServiceTest extends AbstractTest {
 
 	}
 
+	@Test
+	public void searchByIdNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "id:" + Long.MAX_VALUE;
+
+		// System.out.println(searchTerm);
+
+		// action
+		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
 	@Test(expected = NumberFormatException.class)
 	public void searchByIdWrongFormat() {
 
@@ -327,6 +351,25 @@ public class UserServiceTest extends AbstractTest {
 
 	}
 
+	@Test
+	public void searchByIdCardNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "idcard:" + Long.MAX_VALUE;
+
+		// System.out.println(searchTerm);
+
+		// action
+		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
 	@Test(expected = NumberFormatException.class)
 	public void searchByIdCardWrongFormat() {
 
@@ -339,6 +382,41 @@ public class UserServiceTest extends AbstractTest {
 
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void searchByUserNumber() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<User> pageableConfirm = service.searchBy("usernumber:fooUserNumber", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByUserNumberNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<User> pageableConfirm = service.searchBy("usernumber:notFoundUserNumber", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm == null);
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}

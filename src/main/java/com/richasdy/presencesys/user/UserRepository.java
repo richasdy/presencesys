@@ -22,6 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Page<User> findDistinctUserByDeletedAtBetween(Date start, Date end, Pageable pageable);
 
 	// String Containing
+	Page<User> findDistinctUserByUserNumberContaining(String userNumber, Pageable pageable);
+	
 	Page<User> findDistinctUserByNamaContaining(String nama, Pageable pageable);
 
 	Page<User> findDistinctUserByNoteContaining(String note, Pageable pageable);
