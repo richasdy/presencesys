@@ -97,7 +97,7 @@ public class UserController {
 
 		model.addAttribute("entity", entity);
 		model.addAttribute("pageName", "User Detail");
-		model.addAttribute("pageNameDesc", "Detail Data Mesin");
+		model.addAttribute("pageNameDesc", "Detail Data User");
 
 		return "user/show";
 	}
@@ -111,7 +111,7 @@ public class UserController {
 		// kemungkinan error disini
 		model.addAttribute("user", entity);
 		model.addAttribute("pageName", "User Edit");
-		model.addAttribute("pageNameDesc", "Detail Perubahan Data Mesin");
+		model.addAttribute("pageNameDesc", "Detail Perubahan Data User");
 
 		return "user/edit";
 		// return new User();

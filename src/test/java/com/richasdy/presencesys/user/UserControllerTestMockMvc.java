@@ -258,7 +258,8 @@ public class UserControllerTestMockMvc extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/user/{id}";
-		int id = Integer.MAX_VALUE;
+		// kalau long test failed
+		long id = Integer.MAX_VALUE;
 
 		// action
 		// proses mock tidak jalan, null pointer di theamleaf.
