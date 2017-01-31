@@ -70,7 +70,7 @@ public class MachineServiceImpl implements MachineService{
 			// java 7 above
 			switch (searchSplit[0]) {
 			case "id":
-				retVal = repository.findDistinctMachineById(Integer.parseInt(searchSplit[1]), pageable);
+				retVal = repository.findDistinctMachineById(Long.parseLong(searchSplit[1]), pageable);
 				break;
 
 			case "ip":

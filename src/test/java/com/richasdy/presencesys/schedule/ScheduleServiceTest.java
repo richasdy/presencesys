@@ -37,6 +37,7 @@ import com.richasdy.presencesys.AbstractTest;
 import com.richasdy.presencesys.schedule.Schedule;
 import com.richasdy.presencesys.schedule.ScheduleRepository;
 import com.richasdy.presencesys.schedule.ScheduleService;
+import com.richasdy.presencesys.user.User;
 
 @Transactional
 public class ScheduleServiceTest extends AbstractTest {
@@ -310,6 +311,25 @@ public class ScheduleServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
 
 	}
+	
+	@Test
+	public void searchByIdNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "id:" + Long.MAX_VALUE;
+
+		// System.out.println(searchTerm);
+
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
 
 	@Test(expected = NumberFormatException.class)
 	public void searchByIdWrongFormat() {
@@ -341,6 +361,25 @@ public class ScheduleServiceTest extends AbstractTest {
 		// check
 		assertTrue("failure - expected not null", pageableConfirm != null);
 		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+	
+	@Test
+	public void searchByIdKelompokNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "idkelompok:" + Long.MAX_VALUE;
+
+		// System.out.println(searchTerm);
+
+		// action
+		Page<Schedule> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
 

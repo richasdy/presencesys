@@ -37,6 +37,7 @@ import com.richasdy.presencesys.AbstractTest;
 import com.richasdy.presencesys.machine.Machine;
 import com.richasdy.presencesys.machine.MachineRepository;
 import com.richasdy.presencesys.machine.MachineService;
+import com.richasdy.presencesys.user.User;
 
 @Transactional
 public class MachineServiceTest extends AbstractTest {
@@ -284,6 +285,25 @@ public class MachineServiceTest extends AbstractTest {
 		// check
 		assertTrue("failure - expected not null", pageableConfirm != null);
 		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+	
+	@Test
+	public void searchByIdNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "id:" + Long.MAX_VALUE;
+
+		// System.out.println(searchTerm);
+
+		// action
+		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
 

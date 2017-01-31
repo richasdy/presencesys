@@ -70,11 +70,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 			// java 7 above
 			switch (searchSplit[0]) {
 			case "id":
-				retVal = repository.findDistinctScheduleById(Integer.parseInt(searchSplit[1]), pageable);
+				retVal = repository.findDistinctScheduleById(Long.parseLong(searchSplit[1]), pageable);
 				break;
 
 			case "idkelompok":
-				retVal = repository.findDistinctScheduleByIdKelompok(Integer.parseInt(searchSplit[1]), pageable);
+				retVal = repository.findDistinctScheduleByIdKelompok(Long.parseLong(searchSplit[1]), pageable);
 				break;
 
 			case "tipe":

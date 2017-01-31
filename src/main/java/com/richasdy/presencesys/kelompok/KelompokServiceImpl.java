@@ -70,7 +70,7 @@ public class KelompokServiceImpl implements KelompokService{
 			// java 7 above
 			switch (searchSplit[0]) {
 			case "id":
-				retVal = repository.findDistinctGroupById(Integer.parseInt(searchSplit[1]), pageable);
+				retVal = repository.findDistinctGroupById(Long.parseLong(searchSplit[1]), pageable);
 				break;
 
 			case "nama":
