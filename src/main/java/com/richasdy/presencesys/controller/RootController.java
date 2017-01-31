@@ -14,7 +14,7 @@ import com.richasdy.presencesys.card.Card;
 public class RootController {
 
 	// @GetMapping()
-	// public String save(@Valid Card entity, BindingResult result) {
+	// public String index() {
 	// return "redirect:/account";
 	// }
 
