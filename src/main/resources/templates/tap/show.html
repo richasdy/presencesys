@@ -39,7 +39,7 @@
 								<div class="box-body">
 
 									<div class="form-group">
-										<label for="inputEmail" class="col-sm-2 control-label">Id</label>
+										<label for="inputId" class="col-sm-2 control-label">Id</label>
 
 										<div class="col-sm-9">
 											<span class="form-control" th:text="${entity.id}"> 1 </span>
@@ -47,15 +47,63 @@
 									</div>
 
 									<div class="form-group">
-										<label for="inputEmail" class="col-sm-2 control-label">Id
-											Card</label>
+										<label for="inputIdSchedule" class="col-sm-2 control-label">Id
+											Schedule</label>
 
 										<div class="col-sm-9">
-											<span class="form-control" th:text="${entity.idCard}">
+											<span class="form-control" th:text="${entity.idSchedule}">
+												1 </span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputIdUser" class="col-sm-2 control-label">Id
+											User</label>
+
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.idUser}">
+												1 </span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputIdKelompok" class="col-sm-2 control-label">Id
+											Kelompok</label>
+
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.idKelompok}">
+												1 </span>
+										</div>
+									</div>
+
+
+									<div class="form-group">
+										<label for="inputScheduleTanggal" class="col-sm-2 control-label">Tanggal</label>
+
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.scheduleTanggal}">
 												1 </span>
 										</div>
 									</div>
 									
+									<div class="form-group">
+										<label for="inputSheduleStart" class="col-sm-2 control-label">Start</label>
+
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.scheduleStart}">
+												1 </span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputSheduleStop" class="col-sm-2 control-label">Stop</label>
+
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.scheduleStop}">
+												1 </span>
+										</div>
+									</div>
+
 									<div class="form-group">
 										<label for="inputUserNumber" class="col-sm-2 control-label">User Number</label>
 
@@ -66,10 +114,28 @@
 									</div>
 
 									<div class="form-group">
-										<label for="inputEmail" class="col-sm-2 control-label">Nama</label>
+										<label for="inputScheduleTipe" class="col-sm-2 control-label">Tipe</label>
+
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.scheduleTipe}">
+												1 </span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputNama" class="col-sm-2 control-label">Nama</label>
 
 										<div class="col-sm-9">
 											<span class="form-control" th:text="${entity.nama}"> 1
+											</span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
+
+										<div class="col-sm-9">
+											<span class="form-control" th:text="${entity.status}"> 1
 											</span>
 										</div>
 									</div>
@@ -114,9 +180,9 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<a class="btn btn-default" th:href="@{/user}">Back to table</a>
+									<a class="btn btn-default" th:href="@{/tap}">Back to table</a>
 									<a class="btn btn-info pull-right"
-										th:href="@{/user/{id}/edit(id=${entity.id})}">Edit</a>
+										th:href="@{/tap/{id}/edit(id=${entity.id})}">Edit</a>
 								</div>
 								<!-- /.box-footer -->
 							</form>

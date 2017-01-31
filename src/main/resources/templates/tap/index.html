@@ -33,10 +33,10 @@
 							<div class="box-header with-border">
 								<h3 class="box-title" th:text="${tableName}">Bordered Table</h3>
 								<div class="box-tools">
-									<form th:action="@{/user/search}" method="get">
+									<form th:action="@{/tap/search}" method="get">
 										<div class="input-group input-group-sm" style="width: 300px;">
 											<div class="input-group-btn">
-												<a class="btn btn-info" th:href="@{/user/create}"> <i
+												<a class="btn btn-info" th:href="@{/tap/create}"> <i
 													class="fa fa-plus"></i>
 												</a>
 											</div>
@@ -57,9 +57,16 @@
 								<table class="table table-bordered">
 									<tr>
 										<th style="width: 10px">id</th>
-										<th>idCard</th>
+										<th>idSchedule</th>
+										<th>idUser</th>
+										<th>idKelompok</th>
+										<th>Tanggal</th>
+										<th>Start</th>
+										<th>Stop</th>
 										<th>userNumber</th>
+										<th>Tipe</th>
 										<th>nama</th>
+										<th>status</th>
 										<th>note</th>
 										<th>createdAt</th>
 										<th>updatedAt</th>
@@ -68,18 +75,30 @@
 									</tr>
 									<tr th:each="entity : ${listEntity}">
 										<td th:text="${{entity.id}}" />
-										<td><a th:href="@{/card/{id}(id=${entity.idCard})}"><span
-												th:text="${{entity.idCard}}">idCard</span></a></td>
-										<td><a th:href="@{/user/{id}(id=${entity.id})}"><span
-												th:text="${{entity.userNumber}}">userNumber</span></a></td>
-										<td><span th:text="${{entity.nama}}">nama</span></td>
+
+										<td><a th:href="@{/schedule/{id}(id=${entity.idSchedule})}"><span
+												th:text="${{entity.idSchedule}}">idSchedule</span></a></td>
+
+										<td><a th:href="@{/user/{id}(id=${entity.idUser})}"><span
+												th:text="${{entity.idUser}}">idUser</span></a></td>
+
+										<td><a th:href="@{/kelompok/{id}(id=${entity.idKelompok})}"><span
+												th:text="${{entity.idKelompok}}">idKelompok</span></a></td>
+
+										<td th:text="${{entity.scheduleTanggal}}" />
+										<td th:text="${{entity.scheduleStart}}" />
+										<td th:text="${{entity.scheduleStop}}" />
+										<td th:text="${{entity.userNumber}}" />
+										<td th:text="${{entity.scheduleTipe}}" />
+										<td th:text="${{entity.nama}}" />
+										<td th:text="${{entity.status}}" />
 										<td th:text="${{entity.note}}" />
 										<td th:text="${{entity.createdAt}}" />
 										<td th:text="${{entity.updatedAt}}" />
 										<td th:text="${{entity.deletedAt}}" />
-										<td><a th:href="@{/user/{id}/edit(id=${entity.id})}"><i
+										<td><a th:href="@{/tap/{id}/edit(id=${entity.id})}"><i
 												class="fa fa-edit" /></a> <a
-											th:href="@{/user/{id}/delete(id=${entity.id})}"><i
+											th:href="@{/tap/{id}/delete(id=${entity.id})}"><i
 												class="fa fa-trash-o" /></a></td>
 									</tr>
 

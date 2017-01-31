@@ -8,8 +8,8 @@ CREATE TABLE `Tap` (
   `schedule_tanggal` date NOT NULL,
   `schedule_start` datetime NOT NULL,
   `schedule_stop` datetime NOT NULL,
+  `schedule_tipe` varchar(255) NOT NULL,
   `user_number` varchar(255) NOT NULL,
-  `kelompok_tipe` varchar(255) NOT NULL,
   `nama` varchar(255) NOT NULL, -- nip / nik / nis 
   `status` varchar(255) NOT NULL,
   `note` text,

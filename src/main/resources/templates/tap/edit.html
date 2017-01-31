@@ -35,8 +35,8 @@
 
 							<!-- form start -->
 							<form class="form-horizontal" action="#"
-								th:action="@{/user/{id}/update(id=${id})}"
-								th:object="${user}" method="post">
+								th:action="@{/tap/{id}/update(id=${id})}"
+								th:object="${tap}" method="post">
 								<div class="box-body">
 
 									<div class="form-group">
@@ -47,17 +47,77 @@
 									</div>
 
 									<div
-										th:class="${#fields.hasErrors('idCard')} ? 'form-group  has-error' : 'form-group'">
-										<label for="inputIp" class="col-sm-2 control-label">Id Card</label>
+										th:class="${#fields.hasErrors('idSchedule')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputIdSchedule" class="col-sm-2 control-label">Id Schedule</label>
 
 										<div class="col-sm-9">
-											<input type="text" class="form-control" id="inputIdCard"
-												placeholder="Id Card" th:field="*{idCard}" /> <span
-												class="help-block" th:if="${#fields.hasErrors('idCard')}"
-												th:errors="*{idCard}">Help block with error</span>
+											<input type="text" class="form-control" id="inputIdSchedule"
+												placeholder="Id Schedule" th:field="*{idSchedule}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('idSchedule')}"
+												th:errors="*{idSchedule}">Help block with error</span>
 										</div>
 									</div>
-									
+
+									<div
+										th:class="${#fields.hasErrors('idUser')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputIdUser" class="col-sm-2 control-label">Id User</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputIdUser"
+												placeholder="Id User" th:field="*{idUser}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('idUser')}"
+												th:errors="*{idUser}">Help block with error</span>
+										</div>
+									</div>
+
+									<div
+										th:class="${#fields.hasErrors('idKelompok')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputIdKelompok" class="col-sm-2 control-label">Id Kelompok</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputIdKelompok"
+												placeholder="Id Kelompok" th:field="*{idKelompok}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('idKelompok')}"
+												th:errors="*{idKelompok}">Help block with error</span>
+										</div>
+									</div>
+
+									<div
+										th:class="${#fields.hasErrors('scheduleTanggal')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputScheduleTanggal" class="col-sm-2 control-label">Tanggal</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputScheduleTanggal"
+												placeholder="Tanggal" th:field="*{scheduleTanggal}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('scheduleTanggal')}"
+												th:errors="*{scheduleTanggal}">Help block with error</span>
+										</div>
+									</div>
+
+									<div
+										th:class="${#fields.hasErrors('scheduleStart')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputScheduleStart" class="col-sm-2 control-label">Start</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputScheduleStart"
+												placeholder="Start" th:field="*{scheduleStart}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('scheduleStart')}"
+												th:errors="*{scheduleStart}">Help block with error</span>
+										</div>
+									</div>
+
+									<div
+										th:class="${#fields.hasErrors('scheduleStop')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputScheduleStop" class="col-sm-2 control-label">Stop</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputScheduleStop"
+												placeholder="Stop" th:field="*{scheduleStop}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('scheduleStop')}"
+												th:errors="*{scheduleStop}">Help block with error</span>
+										</div>
+									</div>
+
 									<div
 										th:class="${#fields.hasErrors('userNumber')} ? 'form-group  has-error' : 'form-group'">
 										<label for="inputUserNumber" class="col-sm-2 control-label">User Number</label>
@@ -71,14 +131,38 @@
 									</div>
 									
 									<div
+										th:class="${#fields.hasErrors('scheduleTipe')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputKelompokTipe" class="col-sm-2 control-label">Tipe</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputKelompokTipe"
+												placeholder="Tipe" th:field="*{scheduleTipe}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('scheduleTipe')}"
+												th:errors="*{scheduleTipe}">Help block with error</span>
+										</div>
+									</div>
+
+									<div
 										th:class="${#fields.hasErrors('nama')} ? 'form-group  has-error' : 'form-group'">
-										<label for="inputIp" class="col-sm-2 control-label">Nama</label>
+										<label for="inputNama" class="col-sm-2 control-label">Nama</label>
 
 										<div class="col-sm-9">
 											<input type="text" class="form-control" id="inputNama"
 												placeholder="Nama" th:field="*{nama}" /> <span
 												class="help-block" th:if="${#fields.hasErrors('nama')}"
 												th:errors="*{nama}">Help block with error</span>
+										</div>
+									</div>
+
+									<div
+										th:class="${#fields.hasErrors('status')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputStatus"
+												placeholder="Status" th:field="*{status}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('status')}"
+												th:errors="*{status}">Help block with error</span>
 										</div>
 									</div>
 
@@ -94,7 +178,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<a class="btn btn-default" th:href="@{/user/{id}(id=${id})}">Back</a>
+									<a class="btn btn-default" th:href="@{/tap/{id}(id=${id})}">Back</a>
 									<button type="submit" class="btn btn-info pull-right">Save</button>
 								</div>
 								<!-- /.box-footer -->
