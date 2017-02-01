@@ -22,5 +22,7 @@ public interface UserService {
 	Page<User> searchBy(String searchTerm, Pageable pageable);
 
 	Page<User> findAll(Pageable pageable);
+	
+	User findByIdCard(long idCard);
 
 }

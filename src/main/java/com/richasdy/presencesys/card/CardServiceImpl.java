@@ -148,4 +148,9 @@ public class CardServiceImpl implements CardService {
 		return repository.findAll();
 	}
 
+	@Override
+	public Card findByCardNumber(String cardNumber) {
+		return repository.findCardByCardNumberContaining(cardNumber);
+	}
+
 }

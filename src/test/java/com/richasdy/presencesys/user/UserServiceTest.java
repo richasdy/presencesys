@@ -34,6 +34,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.richasdy.presencesys.AbstractTest;
+import com.richasdy.presencesys.machine.Machine;
 import com.richasdy.presencesys.user.User;
 import com.richasdy.presencesys.user.UserRepository;
 import com.richasdy.presencesys.user.UserService;
@@ -717,5 +718,32 @@ public class UserServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
+
+	@Test
+	public void findByIdCard() {
+
+		// prepare
+
+		// action
+		User confirm = service.findByIdCard(foo.getIdCard());
+
+		// check
+		assertTrue("failure - expected not null", confirm != null);
+
+	}
+
+	@Test
+	public void findByIdCardNotFound() {
+
+		// prepare
+
+		// action
+		User confirm = service.findByIdCard(Long.MAX_VALUE);
+
+		// check
+		assertTrue("failure - expected not null", confirm == null);
+
+	}
+
 
 }

@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,7 @@ import com.richasdy.presencesys.AbstractTest;
 import com.richasdy.presencesys.account.AccountRepository;
 import com.richasdy.presencesys.card.Card;
 import com.richasdy.presencesys.card.CardService;
+import com.richasdy.presencesys.machine.Machine;
 import com.richasdy.presencesys.card.Card;
 
 @Transactional
@@ -93,9 +95,9 @@ public class CardServiceTest extends AbstractTest {
 
 	}
 
-//	@Test(expected = DataIntegrityViolationException.class)
+	// @Test(expected = DataIntegrityViolationException.class)
 	public void saveValidationErrorDupicate() {
-		
+
 		// test cant run because hibernate validator for unique value
 		// not in use for cardNumber, only database validator that exist
 
@@ -325,13 +327,12 @@ public class CardServiceTest extends AbstractTest {
 
 	}
 
-
 	@Test
 	public void searchByCardNumber() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
-		String searchTerm = "cardnumber:"+foo.getCardNumber();
+		String searchTerm = "cardnumber:" + foo.getCardNumber();
 
 		// action
 		Page<Card> pageableConfirm = service.searchBy(searchTerm, page);
@@ -362,7 +363,7 @@ public class CardServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
-	
+
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void searchByCardNumberEmpty() {
 
@@ -388,7 +389,7 @@ public class CardServiceTest extends AbstractTest {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
-		String searchTerm = "activated:"+foo.getActivated();
+		String searchTerm = "activated:" + foo.getActivated();
 
 		// action
 		Page<Card> pageableConfirm = service.searchBy(searchTerm, page);
@@ -399,7 +400,7 @@ public class CardServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
 
 	}
-	
+
 	@Test
 	public void searchByActivatedWrongFormat() {
 
@@ -416,7 +417,7 @@ public class CardServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
 
 	}
-	
+
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void searchByActivatedEmpty() {
 
@@ -434,7 +435,6 @@ public class CardServiceTest extends AbstractTest {
 
 	}
 
-	
 	@Test
 	public void searchByNote() {
 
@@ -694,6 +694,49 @@ public class CardServiceTest extends AbstractTest {
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm != null);
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void findByCardNumber() {
+
+		// prepare
+
+		// action
+		Card confirm = service.findByCardNumber(foo.getCardNumber());
+
+		// System.out.println(confirm.toString());
+
+		// check
+		assertTrue("failure - expected not null", confirm != null);
+
+	}
+
+	@Test(expected = IncorrectResultSizeDataAccessException.class)
+	public void findByCardNumberEmpty() {
+
+		// prepare
+
+		// action
+		Card confirm = service.findByCardNumber("");
+
+		System.out.println(confirm.toString());
+
+		// check
+		assertTrue("failure - expected not null", confirm == null);
+
+	}
+
+	// @Test
+	public void findByCardNumberNotFound() {
+
+		// prepare
+
+		// action
+		Card confirm = service.findByCardNumber("notFoundCardNumber");
+
+		// check
+		assertTrue("failure - expected not null", confirm == null);
 
 	}
 

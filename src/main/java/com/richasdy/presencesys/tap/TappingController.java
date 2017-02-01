@@ -26,23 +26,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.richasdy.presencesys.card.Card;
+import com.richasdy.presencesys.card.CardService;
+import com.richasdy.presencesys.kelompok.KelompokService;
 import com.richasdy.presencesys.machine.Machine;
 import com.richasdy.presencesys.machine.MachineService;
+import com.richasdy.presencesys.schedule.ScheduleService;
 import com.richasdy.presencesys.tap.Tap;
 import com.richasdy.presencesys.tap.TapService;
+import com.richasdy.presencesys.user.User;
+import com.richasdy.presencesys.user.UserService;
 
 @Controller
 @RequestMapping("tapping")
 public class TappingController {
 
-	TapService tapService;
-	MachineService machineService;
-
+	
+	
 	@Autowired
-	public TappingController(TapService tapService, MachineService machineService) {
-		this.tapService = tapService;
-		this.machineService = machineService;
-	}
+	MachineService machineService;
+	
+	@Autowired
+	CardService cardService;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	KelompokService kelompokService;
+	
+	@Autowired
+	ScheduleService scheduleService;
+	
+	@Autowired
+	TapService tapService;
 
 	@GetMapping()
 	@ResponseBody
@@ -67,15 +84,30 @@ public class TappingController {
 		}
 
 		// CHECK REGISTERED CARD
-		// String searchTermCard = "cardnumber:" + cardNumber;
-		// Page<Machine> pageCard = machineService.searchBy(searchTermCard, new
-		// PageRequest(0, 1));
-		// List listCard = Lists.newArrayList(pageCard);
-		//
-		// if (listCard.size() == 0) {
-		// return "error : kartu tidak terdaftar";
-		// }
+		Card card = cardService.findByCardNumber(cardNumber);
+		// System.out.println(machine.toString());
+		if (card == null) {
+			return "error : kartu tidak terdaftar";
+		}
 
+		// CHECK ACTIVE CARD
+		if (card.getActivated() == false) {
+			return "error : kartu belum aktif";
+		}
+
+		// CHECK USER
+		// USER TERASOSIASI DENGAN KARTU
+		User user = userService.findByIdCard(card.getId());
+		if (user == null) {
+			return "error : kartu belum terasosiasi dengan user";
+		}
+		
+		// CHECK KELOMPOK
+		
+		// CHECK SCHEDULE
+		
+		// SAVE DATA TO TAP
+		
 		return cardNumber;
 	}
 

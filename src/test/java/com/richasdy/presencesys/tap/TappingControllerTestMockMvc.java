@@ -62,11 +62,19 @@ import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richasdy.presencesys.AbstractControllerTest;
+import com.richasdy.presencesys.card.Card;
+import com.richasdy.presencesys.card.CardService;
 import com.richasdy.presencesys.tap.Tap;
 import com.richasdy.presencesys.tap.TapService;
+import com.richasdy.presencesys.user.User;
+import com.richasdy.presencesys.user.UserService;
 import com.richasdy.presencesys.domain.Quote;
+import com.richasdy.presencesys.kelompok.Kelompok;
+import com.richasdy.presencesys.kelompok.KelompokService;
 import com.richasdy.presencesys.machine.Machine;
 import com.richasdy.presencesys.machine.MachineService;
+import com.richasdy.presencesys.schedule.Schedule;
+import com.richasdy.presencesys.schedule.ScheduleService;
 
 @Transactional
 public class TappingControllerTestMockMvc extends AbstractControllerTest {
@@ -75,12 +83,29 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 	// this is integration test
 
 	@Autowired
-	private TapService tapService;
-	@Autowired
 	private MachineService machineService;
 
-	private Tap foo;
+	@Autowired
+	private CardService cardService;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private KelompokService kelompokService;
+
+	@Autowired
+	private ScheduleService scheduleService;
+
+	@Autowired
+	private TapService tapService;
+
 	private Machine fooMachine;
+	private Card fooCard;
+	private User fooUser;
+	private Kelompok kelompok;
+	private Schedule schedule;
+	private Tap foo;
 
 	@Before
 	public void setUp() {
@@ -99,10 +124,25 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 		foo.setStatus("fooStatus");
 		foo.setNote("fooNote");
 		foo = tapService.save(foo);
-		
+
+		// TAPPING TESTING
+
 		fooMachine = new Machine();
 		fooMachine.setIp("127.0.0.1");
 		fooMachine = machineService.save(fooMachine);
+
+		fooCard = new Card();
+		fooCard.setCardNumber("fooCardNumber");
+		fooCard.setActivated(true);
+		fooCard.setActivatedAt(new Date());
+		fooCard = cardService.save(fooCard);
+
+		fooUser = new User();
+		fooUser.setIdCard(fooCard.getId());
+		fooUser.setUserNumber("fooUserNumber");
+		fooUser.setNama("fooNama");
+		fooUser.setNote("fooNote");
+		fooUser = userService.save(fooUser);
 
 	}
 
@@ -130,18 +170,18 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 
 	}
 
-	 @Test
+	@Test
 	public void indexMachineNotRegistered() throws Exception {
 
 		// prepare
+		String uri = "/tapping";
+
 		// remove fooMachine
 		machineService.delete(fooMachine.getId());
 
-		String uri = "/tapping";
-
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL))
-				.andDo(print())
+				// .andDo(print())
 				.andReturn();
 
 		// System.out.println("@index : " + result);
@@ -153,7 +193,8 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 
 		// check
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected error message : unregistered machine", content, "error : perangkat tidak terdaftar");
+		assertEquals("failure - expected error message : unregistered machine", content,
+				"error : perangkat tidak terdaftar");
 
 	}
 
@@ -162,23 +203,90 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/tapping";
+
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("cardNumber", "asdfghjkl");
+		params.set("cardNumber", fooCard.getCardNumber());
+
+		// remove card to make unregistered
+		cardService.delete(fooCard.getId());
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).params(params).accept(MediaType.ALL))
-				.andDo(print()).andReturn();
+				// .andDo(print())
+				.andReturn();
 
-		System.out.println("@index : " + result);
+		// System.out.println("@index : " + result);
 
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
 
-		System.out.println("@index : " + content);
+		// System.out.println("@index : " + content);
 
 		// check
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
 		assertEquals("failure - expected null error message", content, "error : kartu tidak terdaftar");
+
+	}
+
+	@Test
+	public void indexCardNotActived() throws Exception {
+
+		// prepare
+		String uri = "/tapping";
+
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.set("cardNumber", fooCard.getCardNumber());
+
+		// deactive card
+		fooCard.setActivated(false);
+		cardService.update(fooCard);
+
+		// action
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).params(params).accept(MediaType.ALL))
+				// .andDo(print())
+				.andReturn();
+
+		// System.out.println("@index : " + result);
+
+		String content = result.getResponse().getContentAsString();
+		int status = result.getResponse().getStatus();
+
+		// System.out.println("@index : " + content);
+
+		// check
+		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
+		assertEquals("failure - expected null error message", content, "error : kartu belum aktif");
+
+	}
+
+	@Test
+	public void indexCardNotAssociated() throws Exception {
+
+		// prepare
+		String uri = "/tapping";
+
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.set("cardNumber", fooCard.getCardNumber());
+
+		// hapus fooUser supaya kartu tidak terasosiasi
+		// System.out.println(fooUser.toString());
+		userService.delete(fooUser.getId());
+
+		// action
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).params(params).accept(MediaType.ALL))
+				// .andDo(print())
+				.andReturn();
+
+		// System.out.println("@index : " + result);
+
+		String content = result.getResponse().getContentAsString();
+		int status = result.getResponse().getStatus();
+
+		// System.out.println("@index : " + content);
+
+		// check
+		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
+		assertEquals("failure - expected null error message", content, "error : kartu belum terasosiasi dengan user");
 
 	}
 

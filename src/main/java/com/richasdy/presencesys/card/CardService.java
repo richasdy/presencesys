@@ -26,4 +26,6 @@ public interface CardService {
 	Page<Card> findAll(Pageable pageable);
 	
 	Iterable<Card> findAll();
+	
+	Card findByCardNumber(String cardNumber);
 }

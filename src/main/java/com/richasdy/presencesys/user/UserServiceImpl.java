@@ -143,4 +143,9 @@ public class UserServiceImpl implements UserService{
 		return repository.findAll(pageable);
 	}
 
+	@Override
+	public User findByIdCard(long idCard) {
+		return repository.findUserByIdCard(idCard);
+	}
+
 }

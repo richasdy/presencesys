@@ -27,5 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Page<User> findDistinctUserByNamaContaining(String nama, Pageable pageable);
 
 	Page<User> findDistinctUserByNoteContaining(String note, Pageable pageable);
+	
+	User findUserByIdCard(long idCard);
 
 }

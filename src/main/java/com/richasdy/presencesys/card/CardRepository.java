@@ -35,4 +35,7 @@ public interface CardRepository extends JpaRepository<Card, Long>{
 	//Boolean
 	Page<Card> findDistinctCardByActivated(Boolean activated, Pageable pageable);
 	
+	
+	Card findCardByCardNumberContaining(String cardNumber);
+	
 }
