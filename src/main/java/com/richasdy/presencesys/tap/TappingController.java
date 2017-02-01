@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.richasdy.presencesys.card.Card;
 import com.richasdy.presencesys.card.CardService;
+import com.richasdy.presencesys.kelompok.Kelompok;
 import com.richasdy.presencesys.kelompok.KelompokService;
 import com.richasdy.presencesys.machine.Machine;
 import com.richasdy.presencesys.machine.MachineService;
@@ -27,25 +28,23 @@ import com.richasdy.presencesys.user.UserService;
 @RequestMapping("tapping")
 public class TappingController {
 
-	
-	
 	@Autowired
-	MachineService machineService;
-	
+	private MachineService machineService;
+
 	@Autowired
-	CardService cardService;
-	
+	private CardService cardService;
+
 	@Autowired
-	UserService userService;
-	
+	private UserService userService;
+
 	@Autowired
-	KelompokService kelompokService;
-	
+	private KelompokService kelompokService;
+
 	@Autowired
-	ScheduleService scheduleService;
-	
+	private ScheduleService scheduleService;
+
 	@Autowired
-	TapService tapService;
+	private TapService tapService;
 
 	@GetMapping()
 	@ResponseBody
@@ -83,23 +82,24 @@ public class TappingController {
 
 		// CHECK USER
 		User user = userService.findByIdCard(card.getId());
-		
+
 		if (user == null) {
 			// USER HARUS TERASOSIASI DENGAN KARTU
 			return "error : kartu belum terasosiasi dengan user";
-			
-		} else if (user.getIdKelompok()==0) {
+
+		} else if (user.getIdKelompok() == 0) {
 			// USER HARUS TERASOSIASI DENGAN KELOMPOK
 			return "error : user belum terasosiasi dengan kelompok";
-		} 
-		
+		}
+
 		// CHECK SCHEDULE
-		// find schedule where idKelompok = user.idKelompok and now between start and stop
+		// find schedule where idKelompok = user.idKelompok and now between
+		// start and stop
 		Schedule schedule = scheduleService.findScheduleByIdKelompokAndNow(user.getIdKelompok());
 		if (schedule == null) {
 			return "error : tidak ada jadwal tapping sekarang";
 		}
-		
+
 		// SAVE DATA TO TAP
 		Tap tap = new Tap();
 		tap.setIdSchedule(schedule.getId());
@@ -111,43 +111,139 @@ public class TappingController {
 		tap.setUserNumber(user.getUserNumber());
 		tap.setScheduleTipe(schedule.getTipe());
 		tap.setNama(user.getNama());
-		
+
 		Date sekarang = new Date();
-		Long selisihWaktu = sekarang.getTime()-schedule.getStop().getTime();
+		Long selisihWaktu = sekarang.getTime() - schedule.getStop().getTime();
 		tap.setStatus(selisihWaktu.toString());
 		tap = tapService.save(tap);
-		
-		if (tap != null){
+
+		if (tap != null) {
 			return "success : presensi berhasil";
 		} else {
 			return "error : tap gagal disimpan";
 		}
-		
+
 	}
 	
+	
+	
+	// CODE FOR SIMULATION
+
 	@GetMapping("/registerme")
 	@ResponseBody
 	public String regiterMyMachine(HttpServletRequest request) {
-		
+
 		Machine machine = machineService.findByIp(request.getRemoteAddr());
-		if (machine == null){
-			
+		if (machine == null) {
+
 			Machine machineToRegister = new Machine();
 			machineToRegister.setIp(request.getRemoteAddr());
-			machineToRegister.setNote("ip : "+request.getRemoteAddr()+" | X-FORWARDED-FOR :"+request.getHeader("X-FORWARDED-FOR"));
+			machineToRegister.setNote(
+					"ip : " + request.getRemoteAddr() + " | X-FORWARDED-FOR :" + request.getHeader("X-FORWARDED-FOR"));
 			machineToRegister = machineService.save(machineToRegister);
-			
-			if(machineToRegister!=null){
-				return "regiter berhasil, ip machine : "+request.getRemoteAddr() +" | "+ request.getHeader("X-FORWARDED-FOR");
+
+			if (machineToRegister != null) {
+				return "regiter berhasil, ip machine : " + request.getRemoteAddr() + " | "
+						+ request.getHeader("X-FORWARDED-FOR");
 			} else {
 				return "error : gagal registrasi mesin";
 			}
-			
+
 		} else {
 			return "mesin telah terregistrasi";
 		}
-		
-		
+
+	}
+
+	private Machine machine;
+	private Card card;
+	private Kelompok kelompok;
+	private User user;
+	private Schedule schedule;
+
+	@GetMapping("/cobaregistrasi")
+	@ResponseBody
+	public String cobaPresensi(HttpServletRequest request) {
+
+		// REGISTER MACHINE
+		machine = machineService.findByIp(request.getRemoteAddr());
+		if (machine == null) {
+
+			Machine machineToRegister = new Machine();
+			machineToRegister.setIp(request.getRemoteAddr());
+			machineToRegister.setNote(
+					"ip : " + request.getRemoteAddr() + " | X-FORWARDED-FOR :" + request.getHeader("X-FORWARDED-FOR"));
+			machineToRegister = machineService.save(machineToRegister);
+
+		}
+
+		// REGISTER CARD
+		card = new Card();
+		card.setCardNumber("cobaCardNumber");
+		card.setNote("cobaCardNote");
+		card.setActivated(true);
+		card.setActivatedAt(new Date());
+		card = cardService.save(card);
+
+		if (card == null) {
+			return "error register card";
+		}
+
+		// REGISTER KELOMPOK
+		kelompok = new Kelompok();
+		kelompok.setNama("cobaNamaKelompok");
+		kelompok.setNote("cobaNoteKelompok");
+		kelompok = kelompokService.save(kelompok);
+
+		if (kelompok == null) {
+			return "error register kelompok";
+		}
+
+		// REGISTER USER
+		user = new User();
+		user.setUserNumber("cobaUserNumber");
+		user.setIdCard(card.getId());
+		user.setIdKelompok(kelompok.getId());
+		user.setNama("cobaNamaUser");
+		user.setNote("cobaNoteUser");
+		user = userService.save(user);
+
+		if (user == null) {
+			return "error register user";
+		}
+
+		return "register coba berhasil";
+
+	}
+
+	@GetMapping("/cobajadwal")
+	@ResponseBody
+	public String cobaPresensiJadwal(HttpServletRequest request) {
+
+		// REGISTER SCHEDULE
+		schedule = new Schedule();
+		schedule.setIdKelompok(kelompok.getId());
+		schedule.setNote("cobaNoteSchedule");
+		schedule.setTipe("cobaTipeSchedule");
+		schedule.setTanggal(new Date());
+		schedule.setStart(new Date());
+		schedule.setStop(new Date(System.currentTimeMillis() + 2 * 3600 * 1000));
+		schedule = scheduleService.save(schedule);
+
+		if (schedule == null) {
+			return "error register schedule";
+		}
+
+		return "register schedule berhasil, silahkan coba untuk 2 jam kedepan";
+
+	}
+
+	@GetMapping("/cobatap")
+	// @ResponseBody
+	public String cobaPresensiTap(HttpServletRequest request) {
+
+		return "redirect:/tapping?cardNumber=" + card.getCardNumber();
+
 	}
 
 }
