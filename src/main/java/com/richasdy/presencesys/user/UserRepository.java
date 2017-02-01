@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Page<User> findDistinctUserById(long id, Pageable pageable);
 
 	Page<User> findDistinctUserByIdCard(long idCard, Pageable pageable);
+	
+	Page<User> findDistinctUserByIdKelompok(long idKelompok, Pageable pageable);
 
 	// Date
 	Page<User> findDistinctUserByCreatedAtBetween(Date start, Date end, Pageable pageable);

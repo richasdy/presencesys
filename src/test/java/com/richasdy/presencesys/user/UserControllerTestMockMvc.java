@@ -435,5 +435,30 @@ public class UserControllerTestMockMvc extends AbstractControllerTest {
 		// check
 		// assertEquals("failure - expected HTTP Status 3XX", 3, status / 100);
 	}
+	
+	@Test
+	public void search() throws Exception {
+
+		// prepare
+		String uri = "/user/search";
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.set("q", "idcard:" + foo.getIdCard());
+
+		// action
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL).params(params)).andReturn();
+
+		Map<String, Object> model = result.getModelAndView().getModel();
+		String view = result.getModelAndView().getViewName();
+		String content = result.getResponse().getContentAsString();
+		int status = result.getResponse().getStatus();
+
+		// check
+		assertTrue("failure - expected model attribute listAccount", model.containsKey("listEntity"));
+		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
+		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
+		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
+		assertEquals("failure - expected view user/index", "user/index", view);
+
+	}
 
 }

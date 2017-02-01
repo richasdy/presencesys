@@ -25,6 +25,11 @@ public class User {
 	// @NotEmpty // validator
 	private long idCard;
 	
+	@Column(unique = true, nullable = false)
+	// number cant use @notEmpty Validator
+	// @NotEmpty // validator
+	private long idKelompok;
+	
 	@Column(nullable = false)
 	private String userNumber;
 
@@ -48,10 +53,11 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(long id, long idCard, String userNumber, String nama, String note, Date createdAt, Date updatedAt, Date deletedAt) {
+	public User(long id, long idCard, long idKelompok, String userNumber, String nama, String note, Date createdAt, Date updatedAt, Date deletedAt) {
 		super();
 		this.id = id;
 		this.idCard = idCard;
+		this.idKelompok = idKelompok;
 		this.userNumber = userNumber;
 		this.nama = nama;
 		this.note = note;
@@ -76,6 +82,14 @@ public class User {
 		this.idCard = idCard;
 	}
 	
+	public long getIdKelompok() {
+		return idKelompok;
+	}
+
+	public void setIdKelompok(long idKelompok) {
+		this.idKelompok = idKelompok;
+	}
+
 	public String getUserNumber() {
 		return userNumber;
 	}

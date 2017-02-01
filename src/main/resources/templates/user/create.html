@@ -52,6 +52,18 @@
 									</div>
 									
 									<div
+										th:class="${#fields.hasErrors('idKelompok')} ? 'form-group  has-error' : 'form-group'">
+										<label for="inputIdKelompok" class="col-sm-2 control-label">Id Kelompok</label>
+
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="inputIdKelompok"
+												placeholder="Id Kelompok" th:field="*{idKelompok}" /> <span
+												class="help-block" th:if="${#fields.hasErrors('idKelompok')}"
+												th:errors="*{idKelompok}">Help block with error</span>
+										</div>
+									</div>
+									
+									<div
 										th:class="${#fields.hasErrors('userNumber')} ? 'form-group  has-error' : 'form-group'">
 										<label for="inputUserNumber" class="col-sm-2 control-label">User Number</label>
 

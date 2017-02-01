@@ -386,6 +386,58 @@ public class UserServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
+	
+	@Test
+	public void searchByIdKelompok() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "idkelompok:" + foo.getIdKelompok();
+
+		// action
+		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByIdKelompokNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "idkelompok:" + Long.MAX_VALUE;
+
+		// System.out.println(searchTerm);
+
+		// action
+		Page<User> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected = NumberFormatException.class)
+	public void searchByIdKelompokWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<User> pageableConfirm = service.searchBy("idkelompok:a", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
 
 	@Test
 	public void searchByUserNumber() {

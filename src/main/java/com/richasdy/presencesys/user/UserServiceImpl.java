@@ -77,6 +77,10 @@ public class UserServiceImpl implements UserService{
 				retVal = repository.findDistinctUserByIdCard(Long.parseLong(searchSplit[1]), pageable);
 				break;
 				
+			case "idkelompok":
+				retVal = repository.findDistinctUserByIdKelompok(Long.parseLong(searchSplit[1]), pageable);
+				break;
+				
 			case "usernumber":
 				retVal = repository.findDistinctUserByUserNumberContaining(searchSplit[1], pageable);
 				break;

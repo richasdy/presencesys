@@ -58,6 +58,7 @@
 									<tr>
 										<th style="width: 10px">id</th>
 										<th>idCard</th>
+										<th>idKelompok</th>
 										<th>userNumber</th>
 										<th>nama</th>
 										<th>note</th>
@@ -70,6 +71,8 @@
 										<td th:text="${{entity.id}}" />
 										<td><a th:href="@{/card/{id}(id=${entity.idCard})}"><span
 												th:text="${{entity.idCard}}">idCard</span></a></td>
+										<td><a th:href="@{/kelompok/{id}(id=${entity.idKelompok})}"><span
+												th:text="${{entity.idKelompok}}">idKelompok</span></a></td>
 										<td><a th:href="@{/user/{id}(id=${entity.id})}"><span
 												th:text="${{entity.userNumber}}">userNumber</span></a></td>
 										<td><span th:text="${{entity.nama}}">nama</span></td>
