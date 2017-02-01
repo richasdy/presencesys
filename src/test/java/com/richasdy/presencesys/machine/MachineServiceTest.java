@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -287,7 +288,7 @@ public class MachineServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
 
 	}
-	
+
 	@Test
 	public void searchByIdNotFound() {
 
@@ -431,8 +432,8 @@ public class MachineServiceTest extends AbstractTest {
 		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
-//		System.out.println("@searchByCreatedAt" + pageableConfirm);
-//		System.out.println("@searchByCreatedAt" + listConfirm);
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
 
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm != null);
@@ -456,8 +457,8 @@ public class MachineServiceTest extends AbstractTest {
 		Page<Machine> pageableConfirm = service.searchBy(searchTerm, page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
-//		System.out.println("@searchByCreatedAt" + pageableConfirm);
-//		System.out.println("@searchByCreatedAt" + listConfirm);
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
 
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm != null);
@@ -617,6 +618,49 @@ public class MachineServiceTest extends AbstractTest {
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm != null);
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void findByIp() {
+
+		// prepare
+
+		// action
+		Machine confirm = service.findByIp(foo.getIp());
+
+		// System.out.println(confirm.toString());
+
+		// check
+		assertTrue("failure - expected not null", confirm != null);
+
+	}
+	
+	@Test(expected = IncorrectResultSizeDataAccessException.class)
+	public void findByIpEmpty() {
+
+		// prepare
+
+		// action
+		Machine confirm = service.findByIp("");
+
+		 System.out.println(confirm.toString());
+
+		// check
+		assertTrue("failure - expected not null", confirm == null);
+
+	}
+
+	// @Test
+	public void findByIpNotFound() {
+
+		// prepare
+
+		// action
+		Machine confirm = service.findByIp("notFoundIp");
+
+		// check
+		assertTrue("failure - expected not null", confirm == null);
 
 	}
 

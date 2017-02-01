@@ -65,6 +65,8 @@ import com.richasdy.presencesys.AbstractControllerTest;
 import com.richasdy.presencesys.tap.Tap;
 import com.richasdy.presencesys.tap.TapService;
 import com.richasdy.presencesys.domain.Quote;
+import com.richasdy.presencesys.machine.Machine;
+import com.richasdy.presencesys.machine.MachineService;
 
 @Transactional
 public class TappingControllerTestMockMvc extends AbstractControllerTest {
@@ -73,9 +75,12 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 	// this is integration test
 
 	@Autowired
-	private TapService service;
+	private TapService tapService;
+	@Autowired
+	private MachineService machineService;
 
 	private Tap foo;
+	private Machine fooMachine;
 
 	@Before
 	public void setUp() {
@@ -93,8 +98,11 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 		foo.setNama("fooNama");
 		foo.setStatus("fooStatus");
 		foo.setNote("fooNote");
-
-		foo = service.save(foo);
+		foo = tapService.save(foo);
+		
+		fooMachine = new Machine();
+		fooMachine.setIp("127.0.0.1");
+		fooMachine = machineService.save(fooMachine);
 
 	}
 
@@ -118,21 +126,22 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 
 		// check
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected null error message", content, "error : cardnNumber tidak boleh kosong");
+		assertEquals("failure - expected error message : null", content, "error : cardNumber tidak boleh kosong");
 
 	}
 
-	// @Test
+	 @Test
 	public void indexMachineNotRegistered() throws Exception {
 
-		// CANT EMULATE IP
-		
 		// prepare
+		// remove fooMachine
+		machineService.delete(fooMachine.getId());
+
 		String uri = "/tapping";
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL))
-				// .andDo(print())
+				.andDo(print())
 				.andReturn();
 
 		// System.out.println("@index : " + result);
@@ -144,10 +153,10 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 
 		// check
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected null error message", content, "error : cardnNumber tidak boleh kosong");
+		assertEquals("failure - expected error message : unregistered machine", content, "error : perangkat tidak terdaftar");
 
 	}
-	
+
 	@Test
 	public void indexCardNotRegistered() throws Exception {
 
@@ -513,7 +522,7 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 				MockMvcRequestBuilders.post(uri, id).contentType(MediaType.ALL).accept(MediaType.ALL).params(params))
 				.andExpect(model().hasNoErrors()).andReturn();
 
-		System.out.println(service.findOne(id).toString());
+		System.out.println(tapService.findOne(id).toString());
 
 	}
 

@@ -22,5 +22,7 @@ public interface MachineService {
 	Page<Machine> searchBy(String searchTerm, Pageable pageable);
 
 	Page<Machine> findAll(Pageable pageable);
+	
+	Machine findByIp(String ip);
 
 }

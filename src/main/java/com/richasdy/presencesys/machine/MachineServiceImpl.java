@@ -135,4 +135,9 @@ public class MachineServiceImpl implements MachineService{
 		return repository.findAll(pageable);
 	}
 
+	@Override
+	public Machine findByIp(String ip) {
+		return repository.findMachineByIpContaining(ip);
+	}
+
 }

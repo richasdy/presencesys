@@ -55,29 +55,26 @@ public class TappingController {
 		// "+request.getHeader("X-FORWARDED-FOR"));
 
 		// CHECK REGISTERED MACHINE
-//		String searchTermMachine = "ip:" + request.getRemoteAddr();
-//		Page<Machine> pageMachine = machineService.searchBy(searchTermMachine, new PageRequest(0, 1));
-//		List listMachine = Lists.newArrayList(pageMachine);
-//
-//		if (listMachine.size() == 0) {
-//			return "error : perangkat tidak terdaftar";
-//		}
+		Machine machine = machineService.findByIp(request.getRemoteAddr());
+		// System.out.println(machine.toString());
+		if (machine == null) {
+			return "error : perangkat tidak terdaftar";
+		}
 
-		
 		// CHECK EMPTY CARDNUMBER
 		if (cardNumber.equals("0")) {
 			return "error : cardNumber tidak boleh kosong";
 		}
 
-		
 		// CHECK REGISTERED CARD
-//		String searchTermCard = "cardnumber:" + cardNumber;
-//		Page<Machine> pageCard = machineService.searchBy(searchTermCard, new PageRequest(0, 1));
-//		List listCard = Lists.newArrayList(pageCard);
-//
-//		if (listCard.size() == 0) {
-//			return "error : kartu tidak terdaftar";
-//		}
+		// String searchTermCard = "cardnumber:" + cardNumber;
+		// Page<Machine> pageCard = machineService.searchBy(searchTermCard, new
+		// PageRequest(0, 1));
+		// List listCard = Lists.newArrayList(pageCard);
+		//
+		// if (listCard.size() == 0) {
+		// return "error : kartu tidak terdaftar";
+		// }
 
 		return cardNumber;
 	}

@@ -23,5 +23,7 @@ public interface MachineRepository extends JpaRepository<Machine, Long> {
 	Page<Machine> findDistinctMachineByIpContaining(String ip, Pageable pageable);
 
 	Page<Machine> findDistinctMachineByNoteContaining(String note, Pageable pageable);
+	
+	Machine findMachineByIpContaining(String ip);
 
 }
