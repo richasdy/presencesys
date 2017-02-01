@@ -103,8 +103,8 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 	private Machine fooMachine;
 	private Card fooCard;
 	private User fooUser;
-	private Kelompok kelompok;
-	private Schedule schedule;
+	private Kelompok fooKelompok;
+	private Schedule fooSchedule;
 	private Tap foo;
 
 	@Before
@@ -136,13 +136,28 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 		fooCard.setActivated(true);
 		fooCard.setActivatedAt(new Date());
 		fooCard = cardService.save(fooCard);
+		
+		fooKelompok = new Kelompok();
+		fooKelompok.setNama("fooNama");
+		fooKelompok.setNote("fooNote");
+		fooKelompok = kelompokService.save(fooKelompok);
 
 		fooUser = new User();
 		fooUser.setIdCard(fooCard.getId());
+		fooUser.setIdKelompok(fooKelompok.getId());
 		fooUser.setUserNumber("fooUserNumber");
 		fooUser.setNama("fooNama");
 		fooUser.setNote("fooNote");
 		fooUser = userService.save(fooUser);
+		
+		fooSchedule = new Schedule();
+		fooSchedule.setIdKelompok(fooUser.getIdKelompok());
+		fooSchedule.setTipe("fooTipe");
+		fooSchedule.setNote("fooNote");
+		fooSchedule.setTanggal(new Date());
+		fooSchedule.setStart(new Date(System.currentTimeMillis() - 3600 * 1000));
+		fooSchedule.setStop(new Date(System.currentTimeMillis() + 3600 * 1000));
+		fooSchedule = scheduleService.save(fooSchedule);
 
 	}
 
@@ -323,6 +338,40 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 				"error : user belum terasosiasi dengan kelompok");
 
 	}
+	
+	@Test
+	public void indexScheduleNotExist() throws Exception {
+
+		// prepare
+		String uri = "/tapping";
+
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.set("cardNumber", fooCard.getCardNumber());
+
+		// hapus idKelompok fooUser supaya user tidak terasosiasi dengan
+		// kelompok
+		// System.out.println(fooUser.toString());
+		fooSchedule.setStart(new Date(System.currentTimeMillis() + 3600 * 1000));
+		scheduleService.update(fooSchedule);
+
+		// action
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).params(params).accept(MediaType.ALL))
+				// .andDo(print())
+				.andReturn();
+
+		// System.out.println("@index : " + result);
+
+		String content = result.getResponse().getContentAsString();
+		int status = result.getResponse().getStatus();
+
+		// System.out.println("@index : " + content);
+
+		// check
+		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
+		assertEquals("failure - expected null error message", content,
+				"error : tidak ada jadwal tapping sekarang");
+
+	}
 
 	@Test
 	public void index() throws Exception {
@@ -330,7 +379,7 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 		// prepare
 		String uri = "/tapping";
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("cardNumber", "asdfghjkl");
+		params.set("cardNumber", fooCard.getCardNumber());
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).params(params).accept(MediaType.ALL))

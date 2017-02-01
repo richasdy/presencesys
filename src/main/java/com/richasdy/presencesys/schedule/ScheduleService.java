@@ -22,5 +22,7 @@ public interface ScheduleService {
 	Page<Schedule> searchBy(String searchTerm, Pageable pageable);
 
 	Page<Schedule> findAll(Pageable pageable);
+	
+	Schedule findScheduleByIdKelompokAndNow(long idKelompok);
 
 }

@@ -58,8 +58,8 @@ public class ScheduleServiceTest extends AbstractTest {
 		foo.setTipe("fooTipe");
 		foo.setNote("fooNote");
 		foo.setTanggal(new Date());
-		foo.setStart(new Date());
-		foo.setStop(new Date());
+		foo.setStart(new Date(System.currentTimeMillis() - 3600 * 1000));
+		foo.setStop(new Date(System.currentTimeMillis() + 3600 * 1000));
 
 		foo = service.save(foo);
 	}
@@ -311,7 +311,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
 
 	}
-	
+
 	@Test
 	public void searchByIdNotFound() {
 
@@ -363,7 +363,7 @@ public class ScheduleServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
 
 	}
-	
+
 	@Test
 	public void searchByIdKelompokNotFound() {
 
@@ -918,6 +918,20 @@ public class ScheduleServiceTest extends AbstractTest {
 		// check
 		// assertTrue("failure - expected not null", pageableConfirm != null);
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void findScheduleByIdKelompokAndNow() {
+
+		// prepare
+
+		// action
+		Schedule confirm = service.findScheduleByIdKelompokAndNow(foo.getIdKelompok());
+		System.out.println(confirm.toString());
+
+		// check
+		assertTrue("failure - expected not null", confirm != null);
 
 	}
 

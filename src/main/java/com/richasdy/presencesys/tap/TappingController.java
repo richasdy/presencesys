@@ -31,6 +31,7 @@ import com.richasdy.presencesys.card.CardService;
 import com.richasdy.presencesys.kelompok.KelompokService;
 import com.richasdy.presencesys.machine.Machine;
 import com.richasdy.presencesys.machine.MachineService;
+import com.richasdy.presencesys.schedule.Schedule;
 import com.richasdy.presencesys.schedule.ScheduleService;
 import com.richasdy.presencesys.tap.Tap;
 import com.richasdy.presencesys.tap.TapService;
@@ -108,7 +109,11 @@ public class TappingController {
 		} 
 		
 		// CHECK SCHEDULE
-		
+		// find schedule where idKelompok = user.idKelompok and now between start and stop
+		Schedule schedule = scheduleService.findScheduleByIdKelompokAndNow(user.getIdKelompok());
+		if (schedule == null) {
+			return "error : tidak ada jadwal tapping sekarang";
+		}
 		// SAVE DATA TO TAP
 		
 		return cardNumber;

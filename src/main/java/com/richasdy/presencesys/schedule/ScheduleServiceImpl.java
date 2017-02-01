@@ -182,4 +182,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return repository.findAll(pageable);
 	}
 
+	@Override
+	public Schedule findScheduleByIdKelompokAndNow(long idKelompok) {
+		return repository.findScheduleByIdKelompokAndNow(idKelompok);
+	}
+
 }
