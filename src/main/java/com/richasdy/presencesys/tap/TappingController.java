@@ -139,5 +139,30 @@ public class TappingController {
 		}
 		
 	}
+	
+	@GetMapping("/registerme")
+	@ResponseBody
+	public String regiterMyMachine(HttpServletRequest request) {
+		
+		Machine machine = machineService.findByIp(request.getRemoteAddr());
+		if (machine == null){
+			
+			Machine machineToRegister = new Machine();
+			machineToRegister.setIp(request.getRemoteAddr());
+			machineToRegister.setNote("ip : "+request.getRemoteAddr()+" | X-FORWARDED-FOR :"+request.getHeader("X-FORWARDED-FOR"));
+			machineToRegister = machineService.save(machineToRegister);
+			
+			if(machineToRegister!=null){
+				return "regiter berhasil, ip machine : "+request.getRemoteAddr() +" | "+ request.getHeader("X-FORWARDED-FOR");
+			} else {
+				return "error : gagal registrasi mesin";
+			}
+			
+		} else {
+			return "mesin telah terregistrasi";
+		}
+		
+		
+	}
 
 }
