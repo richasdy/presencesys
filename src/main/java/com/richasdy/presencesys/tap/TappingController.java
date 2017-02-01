@@ -114,9 +114,30 @@ public class TappingController {
 		if (schedule == null) {
 			return "error : tidak ada jadwal tapping sekarang";
 		}
-		// SAVE DATA TO TAP
 		
-		return cardNumber;
+		// SAVE DATA TO TAP
+		Tap tap = new Tap();
+		tap.setIdSchedule(schedule.getId());
+		tap.setIdUser(user.getId());
+		tap.setIdKelompok(user.getIdKelompok());
+		tap.setScheduleTanggal(schedule.getTanggal());
+		tap.setScheduleStart(schedule.getStart());
+		tap.setScheduleStop(schedule.getStop());
+		tap.setUserNumber(user.getUserNumber());
+		tap.setScheduleTipe(schedule.getTipe());
+		tap.setNama(user.getNama());
+		
+		Date sekarang = new Date();
+		Long selisihWaktu = sekarang.getTime()-schedule.getStop().getTime();
+		tap.setStatus(selisihWaktu.toString());
+		tap = tapService.save(tap);
+		
+		if (tap != null){
+			return "success : presensi berhasil";
+		} else {
+			return "error : tap gagal disimpan";
+		}
+		
 	}
 
 }

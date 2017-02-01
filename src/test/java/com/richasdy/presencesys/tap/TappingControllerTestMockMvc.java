@@ -136,7 +136,7 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 		fooCard.setActivated(true);
 		fooCard.setActivatedAt(new Date());
 		fooCard = cardService.save(fooCard);
-		
+
 		fooKelompok = new Kelompok();
 		fooKelompok.setNama("fooNama");
 		fooKelompok.setNote("fooNote");
@@ -149,7 +149,7 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 		fooUser.setNama("fooNama");
 		fooUser.setNote("fooNote");
 		fooUser = userService.save(fooUser);
-		
+
 		fooSchedule = new Schedule();
 		fooSchedule.setIdKelompok(fooUser.getIdKelompok());
 		fooSchedule.setTipe("fooTipe");
@@ -338,7 +338,7 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 				"error : user belum terasosiasi dengan kelompok");
 
 	}
-	
+
 	@Test
 	public void indexScheduleNotExist() throws Exception {
 
@@ -368,8 +368,7 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 
 		// check
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		assertEquals("failure - expected null error message", content,
-				"error : tidak ada jadwal tapping sekarang");
+		assertEquals("failure - expected null error message", content, "error : tidak ada jadwal tapping sekarang");
 
 	}
 
@@ -385,17 +384,16 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).params(params).accept(MediaType.ALL))
 				.andDo(print()).andReturn();
 
-		System.out.println("@index : " + result);
+		// System.out.println("@index : " + result);
 
 		String content = result.getResponse().getContentAsString();
 		int status = result.getResponse().getStatus();
 
-		System.out.println("@index : " + content);
+		// System.out.println("@index : " + content);
 
 		// check
 		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
-		// assertEquals("failure - expected null error message", content, "error
-		// : cardnNumber tidak boleh kosong");
+		assertEquals("failure - expected null error message", content, "success : presensi berhasil");
 
 	}
 
