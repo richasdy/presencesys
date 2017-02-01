@@ -217,13 +217,15 @@ public class TappingController {
 			retVal=retVal+"error register user";
 		}
 
-		return retVal + TimeZone.getDefault();
+		return retVal;
 
 	}
 
 	@GetMapping("/cobajadwal")
 	@ResponseBody
 	public String cobaPresensiJadwal(HttpServletRequest request) {
+		
+		String retVal = "register schedule berhasil, silahkan coba untuk 2 jam kedepan";
 
 		// REGISTER SCHEDULE
 		schedule = new Schedule();
@@ -236,10 +238,10 @@ public class TappingController {
 		schedule = scheduleService.save(schedule);
 
 		if (schedule == null) {
-			return "error register schedule";
+			retVal = "error register schedule";
 		}
 
-		return "register schedule berhasil, silahkan coba untuk 2 jam kedepan";
+		return retVal +", "+TimeZone.getDefault();
 
 	}
 
