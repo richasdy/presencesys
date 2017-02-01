@@ -174,7 +174,7 @@ public class CardControllerTestMockMvc extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/card/{id}";
-		int id = foo.getId();
+		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL)).andReturn();
@@ -199,7 +199,7 @@ public class CardControllerTestMockMvc extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/card/{id}";
-		int id = foo.getId();
+		long id = foo.getId();
 
 		// action
 		mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
@@ -229,7 +229,7 @@ public class CardControllerTestMockMvc extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/card/{id}/edit";
-		int id = foo.getId();
+		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL)).andReturn();
@@ -254,7 +254,7 @@ public class CardControllerTestMockMvc extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/card/{id}/update";
-		int id = foo.getId();
+		long id = foo.getId();
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.set("cardNumber", "999999999999");
@@ -272,7 +272,7 @@ public class CardControllerTestMockMvc extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/card/{id}/update";
-		int id = foo.getId();
+		long id = foo.getId();
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		// params.set("cardNumber", "999999999999");
@@ -307,7 +307,7 @@ public class CardControllerTestMockMvc extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/card/{id}/delete";
-		int id = foo.getId();
+		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))

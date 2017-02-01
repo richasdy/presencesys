@@ -24,7 +24,7 @@ public class Card implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
-	private int id;
+	private long id;
 
 	@Column(unique = true, nullable = false)
 	@NotEmpty
@@ -51,7 +51,7 @@ public class Card implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Card(int id, String cardNumber, Boolean activated, String note, Date activatedAt, Date createdAt, Date updatedAt,
+	public Card(long id, String cardNumber, Boolean activated, String note, Date activatedAt, Date createdAt, Date updatedAt,
 			Date deletedAt) {
 		super();
 		this.id = id;
@@ -64,11 +64,11 @@ public class Card implements Serializable{
 		this.deletedAt = deletedAt;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

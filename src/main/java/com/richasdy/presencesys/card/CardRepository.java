@@ -13,27 +13,26 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.richasdy.presencesys.account.Account;
-import com.richasdy.presencesys.user.User;
+import com.richasdy.presencesys.card.Card;
 
 @Repository
-public interface CardRepository extends JpaRepository<Card, Integer>{
+public interface CardRepository extends JpaRepository<Card, Long>{
 	
-	Page<User> findDistinctUserById(long id, Pageable pageable);
-
-	Page<User> findDistinctUserByIdCard(long idCard, Pageable pageable);
+	Page<Card> findDistinctCardById(long id, Pageable pageable);
 
 	// Date
-	Page<User> findDistinctUserByCreatedAtBetween(Date start, Date end, Pageable pageable);
+	Page<Card> findDistinctCardByCreatedAtBetween(Date start, Date end, Pageable pageable);
 
-	Page<User> findDistinctUserByUpdatedAtBetween(Date start, Date end, Pageable pageable);
+	Page<Card> findDistinctCardByUpdatedAtBetween(Date start, Date end, Pageable pageable);
 
-	Page<User> findDistinctUserByDeletedAtBetween(Date start, Date end, Pageable pageable);
+	Page<Card> findDistinctCardByDeletedAtBetween(Date start, Date end, Pageable pageable);
 
 	// String Containing
-	Page<User> findDistinctUserByUserNumberContaining(String userNumber, Pageable pageable);
+	Page<Card> findDistinctCardByCardNumberContaining(String cardNumber, Pageable pageable);
 	
-	Page<User> findDistinctUserByNamaContaining(String nama, Pageable pageable);
-
-	Page<User> findDistinctUserByNoteContaining(String note, Pageable pageable);
+	Page<Card> findDistinctCardByNoteContaining(String note, Pageable pageable);
+	
+	//Boolean
+	Page<Card> findDistinctCardByActivated(Boolean activated, Pageable pageable);
 	
 }

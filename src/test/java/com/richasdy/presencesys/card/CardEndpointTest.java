@@ -73,7 +73,7 @@ public class CardEndpointTest extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/apiv1/card/{id}";
-		int id = foo.getId();
+		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.APPLICATION_JSON))
@@ -146,7 +146,7 @@ public class CardEndpointTest extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/apiv1/card/{id}";
-		int id = foo.getId();
+		long id = foo.getId();
 
 		Card bar = service.findOne(id);
 		bar.setCardNumber("0000000001");
@@ -177,7 +177,7 @@ public class CardEndpointTest extends AbstractControllerTest {
 
 		// prepare
 		String uri = "/apiv1/card/{id}";
-		int id = foo.getId();
+		long id = foo.getId();
 
 		// action
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete(uri, id)).andReturn();
