@@ -298,7 +298,7 @@ public class CardControllerTestMockMvc extends AbstractControllerTest {
 				MockMvcRequestBuilders.post(uri, id).contentType(MediaType.ALL).accept(MediaType.ALL).params(params))
 				.andExpect(model().hasNoErrors()).andReturn();
 
-		System.out.println(service.findOne(id).toString());
+		// System.out.println(service.findOne(id).toString());
 
 	}
 
@@ -329,17 +329,28 @@ public class CardControllerTestMockMvc extends AbstractControllerTest {
 
 	}
 
-	// @Test
+	@Test
 	public void search() throws Exception {
 
 		// prepare
 		String uri = "/card/search";
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.set("q", "cardnumber" + foo.getCardNumber());
+		params.set("q", "cardnumber:" + foo.getCardNumber());
 
 		// action
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL).params(params))
-				.andDo(print()).andExpect(status().is2xxSuccessful()).andReturn();
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL).params(params)).andReturn();
+
+		Map<String, Object> model = result.getModelAndView().getModel();
+		String view = result.getModelAndView().getViewName();
+		String content = result.getResponse().getContentAsString();
+		int status = result.getResponse().getStatus();
+
+		// check
+		assertTrue("failure - expected model attribute listAccount", model.containsKey("listEntity"));
+		assertTrue("failure - expected model attribute pageName", model.containsKey("pageName"));
+		assertTrue("failure - expected model attribute pageNameDesc", model.containsKey("pageNameDesc"));
+		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
+		assertEquals("failure - expected view card/index", "card/index", view);
 
 	}
 
