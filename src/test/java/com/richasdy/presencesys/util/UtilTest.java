@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -43,7 +44,7 @@ public class UtilTest {
 	public void stringToDateTrue() {
 
 		Date valid = Util.stringToDate("2016-11-20");
-		assertTrue("failure - expected not null", valid!=null);
+		assertTrue("failure - expected not null", valid != null);
 
 	}
 
@@ -52,6 +53,15 @@ public class UtilTest {
 
 		Date valid = Util.stringToDate("2016-11-s20");
 		assertTrue("failure - expected null", valid == null);
+
+	}
+
+	@Test
+	public void getTimeZone() {
+
+		System.out.println(TimeZone.getDefault());
+		// Date valid = Util.stringToDate("2016-11-s20");
+		// assertTrue("failure - expected null", valid == null);
 
 	}
 

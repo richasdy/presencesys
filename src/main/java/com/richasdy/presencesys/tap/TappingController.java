@@ -1,6 +1,7 @@
 package com.richasdy.presencesys.tap;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -164,6 +165,8 @@ public class TappingController {
 	@GetMapping("/cobaregistrasi")
 	@ResponseBody
 	public String cobaPresensi(HttpServletRequest request) {
+		
+		String retVal = "registrasi selesai, ";
 
 		// REGISTER MACHINE
 		machine = machineService.findByIp(request.getRemoteAddr());
@@ -175,6 +178,8 @@ public class TappingController {
 					"ip : " + request.getRemoteAddr() + " | X-FORWARDED-FOR :" + request.getHeader("X-FORWARDED-FOR"));
 			machineToRegister = machineService.save(machineToRegister);
 
+		} else {
+			retVal=retVal+"machine has registered, ";
 		}
 
 		// REGISTER CARD
@@ -186,7 +191,7 @@ public class TappingController {
 		card = cardService.save(card);
 
 		if (card == null) {
-			return "error register card";
+			retVal=retVal+"error register card, ";
 		}
 
 		// REGISTER KELOMPOK
@@ -196,7 +201,7 @@ public class TappingController {
 		kelompok = kelompokService.save(kelompok);
 
 		if (kelompok == null) {
-			return "error register kelompok";
+			retVal=retVal+"error register kelompok, ";
 		}
 
 		// REGISTER USER
@@ -209,10 +214,10 @@ public class TappingController {
 		user = userService.save(user);
 
 		if (user == null) {
-			return "error register user";
+			retVal=retVal+"error register user";
 		}
 
-		return "register coba berhasil";
+		return retVal + TimeZone.getDefault();
 
 	}
 
