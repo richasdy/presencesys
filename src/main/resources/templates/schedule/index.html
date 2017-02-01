@@ -69,8 +69,9 @@
 										<th>action</th>
 									</tr>
 									<tr th:each="entity : ${listEntity}">
-										<td th:text="${{entity.id}}" />
 										<td><a th:href="@{/schedule/{id}(id=${entity.id})}"><span
+												th:text="${{entity.id}}">id</span></a></td>
+										<td><a th:href="@{/kelompok/{id}(id=${entity.idKelompok})}"><span
 												th:text="${{entity.idKelompok}}">idKelompok</span></a></td>
 										<td th:text="${{entity.tipe}}" />
 										<td th:text="${{entity.note}}" />
