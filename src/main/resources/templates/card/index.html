@@ -15,7 +15,8 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					<span th:text="${pageName}">Simple Tables</span> <small th:text="${pageNameDesc}">preview of simple tables</small>
+					<span th:text="${pageName}">Simple Tables</span> <small
+						th:text="${pageNameDesc}">preview of simple tables</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -84,13 +85,24 @@
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer clearfix">
-								<ul class="pagination pagination-sm no-margin pull-right">
-									<li><a href="#">&laquo;</a></li>
-									<li><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
+								<div class="col-sm-6">
+									<div sd:pagination-summary="">info</div>
+								</div>
+
+								<div class="col-sm-6">
+									<nav class="pull-right">
+										<ul class="pagination pagination-sm no-margin pull-right"
+											sd:pagination="full">
+											<!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+											<li class="disabled"><a href="#" aria-label="Previous">
+													<span aria-hidden="true">&laquo;</span>
+											</a></li>
+											<li class="active"><a href="#">1 <span
+													class="sr-only">(current)</span>
+											</a></li>
+										</ul>
+									</nav>
+								</div>
 							</div>
 						</div>
 						<!-- /.box -->

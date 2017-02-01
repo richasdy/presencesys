@@ -323,8 +323,23 @@ public class CardControllerTestMockMvc extends AbstractControllerTest {
 		int id = Integer.MAX_VALUE;
 
 		// action
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL)).andDo(print())
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri, id).accept(MediaType.ALL))
+				// .andDo(print())
 				.andReturn();
+
+	}
+
+	// @Test
+	public void search() throws Exception {
+
+		// prepare
+		String uri = "/card/search";
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.set("q", "cardnumber" + foo.getCardNumber());
+
+		// action
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.ALL).params(params))
+				.andDo(print()).andExpect(status().is2xxSuccessful()).andReturn();
 
 	}
 
