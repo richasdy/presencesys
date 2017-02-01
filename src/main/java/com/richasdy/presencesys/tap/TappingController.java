@@ -96,13 +96,16 @@ public class TappingController {
 		}
 
 		// CHECK USER
-		// USER TERASOSIASI DENGAN KARTU
 		User user = userService.findByIdCard(card.getId());
-		if (user == null) {
-			return "error : kartu belum terasosiasi dengan user";
-		}
 		
-		// CHECK KELOMPOK
+		if (user == null) {
+			// USER HARUS TERASOSIASI DENGAN KARTU
+			return "error : kartu belum terasosiasi dengan user";
+			
+		} else if (user.getIdKelompok()==0) {
+			// USER HARUS TERASOSIASI DENGAN KELOMPOK
+			return "error : user belum terasosiasi dengan kelompok";
+		} 
 		
 		// CHECK SCHEDULE
 		

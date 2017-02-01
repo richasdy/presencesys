@@ -291,6 +291,40 @@ public class TappingControllerTestMockMvc extends AbstractControllerTest {
 	}
 
 	@Test
+	public void indexUserNotAssociatedWithKelompok() throws Exception {
+
+		// prepare
+		String uri = "/tapping";
+
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.set("cardNumber", fooCard.getCardNumber());
+
+		// hapus idKelompok fooUser supaya user tidak terasosiasi dengan
+		// kelompok
+		// System.out.println(fooUser.toString());
+		fooUser.setIdKelompok(0);
+		userService.update(fooUser);
+
+		// action
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(uri).params(params).accept(MediaType.ALL))
+				// .andDo(print())
+				.andReturn();
+
+		// System.out.println("@index : " + result);
+
+		String content = result.getResponse().getContentAsString();
+		int status = result.getResponse().getStatus();
+
+		// System.out.println("@index : " + content);
+
+		// check
+		assertEquals("failure - expected HTTP Status 200", HttpStatus.OK.value(), status);
+		assertEquals("failure - expected null error message", content,
+				"error : user belum terasosiasi dengan kelompok");
+
+	}
+
+	@Test
 	public void index() throws Exception {
 
 		// prepare
