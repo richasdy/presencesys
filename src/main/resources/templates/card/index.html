@@ -34,20 +34,23 @@
 								<h3 class="box-title" th:text="${tableName}">Bordered Table</h3>
 								<div class="box-tools">
 
-									<div class="input-group input-group-sm" style="width: 300px;">
-										<div class="input-group-btn">
-											<a class="btn btn-info" th:href="@{/card/create}"> <i
-												class="fa fa-plus"></i>
-											</a>
+									<form th:action="@{/card/search}" method="get">
+										<div class="input-group input-group-sm" style="width: 300px;">
+											<div class="input-group-btn">
+												<a class="btn btn-info" th:href="@{/card/create}"> <i
+													class="fa fa-plus"></i>
+												</a>
+											</div>
+											<input type="text" name="q" class="form-control pull-right"
+												placeholder="Search" />
+											<div class="input-group-btn">
+												<button type="submit" class="btn btn-info">
+													<i class="fa fa-search"></i>
+												</button>
+											</div>
 										</div>
-										<input type="text" name="table_search"
-											class="form-control pull-right" placeholder="Search" />
-										<div class="input-group-btn">
-											<button type="submit" class="btn btn-info">
-												<i class="fa fa-search"></i>
-											</button>
-										</div>
-									</div>
+									</form>
+									
 								</div>
 
 							</div>

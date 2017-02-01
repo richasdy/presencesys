@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.richasdy.presencesys.user.User;
 
 @Controller
 @RequestMapping("card")
@@ -179,10 +178,10 @@ public class CardController {
 
 		model.addAttribute("q", q);
 		model.addAttribute("listEntity", pageEntity);
-		model.addAttribute("pageName", "Tabel User Pencarian : " + q);
-		model.addAttribute("pageNameDesc", "Daftar User Akses System");
+		model.addAttribute("pageName", "Tabel Card Pencarian : " + q);
+		model.addAttribute("pageNameDesc", "Daftar Card Akses System");
 
-		return "user/index";
+		return "card/index";
 	}
 
 }
