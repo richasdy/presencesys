@@ -186,12 +186,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public Schedule findScheduleByIdKelompokAndNow(long idKelompok) {
 
-		 return repository.findScheduleByIdKelompokAndNow(idKelompok);
+		// return repository.findScheduleByIdKelompokAndNow(idKelompok);
 
-		// SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		// Date dateTime = new Date();
-		// String tanggal = format.format(new Date());
-		// return repository.findScheduleByIdKelompokAndNow(idKelompok, tanggal, dateTime);
+		SimpleDateFormat formatDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dateTime = formatDateTime.format(new Date());
+
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+		String date = formatDate.format(new Date());
+		
+		return repository.findScheduleByIdKelompokAndNow(idKelompok, date, dateTime);
 	}
 
 }
