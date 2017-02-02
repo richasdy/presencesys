@@ -241,7 +241,7 @@ public class TappingController {
 			retVal = "error register schedule";
 		}
 
-		return retVal +", "+TimeZone.getDefault();
+		return retVal +", "+TimeZone.getDefault()+", "+(new Date());
 
 	}
 
