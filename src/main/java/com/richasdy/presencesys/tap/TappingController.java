@@ -98,7 +98,8 @@ public class TappingController {
 		// start and stop
 		Schedule schedule = scheduleService.findScheduleByIdKelompokAndNow(user.getIdKelompok());
 		if (schedule == null) {
-			return "error : tidak ada jadwal tapping sekarang";
+			// return "error : tidak ada jadwal tapping sekarang";
+			return "error : tidak ada jadwal tapping sekarang" + (new Date());
 		}
 
 		// SAVE DATA TO TAP
@@ -125,9 +126,7 @@ public class TappingController {
 		}
 
 	}
-	
-	
-	
+
 	// CODE FOR SIMULATION
 
 	@GetMapping("/registerme")
@@ -165,7 +164,7 @@ public class TappingController {
 	@GetMapping("/cobaregistrasi")
 	@ResponseBody
 	public String cobaPresensi(HttpServletRequest request) {
-		
+
 		String retVal = "registrasi selesai, ";
 
 		// REGISTER MACHINE
@@ -179,7 +178,7 @@ public class TappingController {
 			machineToRegister = machineService.save(machineToRegister);
 
 		} else {
-			retVal=retVal+"machine has registered, ";
+			retVal = retVal + "machine has registered, ";
 		}
 
 		// REGISTER CARD
@@ -191,7 +190,7 @@ public class TappingController {
 		card = cardService.save(card);
 
 		if (card == null) {
-			retVal=retVal+"error register card, ";
+			retVal = retVal + "error register card, ";
 		}
 
 		// REGISTER KELOMPOK
@@ -201,7 +200,7 @@ public class TappingController {
 		kelompok = kelompokService.save(kelompok);
 
 		if (kelompok == null) {
-			retVal=retVal+"error register kelompok, ";
+			retVal = retVal + "error register kelompok, ";
 		}
 
 		// REGISTER USER
@@ -214,7 +213,7 @@ public class TappingController {
 		user = userService.save(user);
 
 		if (user == null) {
-			retVal=retVal+"error register user";
+			retVal = retVal + "error register user";
 		}
 
 		return retVal;
@@ -224,7 +223,7 @@ public class TappingController {
 	@GetMapping("/cobajadwal")
 	@ResponseBody
 	public String cobaPresensiJadwal(HttpServletRequest request) {
-		
+
 		String retVal = "register schedule berhasil, silahkan coba untuk 2 jam kedepan";
 
 		// REGISTER SCHEDULE
@@ -241,7 +240,7 @@ public class TappingController {
 			retVal = "error register schedule";
 		}
 
-		return retVal +", "+TimeZone.getDefault()+", "+(new Date());
+		return retVal + ", " + TimeZone.getDefault() + ", " + (new Date());
 
 	}
 
