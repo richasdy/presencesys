@@ -36,6 +36,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
 	Page<Schedule> findDistinctScheduleByNoteContaining(String note, Pageable pageable);
 	
+//	@Query("SELECT s FROM Schedule s WHERE s.idKelompok = :idKelompok AND CURRENT_DATE = s.tanggal AND (CURRENT_TIME BETWEEN s.start AND s.stop )")
 	@Query("SELECT s FROM Schedule s WHERE s.idKelompok = :idKelompok AND CURRENT_DATE = s.tanggal AND (CURRENT_TIME BETWEEN s.start AND s.stop )")
 	Schedule findScheduleByIdKelompokAndNow(@Param("idKelompok")long idKelompok);
 
