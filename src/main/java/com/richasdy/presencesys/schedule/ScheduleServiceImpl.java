@@ -1,5 +1,6 @@
 package com.richasdy.presencesys.schedule;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -184,7 +185,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public Schedule findScheduleByIdKelompokAndNow(long idKelompok) {
-		return repository.findScheduleByIdKelompokAndNow(idKelompok);
+
+		 return repository.findScheduleByIdKelompokAndNow(idKelompok);
+
+		// SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		// Date dateTime = new Date();
+		// String tanggal = format.format(new Date());
+		// return repository.findScheduleByIdKelompokAndNow(idKelompok, tanggal, dateTime);
 	}
 
 }

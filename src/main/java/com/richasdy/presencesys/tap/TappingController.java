@@ -98,8 +98,9 @@ public class TappingController {
 		// start and stop
 		Schedule schedule = scheduleService.findScheduleByIdKelompokAndNow(user.getIdKelompok());
 		if (schedule == null) {
-			// return "error : tidak ada jadwal tapping sekarang";
-			return "error : tidak ada jadwal tapping sekarang" + (new Date());
+			return "error : tidak ada jadwal tapping sekarang";
+			// return "error : tidak ada jadwal tapping sekarang" + (new
+			// Date());
 		}
 
 		// SAVE DATA TO TAP

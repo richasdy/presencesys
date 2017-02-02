@@ -36,8 +36,12 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
 	Page<Schedule> findDistinctScheduleByNoteContaining(String note, Pageable pageable);
 	
-//	@Query("SELECT s FROM Schedule s WHERE s.idKelompok = :idKelompok AND CURRENT_DATE = s.tanggal AND (CURRENT_TIME BETWEEN s.start AND s.stop )")
 	@Query("SELECT s FROM Schedule s WHERE s.idKelompok = :idKelompok AND CURRENT_DATE = s.tanggal AND (CURRENT_TIME BETWEEN s.start AND s.stop )")
-	Schedule findScheduleByIdKelompokAndNow(@Param("idKelompok")long idKelompok);
+	Schedule findScheduleByIdKelompokAndNow(@Param("idKelompok") long idKelompok);
+
+	// masih error
+	// untuk menangani timezone mysql yagn tidak bisa di set
+	@Query("SELECT s FROM Schedule s WHERE s.idKelompok = :idKelompok AND :currentDate = s.tanggal AND (:currentTime BETWEEN s.start AND s.stop )")
+	Schedule findScheduleByIdKelompokAndNow(@Param("idKelompok") long idKelompok, @Param("currentDate") String currentDate, @Param("currentTime") Date currentTime);
 
 }

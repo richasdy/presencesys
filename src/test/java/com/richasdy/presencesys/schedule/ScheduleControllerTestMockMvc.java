@@ -96,46 +96,6 @@ public class ScheduleControllerTestMockMvc extends AbstractControllerTest {
 
 	}
 
-	// @Test
-	public void datetry() throws ParseException {
-
-		Date sekarang = new Date();
-
-		try {
-			TimeUnit.SECONDS.sleep(3);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Date setelah = new Date();
-
-		System.out.println("COMPARE");
-		System.out.println("sekarang : " + sekarang);
-		System.out.println("setelah : " + setelah);
-		System.out.println("operation : " + setelah.compareTo(sekarang));
-		System.out.println("operation : " + sekarang.compareTo(setelah));
-
-		System.out.println("DATE FORMAT");
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date parsingTanggal = format.parse("2016-01-13");
-		System.out.println("sekarang : " + format.format(sekarang));
-		System.out.println("parsingTanggal : " + parsingTanggal);
-		System.out.println("parsingTanggal : " + format.format(parsingTanggal));
-
-		System.out.println("COMPARE WITH DATE FROMAT");
-		Date parsingTanggalsekarang = format.parse("2017-01-31");
-		System.out.println(parsingTanggalsekarang);
-		System.out.println(sekarang);
-		System.out.println("parsing");
-		System.out.println(format.format(parsingTanggalsekarang));
-		System.out.println(format.format(sekarang));
-
-		System.out.println(parsingTanggalsekarang.equals(format.format(sekarang)));
-		System.out.println(format.format(parsingTanggalsekarang).equals(format.format(sekarang)));
-
-	}
-
 	@Test
 	public void index() throws Exception {
 
