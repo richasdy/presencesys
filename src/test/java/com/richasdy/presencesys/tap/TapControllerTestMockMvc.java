@@ -90,7 +90,7 @@ public class TapControllerTestMockMvc extends AbstractControllerTest {
 		foo.setScheduleStop(new Date());
 		foo.setUserNumber("fooUserNumber");
 		foo.setScheduleTipe("fooScheduleTipe");
-		foo.setNama("fooNama");
+		foo.setKelompokNama("fooNama");
 		foo.setStatus("fooStatus");
 		foo.setNote("fooNote");
 

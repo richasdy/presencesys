@@ -62,7 +62,7 @@ public class TapServiceTest extends AbstractTest {
 		foo.setScheduleStop(new Date());
 		foo.setUserNumber("fooUserNumber");
 		foo.setScheduleTipe("fooScheduleTipe");
-		foo.setNama("fooNama");
+		foo.setKelompokNama("fooNama");
 		foo.setStatus("fooStatus");
 		foo.setNote("fooNote");
 
@@ -89,7 +89,7 @@ public class TapServiceTest extends AbstractTest {
 		bar.setScheduleStop(new Date());
 		bar.setScheduleTipe("barScheduleTipe");
 		bar.setUserNumber("barUserNumber");
-		bar.setNama("barNama");
+		bar.setKelompokNama("barNama");
 		bar.setStatus("barStatus");
 		bar.setNote("barNote");
 
@@ -125,7 +125,7 @@ public class TapServiceTest extends AbstractTest {
 		// validation using hibernate validator
 		// bar.setScheduleTipe("barScheduleTipe");
 		bar.setUserNumber("barUserNumber");
-		bar.setNama("barNama");
+		bar.setKelompokNama("barNama");
 		bar.setStatus("barStatus");
 		bar.setNote("barNote");
 
@@ -149,7 +149,7 @@ public class TapServiceTest extends AbstractTest {
 		bar.setScheduleStop(new Date());
 		bar.setScheduleTipe("fooScheduleTipe");
 		bar.setUserNumber("fooUserNumber");
-		bar.setNama("fooNama");
+		bar.setKelompokNama("fooNama");
 		bar.setStatus("barStatus");
 		bar.setNote("fooNote");
 
@@ -204,7 +204,7 @@ public class TapServiceTest extends AbstractTest {
 		// validation using hibernate validator
 		// bar.setScheduleTipe("barScheduleTipe");
 		bar.setUserNumber("barUserNumber");
-		bar.setNama("barNama");
+		bar.setKelompokNama("barNama");
 		bar.setStatus("barStatus");
 		bar.setNote("barNote");
 		// createdAt tidak boleh null, diset di fungsi save
@@ -1080,7 +1080,7 @@ public class TapServiceTest extends AbstractTest {
 	public void searchByUpdatedAt() {
 
 		// prepare
-		foo.setNama("fooNamaUpdate");
+		foo.setKelompokNama("fooNamaUpdate");
 		Tap confirm = service.update(foo);
 		Pageable page = new PageRequest(0, 2);
 		Date date = new Date();

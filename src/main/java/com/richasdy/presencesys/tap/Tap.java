@@ -53,7 +53,7 @@ public class Tap {
 	private String userNumber;
 
 	@Column(nullable = false)
-	private String nama;
+	private String kelompokNama;
 
 	@Column(nullable = false)
 	@NotEmpty // validator
@@ -88,7 +88,7 @@ public class Tap {
 		this.scheduleStop = scheduleStop;
 		this.scheduleTipe = scheduleTipe;
 		this.userNumber = userNumber;
-		this.nama = nama;
+		this.kelompokNama = nama;
 		this.status = status;
 		this.note = note;
 		this.createdAt = createdAt;
@@ -168,12 +168,12 @@ public class Tap {
 		this.userNumber = userNumber;
 	}
 
-	public String getNama() {
-		return nama;
+	public String getKelompokNama() {
+		return kelompokNama;
 	}
 
-	public void setNama(String nama) {
-		this.nama = nama;
+	public void setKelompokNama(String nama) {
+		this.kelompokNama = nama;
 	}
 
 	public String getStatus() {
@@ -220,7 +220,7 @@ public class Tap {
 	public String toString() {
 		return this.getClass().getName() + " [ " + id + ", " + idSchedule + ", " + idUser + ", " + idKelompok + ", "
 				+ scheduleTanggal + ", " + scheduleStart + ", " + scheduleStop + ", " + userNumber + ", " + scheduleTipe
-				+ ", " + nama + ", " + ", " + status + ", " + ", " + note + ", " + createdAt + ", " + updatedAt + ", "
+				+ ", " + kelompokNama + ", " + ", " + status + ", " + ", " + note + ", " + createdAt + ", " + updatedAt + ", "
 				+ deletedAt + " ]";
 	}
 

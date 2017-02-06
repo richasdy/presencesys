@@ -113,7 +113,7 @@ public class TappingController {
 		tap.setScheduleStop(schedule.getStop());
 		tap.setUserNumber(user.getUserNumber());
 		tap.setScheduleTipe(schedule.getTipe());
-		tap.setNama(user.getNama());
+		tap.setKelompokNama(user.getNama());
 
 		Date sekarang = new Date();
 		Long selisihWaktu = sekarang.getTime() - schedule.getStop().getTime();
