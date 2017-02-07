@@ -22,13 +22,36 @@ public class Tap {
 	private long id;
 
 	@Column(nullable = false)
-	private long idSchedule;
+	private long idKelompok;
 
 	@Column(nullable = false)
 	private long idUser;
 
 	@Column(nullable = false)
-	private long idKelompok;
+	private long idSchedule;
+
+	@Column(nullable = false)
+	private long idCard;
+
+	@Column(nullable = false)
+	private long idMachine;
+
+	@Column(nullable = false)
+	private String kelompokNama;
+
+	@Column(nullable = false)
+	private String userNumber;
+
+	@Column(nullable = false)
+	private String userNama;
+
+	@Column(nullable = false)
+	@NotEmpty // validator
+	private String scheduleTipe;
+
+	@Column(nullable = false)
+	@NotEmpty // validator
+	private String scheduleNote;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -46,14 +69,10 @@ public class Tap {
 	private Date scheduleStop;
 
 	@Column(nullable = false)
-	@NotEmpty // validator
-	private String scheduleTipe;
+	private String cardNumber;
 
 	@Column(nullable = false)
-	private String userNumber;
-
-	@Column(nullable = false)
-	private String kelompokNama;
+	private String machineIp;
 
 	@Column(nullable = false)
 	@NotEmpty // validator
@@ -75,20 +94,27 @@ public class Tap {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Tap(long id, long idSchedule, long idUser, long idKelompok, Date scheduleTanggal, Date scheduleStart,
-			Date scheduleStop, String userNumber, String scheduleTipe, String nama, String status, String note,
+	public Tap(long id, long idKelompok, long idUser, long idSchedule, long idCard, long idMachine, String kelompokNama,
+			String userNumber, String userNama, String scheduleTipe, String scheduleNote, Date scheduleTanggal,
+			Date scheduleStart, Date scheduleStop, String cardNumber, String machineIp, String status, String note,
 			Date createdAt, Date updatedAt, Date deletedAt) {
 		super();
 		this.id = id;
-		this.idSchedule = idSchedule;
-		this.idUser = idUser;
 		this.idKelompok = idKelompok;
+		this.idUser = idUser;
+		this.idSchedule = idSchedule;
+		this.idCard = idCard;
+		this.idMachine = idMachine;
+		this.kelompokNama = kelompokNama;
+		this.userNumber = userNumber;
+		this.userNama = userNama;
+		this.scheduleTipe = scheduleTipe;
+		this.scheduleNote = scheduleNote;
 		this.scheduleTanggal = scheduleTanggal;
 		this.scheduleStart = scheduleStart;
 		this.scheduleStop = scheduleStop;
-		this.scheduleTipe = scheduleTipe;
-		this.userNumber = userNumber;
-		this.kelompokNama = nama;
+		this.cardNumber = cardNumber;
+		this.machineIp = machineIp;
 		this.status = status;
 		this.note = note;
 		this.createdAt = createdAt;
@@ -104,12 +130,12 @@ public class Tap {
 		this.id = id;
 	}
 
-	public long getIdSchedule() {
-		return idSchedule;
+	public long getIdKelompok() {
+		return idKelompok;
 	}
 
-	public void setIdSchedule(long idSchedule) {
-		this.idSchedule = idSchedule;
+	public void setIdKelompok(long idKelompok) {
+		this.idKelompok = idKelompok;
 	}
 
 	public long getIdUser() {
@@ -120,12 +146,68 @@ public class Tap {
 		this.idUser = idUser;
 	}
 
-	public long getIdKelompok() {
-		return idKelompok;
+	public long getIdSchedule() {
+		return idSchedule;
 	}
 
-	public void setIdKelompok(long idKelompok) {
-		this.idKelompok = idKelompok;
+	public void setIdSchedule(long idSchedule) {
+		this.idSchedule = idSchedule;
+	}
+
+	public long getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(long idCard) {
+		this.idCard = idCard;
+	}
+
+	public long getIdMachine() {
+		return idMachine;
+	}
+
+	public void setIdMachine(long idMachine) {
+		this.idMachine = idMachine;
+	}
+
+	public String getKelompokNama() {
+		return kelompokNama;
+	}
+
+	public void setKelompokNama(String kelompokNama) {
+		this.kelompokNama = kelompokNama;
+	}
+
+	public String getUserNumber() {
+		return userNumber;
+	}
+
+	public void setUserNumber(String userNumber) {
+		this.userNumber = userNumber;
+	}
+
+	public String getUserNama() {
+		return userNama;
+	}
+
+	public void setUserNama(String userNama) {
+		this.userNama = userNama;
+	}
+
+	public String getScheduleTipe() {
+		return scheduleTipe;
+	}
+
+	public void setScheduleTipe(String scheduleTipe) {
+		this.scheduleTipe = scheduleTipe;
+	}
+
+	public String getScheduleNote() {
+		return scheduleNote;
+	}
+
+	public void setScheduleNote(String scheduleNote) {
+		this.scheduleNote = scheduleNote;
 	}
 
 	public Date getScheduleTanggal() {
@@ -152,28 +234,20 @@ public class Tap {
 		this.scheduleStop = scheduleStop;
 	}
 
-	public String getScheduleTipe() {
-		return scheduleTipe;
+	public String getCardNumber() {
+		return cardNumber;
 	}
 
-	public void setScheduleTipe(String kelompokTipe) {
-		this.scheduleTipe = kelompokTipe;
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 
-	public String getUserNumber() {
-		return userNumber;
+	public String getMachineIp() {
+		return machineIp;
 	}
 
-	public void setUserNumber(String userNumber) {
-		this.userNumber = userNumber;
-	}
-
-	public String getKelompokNama() {
-		return kelompokNama;
-	}
-
-	public void setKelompokNama(String nama) {
-		this.kelompokNama = nama;
+	public void setMachineIp(String machineIp) {
+		this.machineIp = machineIp;
 	}
 
 	public String getStatus() {
@@ -218,10 +292,13 @@ public class Tap {
 
 	@Override
 	public String toString() {
-		return this.getClass().getName() + " [ " + id + ", " + idSchedule + ", " + idUser + ", " + idKelompok + ", "
-				+ scheduleTanggal + ", " + scheduleStart + ", " + scheduleStop + ", " + userNumber + ", " + scheduleTipe
-				+ ", " + kelompokNama + ", " + ", " + status + ", " + ", " + note + ", " + createdAt + ", " + updatedAt + ", "
-				+ deletedAt + " ]";
+
+		return this.getClass().getName() + " [ " + id + ", " + idKelompok + ", " + idUser + ", " + idSchedule + ", "
+				+ idCard + ", " + idMachine + ", " + kelompokNama + ", " + userNumber + ", " + userNama + ", "
+				+ scheduleTipe + ", " + scheduleNote + ", " + scheduleTanggal + ", " + scheduleStart + ", "
+				+ scheduleStop + ", " + idUser + ", " + idKelompok + ", " + scheduleTanggal + ", " + scheduleStart
+				+ ", " + scheduleStop + ", " + cardNumber + ", " + machineIp + ", " + status + ", " + ", " + note
+				+ createdAt + ", " + updatedAt + ", " + deletedAt + " ]";
 	}
 
 }

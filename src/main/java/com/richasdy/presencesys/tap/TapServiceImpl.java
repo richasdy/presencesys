@@ -73,19 +73,47 @@ public class TapServiceImpl implements TapService{
 				retVal = repository.findDistinctTapById(Long.parseLong(searchSplit[1]), pageable);
 				break;
 				
-			case "idschedule":
-				retVal = repository.findDistinctTapByIdSchedule(Long.parseLong(searchSplit[1]), pageable);
+			case "idkelompok":
+				retVal = repository.findDistinctTapByIdKelompok(Long.parseLong(searchSplit[1]), pageable);
 				break;
-				
+
 			case "iduser":
 				retVal = repository.findDistinctTapByIdUser(Long.parseLong(searchSplit[1]), pageable);
 				break;
 				
-			case "idkelompok":
-				retVal = repository.findDistinctTapByIdKelompok(Long.parseLong(searchSplit[1]), pageable);
+			case "idschedule":
+				retVal = repository.findDistinctTapByIdSchedule(Long.parseLong(searchSplit[1]), pageable);
 				break;
 				
-			case "tanggal":
+			case "idcard":
+				retVal = repository.findDistinctTapByIdCard(Long.parseLong(searchSplit[1]), pageable);
+				break;
+			
+			case "idmachine":
+				retVal = repository.findDistinctTapByIdMachine(Long.parseLong(searchSplit[1]), pageable);
+				break;
+				
+			case "namakelompok":
+				retVal = repository.findDistinctTapByKelompokNamaContaining(searchSplit[1], pageable);
+				break;
+				
+			case "usernumber":
+				retVal = repository.findDistinctTapByUserNumberContaining(searchSplit[1], pageable);
+				break;
+				
+			case "usernama":
+				retVal = repository.findDistinctTapByUserNamaContaining(searchSplit[1], pageable);
+				break;
+			
+			case "scheduletipe":
+				retVal = repository.findDistinctTapByScheduleTipeContaining(searchSplit[1], pageable);
+				break;
+				
+			case "schedulenote":
+				retVal = repository.findDistinctTapByScheduleNoteContaining(searchSplit[1], pageable);
+				break;
+				
+			case "scheduletanggal":
 				if (Util.isValidDate(searchSplit[1])) {
 					Date tanggal = Util.stringToDate(searchSplit[1]);
 					// Date end = Util.stringToDate(searchSplit[1]);
@@ -101,7 +129,7 @@ public class TapServiceImpl implements TapService{
 				}
 				break;
 				
-			case "start":
+			case "schedulestart":
 				if (Util.isValidDate(searchSplit[1])) {
 					Date start = Util.stringToDate(searchSplit[1]);
 					Date end = Util.stringToDate(searchSplit[1]);
@@ -115,7 +143,7 @@ public class TapServiceImpl implements TapService{
 				}
 				break;
 				
-			case "stop":
+			case "schedulestop":
 				if (Util.isValidDate(searchSplit[1])) {
 					Date start = Util.stringToDate(searchSplit[1]);
 					Date end = Util.stringToDate(searchSplit[1]);
@@ -129,18 +157,14 @@ public class TapServiceImpl implements TapService{
 				}
 				break;
 				
-			case "usernumber":
-				retVal = repository.findDistinctTapByUserNumberContaining(searchSplit[1], pageable);
+			case "cardnumber":
+				retVal = repository.findDistinctTapByCardNumberContaining(searchSplit[1], pageable);
 				break;
 				
-			case "tipe":
-				retVal = repository.findDistinctTapByScheduleTipeContaining(searchSplit[1], pageable);
+			case "machineip":
+				retVal = repository.findDistinctTapByMachineIpContaining(searchSplit[1], pageable);
 				break;
 
-			case "nama":
-				retVal = repository.findDistinctTapByNamaContaining(searchSplit[1], pageable);
-				break;
-				
 			case "status":
 				retVal = repository.findDistinctTapByStatusContaining(searchSplit[1], pageable);
 				break;

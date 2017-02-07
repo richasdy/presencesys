@@ -12,11 +12,15 @@ public interface TapRepository extends JpaRepository<Tap, Long> {
 
 	Page<Tap> findDistinctTapById(long id, Pageable pageable);
 
+	Page<Tap> findDistinctTapByIdKelompok(long idSchedule, Pageable pageable);
+
+	Page<Tap> findDistinctTapByIdUser(long idSchedule, Pageable pageable);
+
 	Page<Tap> findDistinctTapByIdSchedule(long idSchedule, Pageable pageable);
 
-	Page<Tap> findDistinctTapByIdUser(long idUser, Pageable pageable);
+	Page<Tap> findDistinctTapByIdCard(long idSchedule, Pageable pageable);
 
-	Page<Tap> findDistinctTapByIdKelompok(long idKelompok, Pageable pageable);
+	Page<Tap> findDistinctTapByIdMachine(long idSchedule, Pageable pageable);
 
 	// Date
 
@@ -33,17 +37,22 @@ public interface TapRepository extends JpaRepository<Tap, Long> {
 	Page<Tap> findDistinctTapByDeletedAtBetween(Date start, Date end, Pageable pageable);
 
 	// String Containing
+	Page<Tap> findDistinctTapByKelompokNamaContaining(String userNumber, Pageable pageable);
+
 	Page<Tap> findDistinctTapByUserNumberContaining(String userNumber, Pageable pageable);
-	
+
+	Page<Tap> findDistinctTapByUserNamaContaining(String userNumber, Pageable pageable);
+
 	Page<Tap> findDistinctTapByScheduleTipeContaining(String userNumber, Pageable pageable);
 
-	Page<Tap> findDistinctTapByNamaContaining(String nama, Pageable pageable);
-	
+	Page<Tap> findDistinctTapByScheduleNoteContaining(String note, Pageable pageable);
+
+	Page<Tap> findDistinctTapByCardNumberContaining(String userNumber, Pageable pageable);
+
+	Page<Tap> findDistinctTapByMachineIpContaining(String nama, Pageable pageable);
+
 	Page<Tap> findDistinctTapByStatusContaining(String userNumber, Pageable pageable);
 
 	Page<Tap> findDistinctTapByNoteContaining(String note, Pageable pageable);
-	
-	
-
 
 }

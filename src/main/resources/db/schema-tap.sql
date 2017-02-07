@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS `Tap`;
 
 CREATE TABLE `Tap` (
   `id` bigint(11) UNSIGNED NOT NULL,
-  `id_kelompok` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `id_kelompok` bigint(11) NOT NULL,
+  `id_user` bigint(11) NOT NULL,
   `id_schedule` bigint(11) UNSIGNED NOT NULL,
   `id_card` bigint(11) UNSIGNED NOT NULL,
   `id_machine` bigint(11) UNSIGNED NOT NULL,
