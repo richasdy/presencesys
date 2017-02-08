@@ -93,7 +93,7 @@ public class TapServiceImpl implements TapService{
 				retVal = repository.findDistinctTapByIdMachine(Long.parseLong(searchSplit[1]), pageable);
 				break;
 				
-			case "namakelompok":
+			case "kelompoknama":
 				retVal = repository.findDistinctTapByKelompokNamaContaining(searchSplit[1], pageable);
 				break;
 				

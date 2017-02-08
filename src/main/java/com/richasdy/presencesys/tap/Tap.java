@@ -50,7 +50,6 @@ public class Tap {
 	private String scheduleTipe;
 
 	@Column(nullable = false)
-	@NotEmpty // validator
 	private String scheduleNote;
 
 	@Column(nullable = false)

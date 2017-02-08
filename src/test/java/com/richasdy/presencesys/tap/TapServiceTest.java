@@ -54,15 +54,21 @@ public class TapServiceTest extends AbstractTest {
 	@Before
 	public void init() {
 		foo = new Tap();
-		foo.setIdSchedule(99);
-		foo.setIdUser(99);
 		foo.setIdKelompok(99);
+		foo.setIdUser(99);
+		foo.setIdSchedule(99);
+		foo.setIdCard(99);
+		foo.setIdMachine(99);
+		foo.setKelompokNama("fooKelompokNama");
+		foo.setUserNumber("fooUserNumber");
+		foo.setUserNama("fooUserNama");
+		foo.setScheduleTipe("fooScheduleTipe");
+		foo.setScheduleNote("fooScheduleNote");
 		foo.setScheduleTanggal(new Date());
 		foo.setScheduleStart(new Date());
 		foo.setScheduleStop(new Date());
-		foo.setUserNumber("fooUserNumber");
-		foo.setScheduleTipe("fooScheduleTipe");
-		foo.setKelompokNama("fooNama");
+		foo.setCardNumber("fooCardNumber");
+		foo.setMachineIp("fooMachineIp");
 		foo.setStatus("fooStatus");
 		foo.setNote("fooNote");
 
@@ -81,15 +87,21 @@ public class TapServiceTest extends AbstractTest {
 
 		// prepare
 		Tap bar = new Tap();
-		bar.setIdSchedule(100);
-		bar.setIdUser(100);
 		bar.setIdKelompok(100);
+		bar.setIdUser(100);
+		bar.setIdSchedule(100);
+		bar.setIdCard(100);
+		bar.setIdMachine(100);
+		bar.setKelompokNama("barKelompokNama");
+		bar.setUserNumber("barUserNumber");
+		bar.setUserNama("barUserNama");
+		bar.setScheduleTipe("barScheduleTipe");
+		bar.setScheduleNote("barScheduleNote");
 		bar.setScheduleTanggal(new Date());
 		bar.setScheduleStart(new Date());
 		bar.setScheduleStop(new Date());
-		bar.setScheduleTipe("barScheduleTipe");
-		bar.setUserNumber("barUserNumber");
-		bar.setKelompokNama("barNama");
+		bar.setCardNumber("barCardNumber");
+		bar.setMachineIp("barMachineIp");
 		bar.setStatus("barStatus");
 		bar.setNote("barNote");
 
@@ -116,16 +128,22 @@ public class TapServiceTest extends AbstractTest {
 
 		// prepare
 		Tap bar = new Tap();
-		bar.setIdSchedule(100);
-		bar.setIdUser(100);
 		bar.setIdKelompok(100);
+		bar.setIdUser(100);
+		bar.setIdSchedule(100);
+		bar.setIdCard(100);
+		bar.setIdMachine(100);
+		bar.setKelompokNama("barKelompokNama");
+		bar.setUserNumber("barUserNumber");
+		bar.setUserNama("barUserNama");
+		// validation using hibernate validator
+		// bar.setScheduleTipe("barScheduleTipe");
+		bar.setScheduleNote("barScheduleNote");
 		bar.setScheduleTanggal(new Date());
 		bar.setScheduleStart(new Date());
 		bar.setScheduleStop(new Date());
-		// validation using hibernate validator
-		// bar.setScheduleTipe("barScheduleTipe");
-		bar.setUserNumber("barUserNumber");
-		bar.setKelompokNama("barNama");
+		bar.setCardNumber("barCardNumber");
+		bar.setMachineIp("barMachineIp");
 		bar.setStatus("barStatus");
 		bar.setNote("barNote");
 
@@ -141,17 +159,22 @@ public class TapServiceTest extends AbstractTest {
 
 		// prepare
 		Tap bar = new Tap();
-		bar.setIdSchedule(99);
-		bar.setIdUser(99);
 		bar.setIdKelompok(99);
+		bar.setIdUser(99);
+		bar.setIdSchedule(99);
+		bar.setIdCard(99);
+		bar.setIdMachine(99);
+		bar.setKelompokNama("fooKelompokNama");
+		bar.setUserNumber("fooUserNumber");
+		bar.setUserNama("fooUserNama");
+		bar.setScheduleTipe("fooScheduleTipe");
+		bar.setScheduleNote("fooScheduleNote");
 		bar.setScheduleTanggal(new Date());
 		bar.setScheduleStart(new Date());
 		bar.setScheduleStop(new Date());
-		bar.setScheduleTipe("fooScheduleTipe");
-		bar.setUserNumber("fooUserNumber");
-		bar.setKelompokNama("fooNama");
-		bar.setStatus("barStatus");
-		bar.setNote("fooNote");
+		bar.setCardNumber("fooCardNumber");
+		bar.setMachineIp("fooMachineIp");
+		bar.setStatus("fooStatus");
 
 		// action
 		Tap confirm = service.save(bar);
@@ -195,18 +218,25 @@ public class TapServiceTest extends AbstractTest {
 
 		// prepare
 		Tap bar = new Tap();
-		bar.setIdSchedule(100);
-		bar.setIdUser(100);
 		bar.setIdKelompok(100);
+		bar.setIdUser(100);
+		bar.setIdSchedule(100);
+		bar.setIdCard(100);
+		bar.setIdMachine(100);
+		bar.setKelompokNama("barKelompokNama");
+		bar.setUserNumber("barUserNumber");
+		bar.setUserNama("barUserNama");
+		// validation using hibernate validator
+		// bar.setScheduleTipe("barScheduleTipe");
+		bar.setScheduleNote("barScheduleNote");
 		bar.setScheduleTanggal(new Date());
 		bar.setScheduleStart(new Date());
 		bar.setScheduleStop(new Date());
-		// validation using hibernate validator
-		// bar.setScheduleTipe("barScheduleTipe");
-		bar.setUserNumber("barUserNumber");
-		bar.setKelompokNama("barNama");
+		bar.setCardNumber("barCardNumber");
+		bar.setMachineIp("barMachineIp");
 		bar.setStatus("barStatus");
 		bar.setNote("barNote");
+		
 		// createdAt tidak boleh null, diset di fungsi save
 		bar.setCreatedAt(new Date());
 
@@ -369,6 +399,158 @@ public class TapServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByIdEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("id:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test
+	public void searchByIdKelompok() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "idkelompok:" + foo.getIdKelompok();
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByIdKelompokNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "idkelompok:" + Long.MAX_VALUE;
+
+		// System.out.println(searchTerm);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected = NumberFormatException.class)
+	public void searchByIdKelompokWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("idkelompok:a", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByIdKelompokEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("idkelompok:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test
+	public void searchByIdUser() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "iduser:" + foo.getIdUser();
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByIdUserNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		String searchTerm = "iduser:" + Long.MAX_VALUE;
+
+		// System.out.println(searchTerm);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected = NumberFormatException.class)
+	public void searchByIdUserWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("iduser:a", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByIdUserEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("iduser:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
 
 	@Test
 	public void searchByIdSchedule() {
@@ -421,16 +603,31 @@ public class TapServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
-
-	@Test
-	public void searchByIdUser() {
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByIdScheduleEmpty() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
-		String searchTerm = "iduser:" + foo.getIdUser();
 
 		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Tap> pageableConfirm = service.searchBy("idschedule:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void searchByKelompokNama() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("kelompoknama:fooKelompokNama", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -440,317 +637,43 @@ public class TapServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void searchByIdUserNotFound() {
+	public void searchByKelompokNamaNotFound() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
-		String searchTerm = "iduser:" + Long.MAX_VALUE;
-
-		// System.out.println(searchTerm);
 
 		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		Page<Tap> pageableConfirm = service.searchBy("kelompoknama:notFoundKelompokNama", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
 		// check
-		assertTrue("failure - expected not null", pageableConfirm != null);
+		// assertTrue("failure - expected not null", pageableConfirm == null);
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
-
-	@Test(expected = NumberFormatException.class)
-	public void searchByIdUserWrongFormat() {
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByKelompokNamaEmpty() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Tap> pageableConfirm = service.searchBy("iduser:a", page);
+		Page<Tap> pageableConfirm = service.searchBy("kelompoknama:", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
 		// check
-		// assertTrue("failure - expected not null", pageableConfirm != null);
+		// assertTrue("failure - expected not null", pageableConfirm == null);
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
-
-	@Test
-	public void searchByIdKelompok() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		String searchTerm = "idkelompok:" + foo.getIdKelompok();
-
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// check
-		assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
-
-	}
-
-	@Test
-	public void searchByIdKelompokNotFound() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		String searchTerm = "idkelompok:" + Long.MAX_VALUE;
-
-		// System.out.println(searchTerm);
-
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// check
-		assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
-
-	}
-
-	@Test(expected = NumberFormatException.class)
-	public void searchByIdKelompokWrongFormat() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-
-		// action
-		Page<Tap> pageableConfirm = service.searchBy("idkelompok:a", page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// check
-		// assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
-
-	}
-
-	@Test
-	public void searchByTanggal() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		Date date = new Date();
-
-		// calculation of year and date, by documentation
-		String searchTerm = "tanggal:" + (date.getYear() + 1900) + "-" + String.format("%02d", date.getMonth() + 1)
-				+ "-" + date.getDate();
-
-		// System.out.println("@searchByCreatedAt"+searchTerm);
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// System.out.println("@searchByCreatedAt"+pageableConfirm);
-		// System.out.println("@searchByCreatedAt"+listConfirm);
-
-		// check
-		assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
-
-	}
-
-	@Test
-	public void searchByTanggalNotFound() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		Date date = new Date();
-
-		// calculation of year and date, by documentation
-		// String searchTerm = "createdat:0000-00-00";
-		String searchTerm = "tanggal:1990-10-06";
-
-		// System.out.println("@searchByCreatedAt"+searchTerm);
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// System.out.println("@searchByCreatedAt" + pageableConfirm);
-		// System.out.println("@searchByCreatedAt" + listConfirm);
-
-		// check
-		// assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
-
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void searchByTanggalWrongFormat() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		Date date = new Date();
-
-		// calculation of year and date, by documentation
-		String searchTerm = "tanggal:0000";
-		// String searchTerm = "createdat:0000-00-00";
-
-		// System.out.println("@searchByCreatedAt"+searchTerm);
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// System.out.println("@searchByCreatedAt" + pageableConfirm);
-		// System.out.println("@searchByCreatedAt" + listConfirm);
-
-		// check
-		// assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
-
-	}
-
-	@Test
-	public void searchByStart() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		Date date = new Date();
-
-		// calculation of year and date, by documentation
-		String searchTerm = "start:" + (date.getYear() + 1900) + "-" + String.format("%02d", date.getMonth() + 1) + "-"
-				+ date.getDate();
-
-		// System.out.println("@searchByCreatedAt"+searchTerm);
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// System.out.println("@searchByCreatedAt"+pageableConfirm);
-		// System.out.println("@searchByCreatedAt"+listConfirm);
-
-		// check
-		assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
-
-	}
-
-	@Test
-	public void searchByStartNotFound() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		Date date = new Date();
-
-		// calculation of year and date, by documentation
-		// String searchTerm = "createdat:0000-00-00";
-		String searchTerm = "start:1990-10-06";
-
-		// System.out.println("@searchByCreatedAt"+searchTerm);
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// System.out.println("@searchByCreatedAt" + pageableConfirm);
-		// System.out.println("@searchByCreatedAt" + listConfirm);
-
-		// check
-		// assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
-
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void searchByStartWrongFormat() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		Date date = new Date();
-
-		// calculation of year and date, by documentation
-		String searchTerm = "start:0000";
-		// String searchTerm = "createdat:0000-00-00";
-
-		// System.out.println("@searchByCreatedAt"+searchTerm);
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// System.out.println("@searchByCreatedAt" + pageableConfirm);
-		// System.out.println("@searchByCreatedAt" + listConfirm);
-
-		// check
-		// assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
-
-	}
-
-	@Test
-	public void searchByStop() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		Date date = new Date();
-
-		// calculation of year and date, by documentation
-		String searchTerm = "stop:" + (date.getYear() + 1900) + "-" + String.format("%02d", date.getMonth() + 1) + "-"
-				+ date.getDate();
-
-		// System.out.println("@searchByCreatedAt"+searchTerm);
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// System.out.println("@searchByCreatedAt"+pageableConfirm);
-		// System.out.println("@searchByCreatedAt"+listConfirm);
-
-		// check
-		assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
-
-	}
-
-	@Test
-	public void searchByStopNotFound() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		Date date = new Date();
-
-		// calculation of year and date, by documentation
-		// String searchTerm = "createdat:0000-00-00";
-		String searchTerm = "stop:1990-10-06";
-
-		// System.out.println("@searchByCreatedAt"+searchTerm);
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// System.out.println("@searchByCreatedAt" + pageableConfirm);
-		// System.out.println("@searchByCreatedAt" + listConfirm);
-
-		// check
-		// assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
-
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void searchByStopWrongFormat() {
-
-		// prepare
-		Pageable page = new PageRequest(0, 2);
-		Date date = new Date();
-
-		// calculation of year and date, by documentation
-		String searchTerm = "stop:0000";
-		// String searchTerm = "createdat:0000-00-00";
-
-		// System.out.println("@searchByCreatedAt"+searchTerm);
-		// action
-		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
-		List listConfirm = Lists.newArrayList(pageableConfirm);
-
-		// System.out.println("@searchByCreatedAt" + pageableConfirm);
-		// System.out.println("@searchByCreatedAt" + listConfirm);
-
-		// check
-		// assertTrue("failure - expected not null", pageableConfirm != null);
-		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
-
-	}
-
+	
 	@Test
 	public void searchByUserNumber() {
 
@@ -785,7 +708,80 @@ public class TapServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByUserNumberEmpty() {
 
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("usernumber:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm == null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test
+	public void searchByUserNama() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("usernama:fooUserNama", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByUserNamaNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("usernama:notFoundUserNama", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm == null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByUserNamaEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("usernama:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm == null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
 	@Test
 	public void searchByScheduleTipe() {
 
@@ -793,7 +789,7 @@ public class TapServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Tap> pageableConfirm = service.searchBy("tipe:fooScheduleTipe", page);
+		Page<Tap> pageableConfirm = service.searchBy("scheduletipe:fooScheduleTipe", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -809,7 +805,7 @@ public class TapServiceTest extends AbstractTest {
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Tap> pageableConfirm = service.searchBy("tipe:notFoundScheduleTipe", page);
+		Page<Tap> pageableConfirm = service.searchBy("scheduletipe:notFoundScheduleTipe", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByIpNotFound" + pageableConfirm);
@@ -820,15 +816,34 @@ public class TapServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
-
-	@Test
-	public void searchByNama() {
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByScheduleTipeEmpty() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Tap> pageableConfirm = service.searchBy("nama:fooNama", page);
+		Page<Tap> pageableConfirm = service.searchBy("scheduletipe:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm == null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test
+	public void searchByScheduleNote() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("schedulenote:note", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -838,13 +853,435 @@ public class TapServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void searchByNamaNotFound() {
+	public void searchByScheduleNoteNotFound() {
 
 		// prepare
 		Pageable page = new PageRequest(0, 2);
 
 		// action
-		Page<Tap> pageableConfirm = service.searchBy("nama:notFoundNama", page);
+		Page<Tap> pageableConfirm = service.searchBy("schedulenote:notFoundNote", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByScheduleNoteEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("schedulenote:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+
+	@Test
+	public void searchByScheduleTanggal() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "scheduletanggal:" + (date.getYear() + 1900) + "-" + String.format("%02d", date.getMonth() + 1)
+				+ "-" + date.getDate();
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt"+pageableConfirm);
+		// System.out.println("@searchByCreatedAt"+listConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByScheduleTanggalNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		// String searchTerm = "createdat:0000-00-00";
+		String searchTerm = "scheduletanggal:1990-10-06";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void searchByScheduleTanggalWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "scheduletanggal:0000";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByScheduleTanggalEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "scheduletanggal:";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void searchByScheduleStart() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "schedulestart:" + (date.getYear() + 1900) + "-" + String.format("%02d", date.getMonth() + 1) + "-"
+				+ date.getDate();
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt"+pageableConfirm);
+		// System.out.println("@searchByCreatedAt"+listConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByScheduleStartNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		// String searchTerm = "createdat:0000-00-00";
+		String searchTerm = "schedulestart:1990-10-06";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void searchByScheduleStartWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "schedulestart:0000";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByScheduleStartEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "schedulestart:";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test
+	public void searchBySchuduleStop() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "schedulestop:" + (date.getYear() + 1900) + "-" + String.format("%02d", date.getMonth() + 1) + "-"
+				+ date.getDate();
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt"+pageableConfirm);
+		// System.out.println("@searchByCreatedAt"+listConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchBySchuduleStopNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		// String searchTerm = "createdat:0000-00-00";
+		String searchTerm = "schedulestop:1990-10-06";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void searchByScheduleStopWrongFormat() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "schedulestop:0000";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByScheduleStopEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "schedulestop:";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test
+	public void searchByCardNumber() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("cardnumber:fooCardNumber", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByCardNumberNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("cardnumber:notFoundcCardNumber", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm == null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByCardNumberEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("cardnumber:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm == null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test
+	public void searchByMachineIp() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("machineip:fooMachineIp", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() > 0);
+
+	}
+
+	@Test
+	public void searchByMachineIpNotFound() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("machineip:notFoundcMachineIp", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm == null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByMachineIpEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("machineip:", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// System.out.println("@searchByIpNotFound" + pageableConfirm);
@@ -890,6 +1327,25 @@ public class TapServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByStatusEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("status:", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByIpNotFound" + pageableConfirm);
+		// System.out.println("@searchByIpNotFound" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm == null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
 
 	@Test
 	public void searchByNote() {
@@ -915,6 +1371,22 @@ public class TapServiceTest extends AbstractTest {
 
 		// action
 		Page<Tap> pageableConfirm = service.searchBy("note:notFoundNote", page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByNoteEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+
+		// action
+		Page<Tap> pageableConfirm = service.searchBy("note:", page);
 		List listConfirm = Lists.newArrayList(pageableConfirm);
 
 		// check
@@ -982,6 +1454,31 @@ public class TapServiceTest extends AbstractTest {
 
 		// calculation of year and date, by documentation
 		String searchTerm = "createdat:0000";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByCreatedAtEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "createdat:";
 		// String searchTerm = "createdat:0000-00-00";
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
@@ -1075,6 +1572,31 @@ public class TapServiceTest extends AbstractTest {
 		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
 
 	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByDeletedAtEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "deletedat:";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
 
 	@Test
 	public void searchByUpdatedAt() {
@@ -1137,6 +1659,31 @@ public class TapServiceTest extends AbstractTest {
 
 		// calculation of year and date, by documentation
 		String searchTerm = "updatedat:0000";
+		// String searchTerm = "createdat:0000-00-00";
+
+		// System.out.println("@searchByCreatedAt"+searchTerm);
+		// action
+		Page<Tap> pageableConfirm = service.searchBy(searchTerm, page);
+		List listConfirm = Lists.newArrayList(pageableConfirm);
+
+		// System.out.println("@searchByCreatedAt" + pageableConfirm);
+		// System.out.println("@searchByCreatedAt" + listConfirm);
+
+		// check
+		// assertTrue("failure - expected not null", pageableConfirm != null);
+		assertTrue("failure - expected size > 0", listConfirm.size() == 0);
+
+	}
+	
+	@Test(expected=ArrayIndexOutOfBoundsException.class)
+	public void searchByUpdatedAtEmpty() {
+
+		// prepare
+		Pageable page = new PageRequest(0, 2);
+		Date date = new Date();
+
+		// calculation of year and date, by documentation
+		String searchTerm = "updatedat:";
 		// String searchTerm = "createdat:0000-00-00";
 
 		// System.out.println("@searchByCreatedAt"+searchTerm);
